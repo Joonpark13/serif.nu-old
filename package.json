@@ -1,0 +1,43 @@
+{
+  "name": "serif.nu",
+  "version": "1.0.0",
+  "description": "Simple. Fast. Visual. Course Planning for Northwestern University.",
+  "main": "index.js",
+  "scripts": {
+    "webpack-watch": "webpack -w",
+    "express-server": "node ./server",
+    "dev": "concurrently --kill-others \"npm run webpack-watch\" \"npm run express-server\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Joonpark13/serif.nu.git"
+  },
+  "author": "Joon Park",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Joonpark13/serif.nu/issues"
+  },
+  "homepage": "https://github.com/Joonpark13/serif.nu#readme",
+  "devDependencies": {
+    "concurrently": "^3.1.0",
+    "webpack": "^1.13.3"
+  },
+  "dependencies": {
+    "babel-core": "^6.18.2",
+    "babel-loader": "^6.2.7",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-react": "^6.16.0",
+    "express": "^4.14.0",
+    "material-ui": "^0.16.1",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "react-tap-event-plugin": "^1.0.0"
+  },
+  "babel": {
+    "presets": [
+      "es2015",
+      "react"
+    ]
+  }
+}
