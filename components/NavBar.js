@@ -16,11 +16,12 @@ export default class NavBar extends React.Component {
     this.state = {
       open: false
     };
-    this.handleToggle = this.handleToggle.bind(this);
   }
-  handleToggle() {
+
+  handleToggle = () => {
     this.setState({ open: !this.state.open });
   }
+
   render() {
     return (
       <div>
