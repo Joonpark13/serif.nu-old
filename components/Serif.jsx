@@ -7,6 +7,7 @@ import { Tabs, Tab } from 'material-ui/Tabs';
 
 import CurrentlyBrowsing from './CurrentlyBrowsing.jsx';
 import Search from './Search.jsx';
+import Calendar from './Calendar.jsx';
 
 const style = {
   column: {
@@ -53,7 +54,9 @@ export default class Serif extends React.Component {
 
           <Col style={style.column} md={9} mdPull={3}>
             <Card style={style.card}>
-              <CardText></CardText>
+              <CardText>
+                <Calendar />
+              </CardText>
             </Card>
 
             <Card style={style.card}>

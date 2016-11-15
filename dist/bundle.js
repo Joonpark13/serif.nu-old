@@ -34664,6 +34664,10 @@
 
 	var _Search2 = _interopRequireDefault(_Search);
 
+	var _Calendar = __webpack_require__(443);
+
+	var _Calendar2 = _interopRequireDefault(_Calendar);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -34745,7 +34749,11 @@
 	            _react2.default.createElement(
 	              _Card.Card,
 	              { style: style.card },
-	              _react2.default.createElement(_Card.CardText, null)
+	              _react2.default.createElement(
+	                _Card.CardText,
+	                null,
+	                _react2.default.createElement(_Calendar2.default, null)
+	              )
 	            ),
 	            _react2.default.createElement(
 	              _Card.Card,
@@ -38083,7 +38091,7 @@
 
 	Search.propTypes = {
 	  searchdata: _react2.default.PropTypes.array,
-	  onSelect: _react2.default.PropTypes.funct
+	  onSelect: _react2.default.PropTypes.func
 	};
 
 /***/ },
@@ -43620,6 +43628,70 @@
 
 	exports.default = Divider;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+
+/***/ },
+/* 443 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(27);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Calendar = function (_React$Component) {
+	  _inherits(Calendar, _React$Component);
+
+	  function Calendar() {
+	    _classCallCheck(this, Calendar);
+
+	    return _possibleConstructorReturn(this, (Calendar.__proto__ || Object.getPrototypeOf(Calendar)).apply(this, arguments));
+	  }
+
+	  _createClass(Calendar, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      $(document).ready(function () {
+	        $('#calendar').fullCalendar({
+	          editable: false, // Don't allow editing of events
+	          handleWindowResize: true,
+	          weekends: false, // Hide weekends
+	          defaultView: 'agendaWeek', // Only show week view
+	          header: false, // Hide buttons/titles
+	          minTime: '07:30:00', // Start time for the calendar
+	          maxTime: '22:00:00', // End time for the calendar
+	          columnFormat: 'ddd',
+	          displayEventTime: true, // Display event time
+	          allDaySlot: false, // Get rid of "all day" slot at the top
+	          height: 'auto' // Get rid of  empty space on the bottom
+	        });
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement('div', { id: 'calendar' });
+	    }
+	  }]);
+
+	  return Calendar;
+	}(_react2.default.Component);
+
+	exports.default = Calendar;
 
 /***/ }
 /******/ ]);

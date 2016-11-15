@@ -39,5 +39,5 @@ export default class Search extends React.Component {
 
 Search.propTypes = {
     searchdata: React.PropTypes.array,
-    onSelect: React.PropTypes.funct
+    onSelect: React.PropTypes.func
 };
