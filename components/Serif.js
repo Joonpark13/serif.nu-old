@@ -3,6 +3,10 @@ import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 import { Card, CardText, CardTitle } from 'material-ui/Card';
+import { Tabs, Tab } from 'material-ui/Tabs';
+
+import CurrentlyBrowsing from './CurrentlyBrowsing';
+import Search from './Search';
 
 const style = {
   column: {
@@ -25,7 +29,30 @@ export default class Serif extends React.Component {
                 {/* The order of the columns is switched:
                     the first one is on the right and the second one is on the left.
                     (push and pull boot strap column functionality) */}
-                <Col style={style.column} md={3} mdPush={9}></Col>
+                <Col style={style.column} md={3} mdPush={9}>
+                    <Card>
+                        <CardText>
+                            <CurrentlyBrowsing />
+                        </CardText>
+                    </Card>
+
+                    <Tabs>
+                        <Tab label="Search">
+                            <Card>
+                                <CardText>
+                                    <Search searchdata={[]} />
+                                </CardText>
+                            </Card>
+                        </Tab>
+
+                        <Tab label="Cart">
+                            <Card>
+                                <CardText>
+                                </CardText>
+                            </Card>
+                        </Tab>
+                    </Tabs>
+                </Col>
 
                 <Col style={style.column} md={9} mdPull={3}>
                     <Card style={style.card}>
