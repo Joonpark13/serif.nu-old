@@ -1,0 +1,18 @@
+{
+    "extends": "airbnb",
+    "rules": {
+        "indent": 1,
+        "react/jsx-indent": 1,
+        "react/jsx-indent-props": 1,
+        "comma-dangle": ["warn", "never"]
+    },
+    "globals": {
+        "document": true,
+        "React": true,
+        "ReactDOM": true,
+        "$": true,
+        "DATA_URL": true,
+        "window": true,
+        "localStorage": true
+    }
+}

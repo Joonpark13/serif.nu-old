@@ -1,8 +1,7 @@
-const webpack = require('webpack');
 const path = require('path');
 
 module.exports = {
-    entry: `${__dirname}/index.js`,
+    entry: `${__dirname}/index.jsx`,
     output: {
         filename: 'bundle.js',
         path: path.join(__dirname, 'dist')
@@ -10,7 +9,7 @@ module.exports = {
     module: {
         loaders: [
             {
-                test: /\.js$/,
+                test: /\.jsx$/,
                 exclude: /node_modules/,
                 loader: 'babel-loader'
             }

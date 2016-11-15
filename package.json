@@ -2,7 +2,7 @@
   "name": "serif.nu",
   "version": "1.0.0",
   "description": "Simple. Fast. Visual. Course Planning for Northwestern University.",
-  "main": "index.js",
+  "main": "index.jsx",
   "scripts": {
     "webpack-watch": "webpack -w",
     "express-server": "node ./server",
