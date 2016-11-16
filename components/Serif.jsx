@@ -36,7 +36,7 @@ const Serif = () => (
           <Tab label="Search">
             <Card>
               <CardText>
-                <SearchContainer searchdata={[]} />
+                <SearchContainer />
               </CardText>
             </Card>
           </Tab>

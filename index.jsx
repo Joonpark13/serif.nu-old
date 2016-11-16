@@ -1,4 +1,5 @@
 import injectTapEventPlugin from 'react-tap-event-plugin'; // Needed for onTouchTap
+import 'babel-polyfill'; // http://redux.js.org/docs/advanced/AsyncActions.html#note-on-fetch
 
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -6,7 +7,9 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { grey500, white, fullBlack } from 'material-ui/styles/colors';
 import { fade } from 'material-ui/utils/colorManipulator';
+import { Provider } from 'react-redux';
 import colors from './colors';
+import store from './store';
 import NavBar from './components/NavBar.jsx';
 import Serif from './components/Serif.jsx';
 
@@ -35,12 +38,14 @@ const muiTheme = getMuiTheme({
 class App extends React.Component {
   render() {
     return (
-      <MuiThemeProvider muiTheme={muiTheme}>
-        <div> {/* MuiThemeProvider requires stricly one child element */}
-          <NavBar />
-          <Serif />
-        </div>
-      </MuiThemeProvider>
+      <Provider store={store}>
+        <MuiThemeProvider muiTheme={muiTheme}>
+          <div> {/* MuiThemeProvider requires stricly one child element */}
+            <NavBar />
+            <Serif />
+          </div>
+        </MuiThemeProvider>
+      </Provider>
     );
   }
 }

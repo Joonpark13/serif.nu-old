@@ -12,15 +12,11 @@ const style = {
   }
 };
 
-const SearchContainer = () => (
+const SearchContainer = (searchdata) => (
   <div style={style.searchGroup}>
     <FontIcon style={style.icon} className="material-icons">search</FontIcon>
-    <Search searchdata={this.props.searchdata} />
+    <Search searchdata={[]} />
   </div>
 );
 
 export default SearchContainer;
-
-SearchContainer.propTypes = {
-    searchdata: React.PropTypes.array
-};

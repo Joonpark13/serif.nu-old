@@ -1,7 +1,10 @@
 import React from 'react';
 import AutoComplete from 'material-ui/AutoComplete';
 
-export default class Search extends React.Component {
+class Search extends React.Component {
+  componentDidMount() {
+    store.dispatch(loadSchools(4650));
+  }
   render() {
     return (
         <AutoComplete
@@ -24,6 +27,6 @@ export default class Search extends React.Component {
 }
 
 Search.propTypes = {
-    searchdata: React.PropTypes.array.isRequired,
-    onSelect: React.PropTypes.func
+  searchdata: React.PropTypes.array.isRequired,
+  onSelect: React.PropTypes.func
 };
