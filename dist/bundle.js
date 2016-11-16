@@ -34634,8 +34634,6 @@
 	  value: true
 	});
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 	var _react = __webpack_require__(27);
 
 	var _react2 = _interopRequireDefault(_react);
@@ -34670,12 +34668,6 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 	var style = {
 	  column: {
 	    paddingRight: 0,
@@ -34686,89 +34678,74 @@
 	  }
 	};
 
-	var Serif = function (_React$Component) {
-	  _inherits(Serif, _React$Component);
-
-	  function Serif() {
-	    _classCallCheck(this, Serif);
-
-	    return _possibleConstructorReturn(this, (Serif.__proto__ || Object.getPrototypeOf(Serif)).apply(this, arguments));
-	  }
-
-	  _createClass(Serif, [{
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        _Grid2.default,
-	        { fluid: true },
+	var Serif = function Serif() {
+	  return _react2.default.createElement(
+	    _Grid2.default,
+	    { fluid: true },
+	    _react2.default.createElement(
+	      _Row2.default,
+	      null,
+	      _react2.default.createElement(
+	        _Col2.default,
+	        { style: style.column, md: 3, mdPush: 9 },
 	        _react2.default.createElement(
-	          _Row2.default,
+	          _Card.Card,
 	          null,
 	          _react2.default.createElement(
-	            _Col2.default,
-	            { style: style.column, md: 3, mdPush: 9 },
+	            _Card.CardText,
+	            null,
+	            _react2.default.createElement(_CurrentlyBrowsing2.default, null)
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _Tabs.Tabs,
+	          null,
+	          _react2.default.createElement(
+	            _Tabs.Tab,
+	            { label: 'Search' },
 	            _react2.default.createElement(
 	              _Card.Card,
 	              null,
 	              _react2.default.createElement(
 	                _Card.CardText,
 	                null,
-	                _react2.default.createElement(_CurrentlyBrowsing2.default, null)
-	              )
-	            ),
-	            _react2.default.createElement(
-	              _Tabs.Tabs,
-	              null,
-	              _react2.default.createElement(
-	                _Tabs.Tab,
-	                { label: 'Search' },
-	                _react2.default.createElement(
-	                  _Card.Card,
-	                  null,
-	                  _react2.default.createElement(
-	                    _Card.CardText,
-	                    null,
-	                    _react2.default.createElement(_SearchContainer2.default, { searchdata: [] })
-	                  )
-	                )
-	              ),
-	              _react2.default.createElement(
-	                _Tabs.Tab,
-	                { label: 'Cart' },
-	                _react2.default.createElement(
-	                  _Card.Card,
-	                  null,
-	                  _react2.default.createElement(_Card.CardText, null)
-	                )
+	                _react2.default.createElement(_SearchContainer2.default, { searchdata: [] })
 	              )
 	            )
 	          ),
 	          _react2.default.createElement(
-	            _Col2.default,
-	            { style: style.column, md: 9, mdPull: 3 },
+	            _Tabs.Tab,
+	            { label: 'Cart' },
 	            _react2.default.createElement(
 	              _Card.Card,
-	              { style: style.card },
-	              _react2.default.createElement(
-	                _Card.CardText,
-	                null,
-	                _react2.default.createElement(_Calendar2.default, null)
-	              )
-	            ),
-	            _react2.default.createElement(
-	              _Card.Card,
-	              { style: style.card },
-	              _react2.default.createElement(_Card.CardTitle, { title: 'Unscheduled Courses' }),
+	              null,
 	              _react2.default.createElement(_Card.CardText, null)
 	            )
 	          )
 	        )
-	      );
-	    }
-	  }]);
-
-	  return Serif;
-	}(_react2.default.Component);
+	      ),
+	      _react2.default.createElement(
+	        _Col2.default,
+	        { style: style.column, md: 9, mdPull: 3 },
+	        _react2.default.createElement(
+	          _Card.Card,
+	          { style: style.card },
+	          _react2.default.createElement(
+	            _Card.CardText,
+	            null,
+	            _react2.default.createElement(_Calendar2.default, null)
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _Card.Card,
+	          { style: style.card },
+	          _react2.default.createElement(_Card.CardTitle, { title: 'Unscheduled Courses' }),
+	          _react2.default.createElement(_Card.CardText, null)
+	        )
+	      )
+	    )
+	  );
+	};
 
 	exports.default = Serif;
 
@@ -37935,8 +37912,6 @@
 	  value: true
 	});
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 	var _react = __webpack_require__(27);
 
 	var _react2 = _interopRequireDefault(_react);
@@ -37946,12 +37921,6 @@
 	var _FontIcon2 = _interopRequireDefault(_FontIcon);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var style = {
 	  box: {
@@ -37965,37 +37934,22 @@
 	  }
 	};
 
-	var CurrentlyBrowsing = function (_React$Component) {
-	  _inherits(CurrentlyBrowsing, _React$Component);
-
-	  function CurrentlyBrowsing() {
-	    _classCallCheck(this, CurrentlyBrowsing);
-
-	    return _possibleConstructorReturn(this, (CurrentlyBrowsing.__proto__ || Object.getPrototypeOf(CurrentlyBrowsing)).apply(this, arguments));
-	  }
-
-	  _createClass(CurrentlyBrowsing, [{
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        { style: style.box },
-	        _react2.default.createElement(
-	          'div',
-	          { style: style.currentTermText },
-	          'Currently Browsing '
-	        ),
-	        _react2.default.createElement(
-	          _FontIcon2.default,
-	          { className: 'material-icons' },
-	          'chevron_right'
-	        )
-	      );
-	    }
-	  }]);
-
-	  return CurrentlyBrowsing;
-	}(_react2.default.Component);
+	var CurrentlyBrowsing = function CurrentlyBrowsing() {
+	  return _react2.default.createElement(
+	    'div',
+	    { style: style.box },
+	    _react2.default.createElement(
+	      'div',
+	      { style: style.currentTermText },
+	      'Currently Browsing '
+	    ),
+	    _react2.default.createElement(
+	      _FontIcon2.default,
+	      { className: 'material-icons' },
+	      'chevron_right'
+	    )
+	  );
+	};
 
 	exports.default = CurrentlyBrowsing;
 
@@ -38008,8 +37962,6 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _react = __webpack_require__(27);
 
@@ -38025,12 +37977,6 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 	var style = {
 	  searchGroup: {
 	    margin: 'auto',
@@ -38041,33 +37987,18 @@
 	  }
 	};
 
-	var SearchContainer = function (_React$Component) {
-	  _inherits(SearchContainer, _React$Component);
-
-	  function SearchContainer() {
-	    _classCallCheck(this, SearchContainer);
-
-	    return _possibleConstructorReturn(this, (SearchContainer.__proto__ || Object.getPrototypeOf(SearchContainer)).apply(this, arguments));
-	  }
-
-	  _createClass(SearchContainer, [{
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        { style: style.searchGroup },
-	        _react2.default.createElement(
-	          _FontIcon2.default,
-	          { style: style.icon, className: 'material-icons' },
-	          'search'
-	        ),
-	        _react2.default.createElement(_Search2.default, { searchdata: this.props.searchdata })
-	      );
-	    }
-	  }]);
-
-	  return SearchContainer;
-	}(_react2.default.Component);
+	var SearchContainer = function SearchContainer() {
+	  return _react2.default.createElement(
+	    'div',
+	    { style: style.searchGroup },
+	    _react2.default.createElement(
+	      _FontIcon2.default,
+	      { style: style.icon, className: 'material-icons' },
+	      'search'
+	    ),
+	    _react2.default.createElement(_Search2.default, { searchdata: undefined.props.searchdata })
+	  );
+	};
 
 	exports.default = SearchContainer;
 

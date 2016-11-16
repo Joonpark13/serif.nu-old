@@ -13,13 +13,11 @@ const style = {
   }
 };
 
-export default class CurrentlyBrowsing extends React.Component {
-  render() {
-    return (
-      <div style={style.box} >
-        <div style={style.currentTermText}>Currently Browsing </div>
-        <FontIcon className="material-icons">chevron_right</FontIcon>
-      </div>
-    );
-  }
-}
+const CurrentlyBrowsing = () => (
+  <div style={style.box} >
+    <div style={style.currentTermText}>Currently Browsing </div>
+    <FontIcon className="material-icons">chevron_right</FontIcon>
+  </div>
+);
+
+export default CurrentlyBrowsing;

@@ -19,53 +19,51 @@ const style = {
   }
 };
 
-export default class Serif extends React.Component {
-  render() {
-    return (
-      <Grid fluid>
-        <Row>
-            {/* The order of the columns is switched:
-             the first one is on the right and the second one is on the left.
-             (push and pull boot strap column functionality) */}
-          <Col style={style.column} md={3} mdPush={9}>
+const Serif = () => (
+  <Grid fluid>
+    <Row>
+        {/* The order of the columns is switched:
+          the first one is on the right and the second one is on the left.
+          (push and pull boot strap column functionality) */}
+      <Col style={style.column} md={3} mdPush={9}>
+        <Card>
+          <CardText>
+            <CurrentlyBrowsing />
+          </CardText>
+        </Card>
+
+        <Tabs>
+          <Tab label="Search">
             <Card>
               <CardText>
-                <CurrentlyBrowsing />
+                <SearchContainer searchdata={[]} />
               </CardText>
             </Card>
+          </Tab>
 
-            <Tabs>
-              <Tab label="Search">
-                <Card>
-                  <CardText>
-                    <SearchContainer searchdata={[]} />
-                  </CardText>
-                </Card>
-              </Tab>
-
-              <Tab label="Cart">
-                <Card>
-                  <CardText>
-                  </CardText>
-                </Card>
-              </Tab>
-            </Tabs>
-          </Col>
-
-          <Col style={style.column} md={9} mdPull={3}>
-            <Card style={style.card}>
+          <Tab label="Cart">
+            <Card>
               <CardText>
-                <Calendar />
               </CardText>
             </Card>
+          </Tab>
+        </Tabs>
+      </Col>
 
-            <Card style={style.card}>
-              <CardTitle title="Unscheduled Courses" />
-              <CardText></CardText>
-            </Card>
-          </Col>
-        </Row>
-      </Grid>
-    );
-  }
-}
+      <Col style={style.column} md={9} mdPull={3}>
+        <Card style={style.card}>
+          <CardText>
+            <Calendar />
+          </CardText>
+        </Card>
+
+        <Card style={style.card}>
+          <CardTitle title="Unscheduled Courses" />
+          <CardText></CardText>
+        </Card>
+      </Col>
+    </Row>
+  </Grid>
+);
+
+export default Serif;

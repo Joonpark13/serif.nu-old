@@ -12,16 +12,14 @@ const style = {
   }
 };
 
-export default class SearchContainer extends React.Component {
-  render() {
-    return (
-      <div style={style.searchGroup}>
-        <FontIcon style={style.icon} className="material-icons">search</FontIcon>
-        <Search searchdata={this.props.searchdata} />
-      </div>
-    );
-  }
-}
+const SearchContainer = () => (
+  <div style={style.searchGroup}>
+    <FontIcon style={style.icon} className="material-icons">search</FontIcon>
+    <Search searchdata={this.props.searchdata} />
+  </div>
+);
+
+export default SearchContainer;
 
 SearchContainer.propTypes = {
     searchdata: React.PropTypes.array
