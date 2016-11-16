@@ -6,7 +6,7 @@ import { Card, CardText, CardTitle } from 'material-ui/Card';
 import { Tabs, Tab } from 'material-ui/Tabs';
 
 import CurrentlyBrowsing from './CurrentlyBrowsing.jsx';
-import Search from './Search.jsx';
+import SearchContainer from './SearchContainer.jsx';
 import Calendar from './Calendar.jsx';
 
 const style = {
@@ -38,7 +38,7 @@ export default class Serif extends React.Component {
               <Tab label="Search">
                 <Card>
                   <CardText>
-                    <Search searchdata={[]} />
+                    <SearchContainer searchdata={[]} />
                   </CardText>
                 </Card>
               </Tab>
