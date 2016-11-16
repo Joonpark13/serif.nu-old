@@ -17,7 +17,7 @@ export default class SearchContainer extends React.Component {
     return (
       <div style={style.searchGroup}>
         <FontIcon style={style.icon} className="material-icons">search</FontIcon>
-        <Search searchData={this.props.searchData} />
+        <Search searchdata={this.props.searchdata} />
       </div>
     );
   }

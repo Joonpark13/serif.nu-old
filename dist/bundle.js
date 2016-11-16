@@ -38061,7 +38061,7 @@
 	          { style: style.icon, className: 'material-icons' },
 	          'search'
 	        ),
-	        _react2.default.createElement(_Search2.default, { searchData: this.props.searchData })
+	        _react2.default.createElement(_Search2.default, { searchdata: this.props.searchdata })
 	      );
 	    }
 	  }]);
@@ -38144,7 +38144,7 @@
 
 
 	Search.propTypes = {
-	  searchdata: _react2.default.PropTypes.array,
+	  searchdata: _react2.default.PropTypes.array.isRequired,
 	  onSelect: _react2.default.PropTypes.func
 	};
 
