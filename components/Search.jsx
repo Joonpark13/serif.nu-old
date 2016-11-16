@@ -2,9 +2,6 @@ import React from 'react';
 import AutoComplete from 'material-ui/AutoComplete';
 
 class Search extends React.Component {
-  componentDidMount() {
-    store.dispatch(loadSchools(4650));
-  }
   render() {
     return (
         <AutoComplete
