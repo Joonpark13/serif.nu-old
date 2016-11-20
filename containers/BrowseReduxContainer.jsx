@@ -1,7 +1,8 @@
 import { connect } from 'react-redux';
+import { showSubjects } from '../actions/actions';
 import Browse from '../components/Browse.jsx';
 
-function getView(state) {
+function propsFilter(state) {
   switch (state.currentView) {
     case 'schools':
       return state.schools;
@@ -13,9 +14,15 @@ function getView(state) {
 }
 
 const mapStateToProps = (state) => ({
-    data: getView(state)
+  schools: propsFilter(state)
 });
 
-const BrowseReduxContainer = connect(mapStateToProps)(Browse);
+const mapDispatchToProps = (dispatch) => ({
+  showSubjects: (schoolId) => {
+    dispatch(showSubjects(schoolId));
+  }
+});
+
+const BrowseReduxContainer = connect(mapStateToProps, mapDispatchToProps)(Browse);
 
 export default BrowseReduxContainer;

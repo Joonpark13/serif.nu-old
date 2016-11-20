@@ -3,8 +3,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 const Browse = (props) => (
   <div>
-    {props.data.map((datum) => (
-      <RaisedButton key={datum.id} label={datum.name} />
+    {props.schools.map((school) => (
+      <RaisedButton key={school.id} label={school.name} onClick={props.showSubjects(school.id)} />
     ))}
   </div>
 );
