@@ -17,6 +17,7 @@ const CurrentlyBrowsing = () => (
   <div style={style.box} >
     <div style={style.currentTermText}>Currently Browsing </div>
     <FontIcon className="material-icons">chevron_right</FontIcon>
+    Winter 2017
   </div>
 );
 

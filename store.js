@@ -1,7 +1,6 @@
-import { createStore, applyMiddleware } from 'redux';
-import thunkMiddleware from 'redux-thunk';
-import schools from './reducers/schools';
+import { createStore } from 'redux';
+import browse from './reducers/browse';
 
-const store = createStore(schools, applyMiddleware(thunkMiddleware));
+const store = createStore(browse);
 
 export default store;
