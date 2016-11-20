@@ -1,7 +1,7 @@
 import React from 'react';
 import AutoComplete from 'material-ui/AutoComplete';
 
-class Search extends React.Component {
+export default class Search extends React.Component {
   render() {
     return (
         <AutoComplete

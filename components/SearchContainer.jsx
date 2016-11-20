@@ -12,10 +12,10 @@ const style = {
   }
 };
 
-const SearchContainer = (searchdata) => (
+const SearchContainer = () => (
   <div style={style.searchGroup}>
     <FontIcon style={style.icon} className="material-icons">search</FontIcon>
-    <Search searchdata={[]} />
+    <Search searchdata={['hello', 'hi', 'hey']} />
   </div>
 );
 

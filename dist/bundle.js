@@ -44444,7 +44444,7 @@
 
 	var _SearchContainer2 = _interopRequireDefault(_SearchContainer);
 
-	var _Calendar = __webpack_require__(774);
+	var _Calendar = __webpack_require__(771);
 
 	var _Calendar2 = _interopRequireDefault(_Calendar);
 
@@ -47711,7 +47711,7 @@
 	  }
 	};
 
-	var SearchContainer = function SearchContainer(searchdata) {
+	var SearchContainer = function SearchContainer() {
 	  return _react2.default.createElement(
 	    'div',
 	    { style: style.searchGroup },
@@ -47720,7 +47720,7 @@
 	      { style: style.icon, className: 'material-icons' },
 	      'search'
 	    ),
-	    _react2.default.createElement(_Search2.default, { searchdata: [] })
+	    _react2.default.createElement(_Search2.default, { searchdata: ['hello', 'hi', 'hey'] })
 	  );
 	};
 
@@ -47731,6 +47731,10 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -47760,11 +47764,6 @@
 	  }
 
 	  _createClass(Search, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      store.dispatch(loadSchools(4650));
-	    }
-	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _this2 = this;
@@ -47790,6 +47789,9 @@
 
 	  return Search;
 	}(_react2.default.Component);
+
+	exports.default = Search;
+
 
 	Search.propTypes = {
 	  searchdata: _react2.default.PropTypes.array.isRequired,
@@ -53332,10 +53334,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ },
-/* 771 */,
-/* 772 */,
-/* 773 */,
-/* 774 */
+/* 771 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
