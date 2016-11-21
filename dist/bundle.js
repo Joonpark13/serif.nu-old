@@ -53387,9 +53387,9 @@
 
 	var _reactRedux = __webpack_require__(619);
 
-	var _actions = __webpack_require__(775);
+	var _actions = __webpack_require__(772);
 
-	var _Browse = __webpack_require__(772);
+	var _Browse = __webpack_require__(773);
 
 	var _Browse2 = _interopRequireDefault(_Browse);
 
@@ -53426,6 +53426,23 @@
 
 /***/ },
 /* 772 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.showSubjects = showSubjects;
+	function showSubjects(schoolId) {
+	  return {
+	    type: 'SHOW_SUBJECTS',
+	    schoolId: schoolId
+	  };
+	}
+
+/***/ },
+/* 773 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -53438,7 +53455,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _RaisedButton = __webpack_require__(773);
+	var _RaisedButton = __webpack_require__(774);
 
 	var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
 
@@ -53449,7 +53466,9 @@
 	    'div',
 	    null,
 	    props.schools.map(function (school) {
-	      return _react2.default.createElement(_RaisedButton2.default, { key: school.id, label: school.name, onClick: props.showSubjects(school.id) });
+	      return _react2.default.createElement(_RaisedButton2.default, { key: school.id, label: school.name, onClick: function onClick() {
+	          return props.showSubjects(school.id);
+	        } });
 	    })
 	  );
 	};
@@ -53457,7 +53476,7 @@
 	exports.default = Browse;
 
 /***/ },
-/* 773 */
+/* 774 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -53467,7 +53486,7 @@
 	});
 	exports.default = undefined;
 
-	var _RaisedButton = __webpack_require__(774);
+	var _RaisedButton = __webpack_require__(775);
 
 	var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
 
@@ -53476,7 +53495,7 @@
 	exports.default = _RaisedButton2.default;
 
 /***/ },
-/* 774 */
+/* 775 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -53954,23 +53973,6 @@
 	} : void 0;
 	exports.default = RaisedButton;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
-
-/***/ },
-/* 775 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.showSubjects = showSubjects;
-	function showSubjects(schoolId) {
-	  return {
-	    type: 'SHOW_SUBJECTS',
-	    schoolId: schoolId
-	  };
-	}
 
 /***/ }
 /******/ ]);
