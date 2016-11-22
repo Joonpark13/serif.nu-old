@@ -5,8 +5,8 @@ import Browse from '../components/Browse.jsx';
 
 const mapStateToProps = (state) => ({
   currentView: state.currentView,
-  schools: state.schools,
-  subjects: state.subjects
+  schools: state.data.schools.items,
+  subjects: state.data.subjects.items
 });
 
 const mapDispatchToProps = (dispatch) => ({

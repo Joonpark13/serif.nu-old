@@ -2,7 +2,6 @@ import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 
 const Browse = ({ currentView, schools, subjects, showSubjects, showCourses }) => {
-  console.log(currentView);
   switch (currentView) {
     case 'schools':
       return (
@@ -29,7 +28,6 @@ const Browse = ({ currentView, schools, subjects, showSubjects, showCourses }) =
         </div>
       );
     default:
-      console.log('yup, nothing');
       return <div></div>;
   }
 };
