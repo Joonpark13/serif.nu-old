@@ -1,25 +1,35 @@
 import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 
-const Browse = (currentView, schools, subjects, showSubjects, showCourses) => {
+const Browse = ({ currentView, schools, subjects, showSubjects, showCourses }) => {
+  console.log(currentView);
   switch (currentView) {
     case 'schools':
       return (
         <div>
-            {schools.map((school) => (
-            <RaisedButton key={school.id} label={school.name} onClick={() => showSubjects(school.id)} />
-            ))}
+          {schools.map((school) => (
+            <RaisedButton
+              key={school.id}
+              label={school.name}
+              onClick={() => showSubjects(school.id)}
+            />
+          ))}
         </div>
       );
     case 'subjects':
       return (
         <div>
-            {subjects.map((subject) => (
-            <RaisedButton key={subject.id} label={subject.name} onClick={() => showCourses(subject.id)} />
-            ))}
+          {subjects.map((subject) => (
+            <RaisedButton
+              key={subject.id}
+              label={subject.name}
+              onClick={() => showCourses(subject.id)}
+            />
+          ))}
         </div>
       );
     default:
+      console.log('yup, nothing');
       return <div></div>;
   }
 };

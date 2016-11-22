@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { showSubjects, showCourses } from '../actions/actions';
+import { showSubjects, showCourses } from '../action-creators';
 import Browse from '../components/Browse.jsx';
 
 const mapStateToProps = (state) => ({

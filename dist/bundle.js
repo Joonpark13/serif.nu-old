@@ -38953,7 +38953,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var store = (0, _redux.createStore)(_browse2.default);
+	var store = (0, _redux.createStore)(_browse2.default, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 	exports.default = store;
 
@@ -53391,7 +53391,7 @@
 
 	var _reactRedux = __webpack_require__(619);
 
-	var _actions = __webpack_require__(772);
+	var _actionCreators = __webpack_require__(772);
 
 	var _Browse = __webpack_require__(773);
 
@@ -53410,10 +53410,10 @@
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
 	    showSubjects: function showSubjects(schoolId) {
-	      dispatch((0, _actions.showSubjects)(schoolId));
+	      dispatch((0, _actionCreators.showSubjects)(schoolId));
 	    },
 	    showCourses: function showCourses(subjectId) {
-	      dispatch((0, _actions.showCourses)(subjectId));
+	      dispatch((0, _actionCreators.showCourses)(subjectId));
 	    }
 	  };
 	};
@@ -53467,16 +53467,27 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var Browse = function Browse(currentView, schools, subjects, showSubjects, showCourses) {
+	var Browse = function Browse(_ref) {
+	  var currentView = _ref.currentView,
+	      schools = _ref.schools,
+	      subjects = _ref.subjects,
+	      showSubjects = _ref.showSubjects,
+	      showCourses = _ref.showCourses;
+
+	  console.log(currentView);
 	  switch (currentView) {
 	    case 'schools':
 	      return _react2.default.createElement(
 	        'div',
 	        null,
 	        schools.map(function (school) {
-	          return _react2.default.createElement(_RaisedButton2.default, { key: school.id, label: school.name, onClick: function onClick() {
+	          return _react2.default.createElement(_RaisedButton2.default, {
+	            key: school.id,
+	            label: school.name,
+	            onClick: function onClick() {
 	              return showSubjects(school.id);
-	            } });
+	            }
+	          });
 	        })
 	      );
 	    case 'subjects':
@@ -53484,12 +53495,17 @@
 	        'div',
 	        null,
 	        subjects.map(function (subject) {
-	          return _react2.default.createElement(_RaisedButton2.default, { key: subject.id, label: subject.name, onClick: function onClick() {
+	          return _react2.default.createElement(_RaisedButton2.default, {
+	            key: subject.id,
+	            label: subject.name,
+	            onClick: function onClick() {
 	              return showCourses(subject.id);
-	            } });
+	            }
+	          });
 	        })
 	      );
 	    default:
+	      console.log('yup, nothing');
 	      return _react2.default.createElement('div', null);
 	  }
 	};
