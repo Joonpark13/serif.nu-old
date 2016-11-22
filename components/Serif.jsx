@@ -8,7 +8,7 @@ import { Tabs, Tab } from 'material-ui/Tabs';
 import CurrentlyBrowsing from './CurrentlyBrowsing.jsx';
 import SearchContainer from './SearchContainer.jsx';
 import Calendar from './Calendar.jsx';
-import BrowseReduxContainer from '../containers/BrowseReduxContainer.jsx';
+import BrowseContainer from '../containers/BrowseContainer.jsx';
 
 const style = {
   column: {
@@ -45,7 +45,7 @@ const Serif = () => (
           <Tab label="Browse">
             <Card>
               <CardText>
-                <BrowseReduxContainer />
+                <BrowseContainer />
               </CardText>
             </Card>
           </Tab>

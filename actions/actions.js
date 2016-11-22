@@ -4,3 +4,10 @@ export function showSubjects(schoolId) {
     schoolId
   };
 }
+
+export function showCourses(subjectId) {
+  return {
+    type: 'SHOW_COURSES',
+    subjectId
+  };
+}

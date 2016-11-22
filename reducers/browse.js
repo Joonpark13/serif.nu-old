@@ -11,6 +11,11 @@ function browse(state = initialState, action) {
         ...state,
         currentView: 'subjects'
       };
+    case 'SHOW_COURSES':
+      return {
+        ...state,
+        currentView: 'courses'
+      };
     default:
       return state;
   }

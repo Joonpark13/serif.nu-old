@@ -38984,6 +38984,10 @@
 	      return _extends({}, state, {
 	        currentView: 'subjects'
 	      });
+	    case 'SHOW_COURSES':
+	      return _extends({}, state, {
+	        currentView: 'courses'
+	      });
 	    default:
 	      return state;
 	  }
@@ -44408,9 +44412,9 @@
 
 	var _Calendar2 = _interopRequireDefault(_Calendar);
 
-	var _BrowseReduxContainer = __webpack_require__(771);
+	var _BrowseContainer = __webpack_require__(771);
 
-	var _BrowseReduxContainer2 = _interopRequireDefault(_BrowseReduxContainer);
+	var _BrowseContainer2 = _interopRequireDefault(_BrowseContainer);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -44468,7 +44472,7 @@
 	              _react2.default.createElement(
 	                _Card.CardText,
 	                null,
-	                _react2.default.createElement(_BrowseReduxContainer2.default, null)
+	                _react2.default.createElement(_BrowseContainer2.default, null)
 	              )
 	            )
 	          ),
@@ -53395,20 +53399,11 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function propsFilter(state) {
-	  switch (state.currentView) {
-	    case 'schools':
-	      return state.schools;
-	    case 'subjects':
-	      return state.subjects;
-	    default:
-	      throw new Error('No such view: ' + state.currentView);
-	  }
-	}
-
 	var mapStateToProps = function mapStateToProps(state) {
 	  return {
-	    schools: propsFilter(state)
+	    currentView: state.currentView,
+	    schools: state.schools,
+	    subjects: state.subjects
 	  };
 	};
 
@@ -53416,13 +53411,16 @@
 	  return {
 	    showSubjects: function showSubjects(schoolId) {
 	      dispatch((0, _actions.showSubjects)(schoolId));
+	    },
+	    showCourses: function showCourses(subjectId) {
+	      dispatch((0, _actions.showCourses)(subjectId));
 	    }
 	  };
 	};
 
-	var BrowseReduxContainer = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Browse2.default);
+	var BrowseContainer = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Browse2.default);
 
-	exports.default = BrowseReduxContainer;
+	exports.default = BrowseContainer;
 
 /***/ },
 /* 772 */
@@ -53434,10 +53432,18 @@
 	  value: true
 	});
 	exports.showSubjects = showSubjects;
+	exports.showCourses = showCourses;
 	function showSubjects(schoolId) {
 	  return {
 	    type: 'SHOW_SUBJECTS',
 	    schoolId: schoolId
+	  };
+	}
+
+	function showCourses(subjectId) {
+	  return {
+	    type: 'SHOW_COURSES',
+	    subjectId: subjectId
 	  };
 	}
 
@@ -53461,16 +53467,31 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var Browse = function Browse(props) {
-	  return _react2.default.createElement(
-	    'div',
-	    null,
-	    props.schools.map(function (school) {
-	      return _react2.default.createElement(_RaisedButton2.default, { key: school.id, label: school.name, onClick: function onClick() {
-	          return props.showSubjects(school.id);
-	        } });
-	    })
-	  );
+	var Browse = function Browse(currentView, schools, subjects, showSubjects, showCourses) {
+	  switch (currentView) {
+	    case 'schools':
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        schools.map(function (school) {
+	          return _react2.default.createElement(_RaisedButton2.default, { key: school.id, label: school.name, onClick: function onClick() {
+	              return showSubjects(school.id);
+	            } });
+	        })
+	      );
+	    case 'subjects':
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        subjects.map(function (subject) {
+	          return _react2.default.createElement(_RaisedButton2.default, { key: subject.id, label: subject.name, onClick: function onClick() {
+	              return showCourses(subject.id);
+	            } });
+	        })
+	      );
+	    default:
+	      return _react2.default.createElement('div', null);
+	  }
 	};
 
 	exports.default = Browse;
