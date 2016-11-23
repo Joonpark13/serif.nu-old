@@ -4,7 +4,8 @@ module.exports = {
     entry: path.join(__dirname, 'app/index.jsx'),
     output: {
         filename: 'bundle.js',
-        path: path.join(__dirname, 'dist')
+        path: path.join(__dirname, 'dist'),
+        publicPath: '/static/'
     },
     module: {
         loaders: [
@@ -13,11 +14,6 @@ module.exports = {
                 exclude: /node_modules/,
                 loader: 'babel-loader'
             },
-            {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                loader: 'babel-loader'
-            }
         ]
     }
 };
