@@ -5,7 +5,7 @@
   "main": "index.jsx",
   "scripts": {
     "webpack-watch": "webpack -w",
-    "express-server": "node ./server",
+    "express-server": "node ./server/index.js",
     "dev": "concurrently --kill-others \"npm run webpack-watch\" \"npm run express-server\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -30,6 +30,7 @@
     "babel-polyfill": "^6.16.0",
     "babel-preset-es2015": "^6.18.0",
     "babel-preset-react": "^6.16.0",
+    "babel-register": "^6.18.0",
     "es6-promise": "^4.0.5",
     "express": "^4.14.0",
     "isomorphic-fetch": "^2.2.1",
