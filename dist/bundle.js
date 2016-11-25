@@ -137,9 +137,7 @@
 	  _createClass(App, [{
 	    key: 'render',
 	    value: function render() {
-	      _store2.default.dispatch((0, _actionCreators.fetchSchools)()).then(function () {
-	        console.log(_store2.default.getState());
-	      });
+	      _store2.default.dispatch((0, _actionCreators.fetchSchools)());
 
 	      return _react2.default.createElement(
 	        _reactRedux.Provider,
@@ -39015,7 +39013,7 @@
 	    schools: {
 	      isFetching: false,
 	      lastUpdated: 0,
-	      items: [{ id: 'AAAA', name: 'aaaa' }, { id: 'BBBB', name: 'bbbb' }]
+	      items: []
 	    },
 	    subjects: {
 	      isFetching: false,
@@ -53566,9 +53564,7 @@
 	function receiveSchools(json) {
 	  return {
 	    type: 'RECEIVE_SCHOOLS',
-	    schools: json.data.children.map(function (child) {
-	      return child.data;
-	    }),
+	    schools: json,
 	    receivedAt: Date.now()
 	  };
 	}
@@ -53576,7 +53572,7 @@
 	function fetchSchools() {
 	  return function (dispatch) {
 	    dispatch(requestSchools());
-	    return (0, _isomorphicFetch2.default)('http://www.northwestern.edu/class-descriptions/4650/index-v2.json').then(function (response) {
+	    return (0, _isomorphicFetch2.default)('/data/schools').then(function (response) {
 	      return response.json();
 	    }).then(function (json) {
 	      return dispatch(receiveSchools(json));

@@ -6,7 +6,7 @@ const initialState = {
       schools: {
         isFetching: false,
         lastUpdated: 0,
-        items: [{id: 'AAAA', name: 'aaaa'}, {id: 'BBBB', name: 'bbbb'}]
+        items: []
       },
       subjects: {
         isFetching: false,

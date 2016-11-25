@@ -23,7 +23,7 @@ export function requestSchools() {
 export function receiveSchools(json) {
   return {
     type: 'RECEIVE_SCHOOLS',
-    schools: json.data.children.map(child => child.data),
+    schools: json,
     receivedAt: Date.now()
   };
 }
@@ -31,7 +31,7 @@ export function receiveSchools(json) {
 export function fetchSchools() {
   return function (dispatch) {
     dispatch(requestSchools());
-    return fetch('http://www.northwestern.edu/class-descriptions/4650/index-v2.json')
+    return fetch('/data/schools')
       .then(response => response.json())
       .then(json => dispatch(receiveSchools(json)));
   };

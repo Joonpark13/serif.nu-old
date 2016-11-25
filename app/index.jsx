@@ -39,7 +39,7 @@ const muiTheme = getMuiTheme({
 
 class App extends React.Component {
   render() {
-    store.dispatch(fetchSchools()).then(() => { console.log(store.getState()); });
+    store.dispatch(fetchSchools());
 
     return (
       <Provider store={store}>
