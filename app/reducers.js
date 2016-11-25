@@ -234,14 +234,13 @@ function reducer(state = initialState, action) {
         }
       };
     case 'REQUEST_DETAILS':
-    case 'RECEIVE_DETAILS':
       return {
         ...state,
         selected: {
           school: state.selected.school,
           subject: state.selected.subject,
           course: state.selected.course,
-          hasComponents: state.data.details.length !== 0
+          hasComponents: false
         },
         data: {
           schools: state.data.schools,
@@ -251,6 +250,23 @@ function reducer(state = initialState, action) {
           details: details(state.data.details, action)
         }
       }
+    case 'RECEIVE_DETAILS':
+      return {
+        ...state,
+        selected: {
+          school: state.selected.school,
+          subject: state.selected.subject,
+          course: state.selected.course,
+          hasComponents: 'associated_classes' in action.details[0]
+        },
+        data: {
+          schools: state.data.schools,
+          subjects: state.data.subjects,
+          courses: state.data.courses,
+          sections: state.data.sections,
+          details: details(state.data.details, action)
+        }
+      };
     default:
       return state;
   }
