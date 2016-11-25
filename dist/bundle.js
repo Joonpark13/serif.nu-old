@@ -39007,8 +39007,11 @@
 
 	var initialState = {
 	  currentView: 'schools',
-	  selectedSchool: '',
-	  selectedSubject: '',
+	  selected: {
+	    school: '',
+	    subject: '',
+	    course: ''
+	  },
 	  data: {
 	    schools: {
 	      isFetching: false,
@@ -39016,6 +39019,11 @@
 	      items: []
 	    },
 	    subjects: {
+	      isFetching: false,
+	      lastUpdated: 0,
+	      items: []
+	    },
+	    courses: {
 	      isFetching: false,
 	      lastUpdated: 0,
 	      items: []
@@ -39063,6 +39071,26 @@
 	  }
 	}
 
+	function courses() {
+	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+	  var action = arguments[1];
+
+	  switch (action.type) {
+	    case 'REQUEST_COURSES':
+	      return _extends({}, state, {
+	        isFetching: true
+	      });
+	    case 'RECEIVE_COURSES':
+	      return _extends({}, state, {
+	        isFetching: false,
+	        items: action.courses,
+	        lastUpdated: action.receivedAt
+	      });
+	    default:
+	      return state;
+	  }
+	}
+
 	function reducer() {
 	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
 	  var action = arguments[1];
@@ -39071,27 +39099,47 @@
 	    case 'SHOW_SUBJECTS':
 	      return _extends({}, state, {
 	        currentView: 'subjects',
-	        selectedSchool: action.schoolId
+	        selected: {
+	          school: action.schoolId,
+	          subject: state.selected.subject,
+	          course: state.selected.course
+	        }
 	      });
 	    case 'SHOW_COURSES':
 	      return _extends({}, state, {
 	        currentView: 'courses',
-	        selectedSubject: action.subjectId
+	        selectedSubject: action.subjectId,
+	        selected: {
+	          school: state.selected.school,
+	          subject: action.subjectAbbv,
+	          course: state.selected.course
+	        }
 	      });
 	    case 'REQUEST_SCHOOLS':
 	    case 'RECEIVE_SCHOOLS':
 	      return _extends({}, state, {
 	        data: {
 	          schools: schools(state.data.schools, action),
-	          subjects: subjects(state.data.subjects, action)
+	          subjects: state.data.subjects,
+	          courses: state.data.courses
 	        }
 	      });
 	    case 'REQUEST_SUBJECTS':
 	    case 'RECEIVE_SUBJECTS':
 	      return _extends({}, state, {
 	        data: {
-	          schools: schools(state.data.schools, action),
-	          subjects: subjects(state.data.subjects, action)
+	          schools: state.data.schools,
+	          subjects: subjects(state.data.subjects, action),
+	          courses: state.data.courses
+	        }
+	      });
+	    case 'REQUEST_COURSES':
+	    case 'RECEIVE_COURSES':
+	      return _extends({}, state, {
+	        data: {
+	          schools: state.data.schools,
+	          subjects: state.data.subjects,
+	          courses: courses(state.data.courses, action)
 	        }
 	      });
 	    default:
@@ -53508,8 +53556,10 @@
 	var mapStateToProps = function mapStateToProps(state) {
 	  return {
 	    currentView: state.currentView,
+	    selected: state.selected,
 	    schools: state.data.schools.items,
-	    subjects: state.data.subjects.items
+	    subjects: state.data.subjects.items,
+	    courses: state.data.courses.items
 	  };
 	};
 
@@ -53519,8 +53569,9 @@
 	      dispatch((0, _actionCreators.fetchSubjects)(schoolId));
 	      dispatch((0, _actionCreators.showSubjects)(schoolId));
 	    },
-	    showCourses: function showCourses(subjectId) {
-	      dispatch((0, _actionCreators.showCourses)(subjectId));
+	    showCourses: function showCourses(schoolId, subjectAbbv) {
+	      dispatch((0, _actionCreators.fetchCourses)(schoolId, subjectAbbv));
+	      dispatch((0, _actionCreators.showCourses)(subjectAbbv));
 	    }
 	  };
 	};
@@ -53540,12 +53591,19 @@
 	});
 	exports.showSubjects = showSubjects;
 	exports.showCourses = showCourses;
+	exports.showSections = showSections;
 	exports.requestSchools = requestSchools;
 	exports.receiveSchools = receiveSchools;
 	exports.fetchSchools = fetchSchools;
 	exports.requestSubjects = requestSubjects;
 	exports.receiveSubjects = receiveSubjects;
 	exports.fetchSubjects = fetchSubjects;
+	exports.requestCourses = requestCourses;
+	exports.receiveCourses = receiveCourses;
+	exports.fetchCourses = fetchCourses;
+	exports.requestSections = requestSections;
+	exports.receiveSections = receiveSections;
+	exports.fetchSections = fetchSections;
 
 	var _isomorphicFetch = __webpack_require__(774);
 
@@ -53560,10 +53618,17 @@
 	  };
 	}
 
-	function showCourses(subjectId) {
+	function showCourses(subjectAbbv) {
 	  return {
 	    type: 'SHOW_COURSES',
-	    subjectId: subjectId
+	    subjectAbbv: subjectAbbv
+	  };
+	}
+
+	function showSections(courseAbbv) {
+	  return {
+	    type: 'SHOW_SECTIONS',
+	    courseAbbv: courseAbbv
 	  };
 	}
 
@@ -53613,6 +53678,56 @@
 	      return response.json();
 	    }).then(function (json) {
 	      return dispatch(receiveSubjects(json));
+	    });
+	  };
+	}
+
+	function requestCourses() {
+	  return {
+	    type: 'REQUEST_COURSES'
+	  };
+	}
+
+	function receiveCourses(json) {
+	  return {
+	    type: 'RECEIVE_COURSES',
+	    courses: json,
+	    receivedAt: Date.now()
+	  };
+	}
+
+	function fetchCourses(schoolId, subjectAbbv) {
+	  return function (dispatch) {
+	    dispatch(requestCourses());
+	    return (0, _isomorphicFetch2.default)('/data/courses/' + schoolId + '/' + subjectAbbv).then(function (response) {
+	      return response.json();
+	    }).then(function (json) {
+	      return dispatch(receiveCourses(json));
+	    });
+	  };
+	}
+
+	function requestSections() {
+	  return {
+	    type: 'REQUEST_SECTIONS'
+	  };
+	}
+
+	function receiveSections(json) {
+	  return {
+	    type: 'RECEIVE_SECTIONS',
+	    courses: json,
+	    receivedAt: Date.now()
+	  };
+	}
+
+	function fetchSections(schoolId, subjectAbbv, courseAbbv) {
+	  return function (dispatch) {
+	    dispatch(requestSections());
+	    return (0, _isomorphicFetch2.default)('/data/sections/' + schoolId + '/' + subjectAbbv + '/' + courseAbbv).then(function (response) {
+	      return response.json();
+	    }).then(function (json) {
+	      return dispatch(receiveSections(json));
 	    });
 	  };
 	}
@@ -54109,10 +54224,13 @@
 
 	var Browse = function Browse(_ref) {
 	  var currentView = _ref.currentView,
+	      selected = _ref.selected,
 	      schools = _ref.schools,
 	      subjects = _ref.subjects,
+	      courses = _ref.courses,
 	      showSubjects = _ref.showSubjects,
-	      showCourses = _ref.showCourses;
+	      showCourses = _ref.showCourses,
+	      showSections = _ref.showSections;
 
 	  switch (currentView) {
 	    case 'schools':
@@ -54138,7 +54256,21 @@
 	            key: subject.abbv,
 	            label: subject.name,
 	            onClick: function onClick() {
-	              return showCourses(subject.abbv);
+	              return showCourses(selected.school, subject.abbv);
+	            }
+	          });
+	        })
+	      );
+	    case 'courses':
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        courses.map(function (course) {
+	          return _react2.default.createElement(_RaisedButton2.default, {
+	            key: course.abbv,
+	            label: course.name,
+	            onClick: function onClick() {
+	              return showSections(selected.school, selected.subject, course.abbv);
 	            }
 	          });
 	        })

@@ -1,12 +1,14 @@
 import { connect } from 'react-redux';
 
-import { fetchSubjects, showSubjects, showCourses } from '../action-creators';
+import { fetchSubjects, showSubjects, fetchCourses, showCourses } from '../action-creators';
 import Browse from '../components/Browse.jsx';
 
 const mapStateToProps = (state) => ({
   currentView: state.currentView,
+  selected: state.selected,
   schools: state.data.schools.items,
-  subjects: state.data.subjects.items
+  subjects: state.data.subjects.items,
+  courses: state.data.courses.items
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -14,8 +16,9 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(fetchSubjects(schoolId));
     dispatch(showSubjects(schoolId));
   },
-  showCourses: (subjectId) => {
-    dispatch(showCourses(subjectId));
+  showCourses: (schoolId, subjectAbbv) => {
+    dispatch(fetchCourses(schoolId, subjectAbbv));
+    dispatch(showCourses(subjectAbbv));
   }
 });
 

@@ -7,10 +7,17 @@ export function showSubjects(schoolId) {
   };
 }
 
-export function showCourses(subjectId) {
+export function showCourses(subjectAbbv) {
   return {
     type: 'SHOW_COURSES',
-    subjectId
+    subjectAbbv
+  };
+}
+
+export function showSections(courseAbbv) {
+  return {
+    type: 'SHOW_SECTIONS',
+    courseAbbv
   };
 }
 
@@ -54,8 +61,54 @@ export function receiveSubjects(json) {
 export function fetchSubjects(schoolId) {
   return function (dispatch) {
     dispatch(requestSubjects());
-    return fetch('/data/subjects/' + schoolId)
+    return fetch(`/data/subjects/${schoolId}`)
       .then(response => response.json())
       .then(json => dispatch(receiveSubjects(json)));
+  };
+}
+
+export function requestCourses() {
+  return {
+    type: 'REQUEST_COURSES'
+  };
+}
+
+export function receiveCourses(json) {
+  return {
+    type: 'RECEIVE_COURSES',
+    courses: json,
+    receivedAt: Date.now()
+  };
+}
+
+export function fetchCourses(schoolId, subjectAbbv) {
+  return function (dispatch) {
+    dispatch(requestCourses());
+    return fetch(`/data/courses/${schoolId}/${subjectAbbv}`)
+      .then(response => response.json())
+      .then(json => dispatch(receiveCourses(json)));
+  };
+}
+
+export function requestSections() {
+  return {
+    type: 'REQUEST_SECTIONS'
+  };
+}
+
+export function receiveSections(json) {
+  return {
+    type: 'RECEIVE_SECTIONS',
+    courses: json,
+    receivedAt: Date.now()
+  };
+}
+
+export function fetchSections(schoolId, subjectAbbv, courseAbbv) {
+  return function (dispatch) {
+    dispatch(requestSections());
+    return fetch(`/data/sections/${schoolId}/${subjectAbbv}/${courseAbbv}`)
+      .then(response => response.json())
+      .then(json => dispatch(receiveSections(json)));
   };
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 
-const Browse = ({ currentView, schools, subjects, showSubjects, showCourses }) => {
+const Browse = ({ currentView, selected, schools, subjects, courses, showSubjects, showCourses, showSections }) => {
   switch (currentView) {
     case 'schools':
       return (
@@ -22,7 +22,19 @@ const Browse = ({ currentView, schools, subjects, showSubjects, showCourses }) =
             <RaisedButton
               key={subject.abbv}
               label={subject.name}
-              onClick={() => showCourses(subject.abbv)}
+              onClick={() => showCourses(selected.school, subject.abbv)}
+            />
+          ))}
+        </div>
+      );
+    case 'courses':
+      return (
+        <div>
+          {courses.map((course) => (
+            <RaisedButton
+              key={course.abbv}
+              label={course.name}
+              onClick={() => showSections(selected.school, selected.subject, course.abbv)}
             />
           ))}
         </div>

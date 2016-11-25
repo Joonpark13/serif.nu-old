@@ -1,7 +1,10 @@
 const initialState = {
     currentView: 'schools',
-    selectedSchool: '',
-    selectedSubject: '',
+    selected: {
+      school: '',
+      subject: '',
+      course: ''
+    },
     data: {
       schools: {
         isFetching: false,
@@ -9,6 +12,11 @@ const initialState = {
         items: []
       },
       subjects: {
+        isFetching: false,
+        lastUpdated: 0,
+        items: []
+      },
+      courses: {
         isFetching: false,
         lastUpdated: 0,
         items: []
@@ -54,19 +62,47 @@ function subjects(state = {}, action) {
   }
 }
 
+function courses(state = {}, action) {
+  switch(action.type) {
+    case 'REQUEST_COURSES':
+      return {
+        ...state,
+        isFetching: true
+      };
+    case 'RECEIVE_COURSES':
+      return {
+        ...state,
+        isFetching: false,
+        items: action.courses,
+        lastUpdated: action.receivedAt
+      };
+    default:
+      return state;
+  }
+}
+
 function reducer(state = initialState, action) {
   switch (action.type) {
     case 'SHOW_SUBJECTS':
       return {
         ...state,
         currentView: 'subjects',
-        selectedSchool: action.schoolId
+        selected: {
+          school: action.schoolId,
+          subject: state.selected.subject,
+          course: state.selected.course
+        }
       };
     case 'SHOW_COURSES':
       return {
         ...state,
         currentView: 'courses',
-        selectedSubject: action.subjectId
+        selectedSubject: action.subjectId,
+        selected: {
+          school: state.selected.school,
+          subject: action.subjectAbbv,
+          course: state.selected.course
+        }
       };
     case 'REQUEST_SCHOOLS':
     case 'RECEIVE_SCHOOLS':
@@ -74,7 +110,8 @@ function reducer(state = initialState, action) {
         ...state,
         data: {
           schools: schools(state.data.schools, action),
-          subjects: subjects(state.data.subjects, action)
+          subjects: state.data.subjects,
+          courses: state.data.courses
         }
       };
     case 'REQUEST_SUBJECTS':
@@ -82,8 +119,19 @@ function reducer(state = initialState, action) {
       return {
         ...state,
         data: {
-          schools: schools(state.data.schools, action),
-          subjects: subjects(state.data.subjects, action)
+          schools: state.data.schools,
+          subjects: subjects(state.data.subjects, action),
+          courses: state.data.courses
+        }
+      }
+    case 'REQUEST_COURSES':
+    case 'RECEIVE_COURSES':
+      return {
+        ...state,
+        data: {
+          schools: state.data.schools,
+          subjects: state.data.subjects,
+          courses: courses(state.data.courses, action)
         }
       }
     default:
