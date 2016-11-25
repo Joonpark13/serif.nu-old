@@ -12,7 +12,8 @@ const Browse = (
     sections,
     showSubjects,
     showCourses,
-    showSections
+    showSections,
+    checkComponents
   }
 ) => {
   const courseView = courses.map((course) => (
@@ -60,10 +61,12 @@ const Browse = (
         <div>
           {courseView}
           <Sections
-            selected={currentView == 'sections'}
+            isOpen={currentView === 'sections'}
+            selected={selected}
             sections={sections}
             courseName={selectedCourseName}
-            close={() => showCourses(selected.school, selected.subject)}
+            click={checkComponents}
+            close={showCourses}
           />
         </div>
       );

@@ -3,21 +3,25 @@ import Dialog from 'material-ui/Dialog';
 import { List, ListItem } from 'material-ui/List';
 import FlatButton from 'material-ui/FlatButton';
 
-const Sections = ({ selected, sections, courseName, close }) => {
+const Sections = ({ isOpen, selected, sections, courseName, click, close }) => {
   const actions = [
-    <FlatButton label="Cancel" primary={true} onTouchTap={close} />
+    <FlatButton label="Cancel" primary onTouchTap={close} />
   ];
   return (
     <Dialog
       title={courseName}
       actions={actions}
-      modal={false} // Allow users to close by pressing esc or anywhere else on the page
-      open={selected}
-      onRequestClose={close}
+      modal
+      open={isOpen}
+      onRequestClose={() => close(selected.school, selected.subject)}
     >
       <List>
         {sections.map((section) => (
-          <ListItem key={section.id} primaryText={section.section} />
+          <ListItem
+            key={section.id}
+            primaryText={section.section}
+            onClick={() => click(selected.school, selected.subject, selected.course, section.id)}
+          />
         ))}
       </List>
     </Dialog>

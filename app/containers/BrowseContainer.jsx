@@ -1,6 +1,15 @@
 import { connect } from 'react-redux';
 
-import { fetchSubjects, fetchCourses, fetchSections, showSubjects, showCourses, showSections } from '../action-creators';
+import {
+  fetchSubjects,
+  fetchCourses,
+  fetchSections,
+  fetchDetails,
+  showSubjects,
+  showCourses,
+  showSections,
+  checkComponents
+} from '../action-creators';
 import Browse from '../components/Browse.jsx';
 
 const mapStateToProps = (state) => ({
@@ -24,6 +33,9 @@ const mapDispatchToProps = (dispatch) => ({
   showSections: (schoolId, subjectAbbv, courseAbbv) => {
     dispatch(fetchSections(schoolId, subjectAbbv, courseAbbv));
     dispatch(showSections(courseAbbv));
+  },
+  checkComponents: (schoolId, subjectAbbv, courseAbbv, sectionId) => {
+    dispatch(fetchDetails(schoolId, subjectAbbv, courseAbbv, sectionId));
   }
 });
 

@@ -112,3 +112,26 @@ export function fetchSections(schoolId, subjectAbbv, courseAbbv) {
       .then(json => dispatch(receiveSections(json)));
   };
 }
+
+export function requestDetails() {
+  return {
+    type: 'REQUEST_DETAILS'
+  };
+}
+
+export function receiveDetails(json) {
+  return {
+    type: 'RECEIVE_DETAILS',
+    details: json,
+    receivedAt: Date.now()
+  };
+}
+
+export function fetchDetails(schoolId, subjectAbbv, courseAbbv, sectionId) {
+  return function (dispatch) {
+    dispatch(requestDetails());
+    return fetch(`/data/details/${schoolId}/${subjectAbbv}/${courseAbbv}/${sectionId}`)
+      .then(response => response.json())
+      .then(json => dispatch(receiveDetails(json)));
+  };
+}
