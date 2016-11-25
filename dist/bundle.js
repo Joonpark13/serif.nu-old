@@ -39013,7 +39013,10 @@
 	    course: '',
 	    hasComponents: false
 	  },
-	  calendar: [],
+	  calendar: {
+	    courses: [],
+	    components: []
+	  },
 	  data: {
 	    schools: {
 	      isFetching: false,
@@ -39176,6 +39179,20 @@
 	          subject: state.selected.subject,
 	          course: action.courseAbbv,
 	          hasComponents: false
+	        }
+	      });
+	    case 'ADD_COURSE':
+	      return _extends({}, state, {
+	        calendar: {
+	          courses: state.calendar.courses.concat(action.section),
+	          components: state.calendar.components
+	        }
+	      });
+	    case 'ADD_COMPONENT':
+	      return _extends({}, state, {
+	        calendar: {
+	          courses: state.calendar.courses,
+	          components: state.calendar.components.concat(action.detail)
 	        }
 	      });
 	    case 'REQUEST_SCHOOLS':
@@ -53657,7 +53674,8 @@
 	    schools: state.data.schools.items,
 	    subjects: state.data.subjects.items,
 	    courses: state.data.courses.items,
-	    sections: state.data.sections.items
+	    sections: state.data.sections.items,
+	    details: state.data.details.items
 	  };
 	};
 
@@ -53677,6 +53695,12 @@
 	    },
 	    checkComponents: function checkComponents(schoolId, subjectAbbv, courseAbbv, sectionId) {
 	      dispatch((0, _actionCreators.fetchDetails)(schoolId, subjectAbbv, courseAbbv, sectionId));
+	    },
+	    addCourse: function addCourse(section) {
+	      dispatch((0, _actionCreators.addCourse)(section));
+	    },
+	    addComponent: function addComponent(detail) {
+	      dispatch((0, _actionCreators.addComponent)(detail));
 	    }
 	  };
 	};
@@ -53697,6 +53721,8 @@
 	exports.showSubjects = showSubjects;
 	exports.showCourses = showCourses;
 	exports.showSections = showSections;
+	exports.addCourse = addCourse;
+	exports.addComponent = addComponent;
 	exports.requestSchools = requestSchools;
 	exports.receiveSchools = receiveSchools;
 	exports.fetchSchools = fetchSchools;
@@ -53737,6 +53763,20 @@
 	  return {
 	    type: 'SHOW_SECTIONS',
 	    courseAbbv: courseAbbv
+	  };
+	}
+
+	function addCourse(section) {
+	  return {
+	    type: 'ADD_COURSE',
+	    section: section
+	  };
+	}
+
+	function addComponent(detail) {
+	  return {
+	    type: 'ADD_COMPONENT',
+	    detail: detail
 	  };
 	}
 
@@ -53854,7 +53894,7 @@
 	  };
 	}
 
-	function fetchDetails(schoolId, subjectAbbv, courseAbbv, sectionId) {
+	function fetchDetails(schoolId, subjectAbbv, courseAbbv, sectionId, callback) {
 	  return function (dispatch) {
 	    dispatch(requestDetails());
 	    return (0, _isomorphicFetch2.default)('/data/details/' + schoolId + '/' + subjectAbbv + '/' + courseAbbv + '/' + sectionId).then(function (response) {
@@ -54366,10 +54406,13 @@
 	      subjects = _ref.subjects,
 	      courses = _ref.courses,
 	      sections = _ref.sections,
+	      details = _ref.details,
 	      showSubjects = _ref.showSubjects,
 	      showCourses = _ref.showCourses,
 	      showSections = _ref.showSections,
-	      checkComponents = _ref.checkComponents;
+	      checkComponents = _ref.checkComponents,
+	      addCourse = _ref.addCourse,
+	      addComponent = _ref.addComponent;
 
 	  var courseView = courses.map(function (course) {
 	    return _react2.default.createElement(_RaisedButton2.default, {
@@ -54430,8 +54473,11 @@
 	          isOpen: currentView === 'sections',
 	          selected: selected,
 	          sections: sections,
+	          details: details,
 	          courseName: selectedCourseName,
-	          click: checkComponents,
+	          checkComponents: checkComponents,
+	          addCourse: addCourse,
+	          addComponent: addComponent,
 	          close: showCourses
 	        })
 	      );
@@ -54971,11 +55017,48 @@
 	  var isOpen = _ref.isOpen,
 	      selected = _ref.selected,
 	      sections = _ref.sections,
+	      details = _ref.details,
 	      courseName = _ref.courseName,
-	      click = _ref.click,
+	      checkComponents = _ref.checkComponents,
+	      addCourse = _ref.addCourse,
+	      addComponent = _ref.addComponent,
 	      close = _ref.close;
 
 	  var actions = [_react2.default.createElement(_FlatButton2.default, { label: 'Cancel', primary: true, onTouchTap: close })];
+	  var list = void 0;
+	  if (selected.hasComponents) {
+	    (function () {
+	      var detail = details[0];
+	      list = _react2.default.createElement(
+	        _List.List,
+	        null,
+	        detail.associated_classes.map(function (component) {
+	          return _react2.default.createElement(_List.ListItem, {
+	            key: component.meeting_time,
+	            primaryText: component.meeting_time,
+	            onClick: function onClick() {
+	              return addComponent(detail);
+	            }
+	          });
+	        })
+	      );
+	    })();
+	  } else {
+	    list = _react2.default.createElement(
+	      _List.List,
+	      null,
+	      sections.map(function (section) {
+	        return _react2.default.createElement(_List.ListItem, {
+	          key: section.id,
+	          primaryText: section.section,
+	          onClick: function onClick() {
+	            checkComponents(selected.school, selected.subject, selected.course, section.id);
+	            addCourse(section);
+	          }
+	        });
+	      })
+	    );
+	  }
 	  return _react2.default.createElement(
 	    _Dialog2.default,
 	    {
@@ -54987,19 +55070,7 @@
 	        return close(selected.school, selected.subject);
 	      }
 	    },
-	    _react2.default.createElement(
-	      _List.List,
-	      null,
-	      sections.map(function (section) {
-	        return _react2.default.createElement(_List.ListItem, {
-	          key: section.id,
-	          primaryText: section.section,
-	          onClick: function onClick() {
-	            return click(selected.school, selected.subject, selected.course, section.id);
-	          }
-	        });
-	      })
-	    )
+	    list
 	  );
 	};
 

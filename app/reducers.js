@@ -6,7 +6,10 @@ const initialState = {
       course: '',
       hasComponents: false
     },
-    calendar: [],
+    calendar: {
+      courses: [],
+      components: []
+    },
     data: {
       schools: {
         isFetching: false,
@@ -164,6 +167,22 @@ function reducer(state = initialState, action) {
           subject: state.selected.subject,
           course: action.courseAbbv,
           hasComponents: false
+        }
+      };
+    case 'ADD_COURSE':
+      return {
+        ...state,
+        calendar: {
+          courses: state.calendar.courses.concat(action.section),
+          components: state.calendar.components
+        }
+      };
+    case 'ADD_COMPONENT':
+      return {
+        ...state,
+        calendar: {
+          courses: state.calendar.courses,
+          components: state.calendar.components.concat(action.detail)
         }
       };
     case 'REQUEST_SCHOOLS':

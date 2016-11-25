@@ -21,6 +21,20 @@ export function showSections(courseAbbv) {
   };
 }
 
+export function addCourse(section) {
+  return {
+    type: 'ADD_COURSE',
+    section
+  };
+}
+
+export function addComponent(detail) {
+  return {
+    type: 'ADD_COMPONENT',
+    detail
+  };
+}
+
 export function requestSchools() {
   return {
     type: 'REQUEST_SCHOOLS'
@@ -127,7 +141,7 @@ export function receiveDetails(json) {
   };
 }
 
-export function fetchDetails(schoolId, subjectAbbv, courseAbbv, sectionId) {
+export function fetchDetails(schoolId, subjectAbbv, courseAbbv, sectionId, callback) {
   return function (dispatch) {
     dispatch(requestDetails());
     return fetch(`/data/details/${schoolId}/${subjectAbbv}/${courseAbbv}/${sectionId}`)

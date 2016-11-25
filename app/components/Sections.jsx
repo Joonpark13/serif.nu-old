@@ -3,10 +3,52 @@ import Dialog from 'material-ui/Dialog';
 import { List, ListItem } from 'material-ui/List';
 import FlatButton from 'material-ui/FlatButton';
 
-const Sections = ({ isOpen, selected, sections, courseName, click, close }) => {
+const Sections = (
+  {
+    isOpen,
+    selected,
+    sections,
+    details,
+    courseName,
+    checkComponents,
+    addCourse,
+    addComponent,
+    close
+  }
+) => {
   const actions = [
     <FlatButton label="Cancel" primary onTouchTap={close} />
   ];
+  let list;
+  if (selected.hasComponents) {
+    const detail = details[0];
+    list = (
+      <List>
+        {detail.associated_classes.map((component) => (
+          <ListItem
+            key={component.meeting_time}
+            primaryText={component.meeting_time}
+            onClick={() => addComponent(detail)}
+          />
+        ))}
+      </List>
+    );
+  } else {
+    list = (
+      <List>
+        {sections.map((section) => (
+          <ListItem
+            key={section.id}
+            primaryText={section.section}
+            onClick={() => {
+              checkComponents(selected.school, selected.subject, selected.course, section.id);
+              addCourse(section);
+            }}
+          />
+        ))}
+      </List>
+    );
+  }
   return (
     <Dialog
       title={courseName}
@@ -15,15 +57,7 @@ const Sections = ({ isOpen, selected, sections, courseName, click, close }) => {
       open={isOpen}
       onRequestClose={() => close(selected.school, selected.subject)}
     >
-      <List>
-        {sections.map((section) => (
-          <ListItem
-            key={section.id}
-            primaryText={section.section}
-            onClick={() => click(selected.school, selected.subject, selected.course, section.id)}
-          />
-        ))}
-      </List>
+      {list}
     </Dialog>
   );
 }

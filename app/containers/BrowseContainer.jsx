@@ -8,7 +8,8 @@ import {
   showSubjects,
   showCourses,
   showSections,
-  checkComponents
+  addCourse,
+  addComponent
 } from '../action-creators';
 import Browse from '../components/Browse.jsx';
 
@@ -18,7 +19,8 @@ const mapStateToProps = (state) => ({
   schools: state.data.schools.items,
   subjects: state.data.subjects.items,
   courses: state.data.courses.items,
-  sections: state.data.sections.items
+  sections: state.data.sections.items,
+  details: state.data.details.items
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -36,6 +38,12 @@ const mapDispatchToProps = (dispatch) => ({
   },
   checkComponents: (schoolId, subjectAbbv, courseAbbv, sectionId) => {
     dispatch(fetchDetails(schoolId, subjectAbbv, courseAbbv, sectionId));
+  },
+  addCourse: (section) => {
+    dispatch(addCourse(section));
+  },
+  addComponent: (detail) => {
+    dispatch(addComponent(detail));
   }
 });
 
