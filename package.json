@@ -6,7 +6,7 @@
   "scripts": {
     "webpack-watch": "webpack -w",
     "express-server": "node ./server/index.js",
-    "dev": "source .env && concurrently --kill-others \"npm run webpack-watch\" \"npm run express-server\"",
+    "dev": "concurrently --kill-others \"npm run webpack-watch\" \"npm run express-server\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -21,6 +21,7 @@
   "homepage": "https://github.com/Joonpark13/serif.nu#readme",
   "devDependencies": {
     "concurrently": "^3.1.0",
+    "core-js": "^2.4.1",
     "webpack": "^1.13.3"
   },
   "dependencies": {
@@ -40,7 +41,7 @@
     "react-bootstrap": "^0.30.6",
     "react-dom": "^15.3.2",
     "react-redux": "^4.4.6",
-    "react-tap-event-plugin": "^1.0.0",
+    "react-tap-event-plugin": "^2.0.1",
     "redux": "^3.6.0",
     "redux-thunk": "^2.1.0",
     "request": "^2.79.0",

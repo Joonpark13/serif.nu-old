@@ -1,7 +1,27 @@
 import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
+import Sections from './Sections.jsx';
 
-const Browse = ({ currentView, selected, schools, subjects, courses, showSubjects, showCourses, showSections }) => {
+const Browse = (
+  {
+    currentView,
+    selected,
+    schools,
+    subjects,
+    courses,
+    sections,
+    showSubjects,
+    showCourses,
+    showSections
+  }
+) => {
+  const courseView = courses.map((course) => (
+      <RaisedButton
+        key={course.abbv}
+        label={course.name}
+        onClick={() => showSections(selected.school, selected.subject, course.abbv)}
+      />
+  ));
   switch (currentView) {
     case 'schools':
       return (
@@ -28,15 +48,23 @@ const Browse = ({ currentView, selected, schools, subjects, courses, showSubject
         </div>
       );
     case 'courses':
+      return <div>{courseView}</div>;
+    case 'sections':
+      let selectedCourseName = '';
+      courses.forEach((course) => {
+        if (course.abbv == selected.course) {
+          selectedCourseName = course.name;
+        }
+      });
       return (
         <div>
-          {courses.map((course) => (
-            <RaisedButton
-              key={course.abbv}
-              label={course.name}
-              onClick={() => showSections(selected.school, selected.subject, course.abbv)}
-            />
-          ))}
+          {courseView}
+          <Sections
+            selected={currentView == 'sections'}
+            sections={sections}
+            courseName={selectedCourseName}
+            close={() => showCourses(selected.school, selected.subject)}
+          />
         </div>
       );
     default:

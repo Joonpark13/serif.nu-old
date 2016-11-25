@@ -99,7 +99,7 @@ export function requestSections() {
 export function receiveSections(json) {
   return {
     type: 'RECEIVE_SECTIONS',
-    courses: json,
+    sections: json,
     receivedAt: Date.now()
   };
 }
