@@ -36,3 +36,26 @@ export function fetchSchools() {
       .then(json => dispatch(receiveSchools(json)));
   };
 }
+
+export function requestSubjects() {
+  return {
+    type: 'REQUEST_SUBJECTS'
+  };
+}
+
+export function receiveSubjects(json) {
+  return {
+    type: 'RECEIVE_SUBJECTS',
+    subjects: json,
+    receivedAt: Date.now()
+  };
+}
+
+export function fetchSubjects(schoolId) {
+  return function (dispatch) {
+    dispatch(requestSubjects());
+    return fetch('/data/subjects/' + schoolId)
+      .then(response => response.json())
+      .then(json => dispatch(receiveSubjects(json)));
+  };
+}

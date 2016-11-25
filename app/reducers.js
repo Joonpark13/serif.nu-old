@@ -11,7 +11,7 @@ const initialState = {
       subjects: {
         isFetching: false,
         lastUpdated: 0,
-        items: [{id: 'CCC', name: 'ccc'}, {id: 'DDD', name: 'ddd'}]
+        items: []
       }
     }
 };
@@ -77,6 +77,15 @@ function reducer(state = initialState, action) {
           subjects: subjects(state.data.subjects, action)
         }
       };
+    case 'REQUEST_SUBJECTS':
+    case 'RECEIVE_SUBJECTS':
+      return {
+        ...state,
+        data: {
+          schools: schools(state.data.schools, action),
+          subjects: subjects(state.data.subjects, action)
+        }
+      }
     default:
       return state;
   }

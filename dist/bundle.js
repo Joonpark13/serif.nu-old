@@ -39018,7 +39018,7 @@
 	    subjects: {
 	      isFetching: false,
 	      lastUpdated: 0,
-	      items: [{ id: 'CCC', name: 'ccc' }, { id: 'DDD', name: 'ddd' }]
+	      items: []
 	    }
 	  }
 	};
@@ -39080,6 +39080,14 @@
 	      });
 	    case 'REQUEST_SCHOOLS':
 	    case 'RECEIVE_SCHOOLS':
+	      return _extends({}, state, {
+	        data: {
+	          schools: schools(state.data.schools, action),
+	          subjects: subjects(state.data.subjects, action)
+	        }
+	      });
+	    case 'REQUEST_SUBJECTS':
+	    case 'RECEIVE_SUBJECTS':
 	      return _extends({}, state, {
 	        data: {
 	          schools: schools(state.data.schools, action),
@@ -53508,6 +53516,7 @@
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
 	    showSubjects: function showSubjects(schoolId) {
+	      dispatch((0, _actionCreators.fetchSubjects)(schoolId));
 	      dispatch((0, _actionCreators.showSubjects)(schoolId));
 	    },
 	    showCourses: function showCourses(subjectId) {
@@ -53534,6 +53543,9 @@
 	exports.requestSchools = requestSchools;
 	exports.receiveSchools = receiveSchools;
 	exports.fetchSchools = fetchSchools;
+	exports.requestSubjects = requestSubjects;
+	exports.receiveSubjects = receiveSubjects;
+	exports.fetchSubjects = fetchSubjects;
 
 	var _isomorphicFetch = __webpack_require__(774);
 
@@ -53576,6 +53588,31 @@
 	      return response.json();
 	    }).then(function (json) {
 	      return dispatch(receiveSchools(json));
+	    });
+	  };
+	}
+
+	function requestSubjects() {
+	  return {
+	    type: 'REQUEST_SUBJECTS'
+	  };
+	}
+
+	function receiveSubjects(json) {
+	  return {
+	    type: 'RECEIVE_SUBJECTS',
+	    subjects: json,
+	    receivedAt: Date.now()
+	  };
+	}
+
+	function fetchSubjects(schoolId) {
+	  return function (dispatch) {
+	    dispatch(requestSubjects());
+	    return (0, _isomorphicFetch2.default)('/data/subjects/' + schoolId).then(function (response) {
+	      return response.json();
+	    }).then(function (json) {
+	      return dispatch(receiveSubjects(json));
 	    });
 	  };
 	}
@@ -54098,10 +54135,10 @@
 	        null,
 	        subjects.map(function (subject) {
 	          return _react2.default.createElement(_RaisedButton2.default, {
-	            key: subject.id,
+	            key: subject.abbv,
 	            label: subject.name,
 	            onClick: function onClick() {
-	              return showCourses(subject.id);
+	              return showCourses(subject.abbv);
 	            }
 	          });
 	        })

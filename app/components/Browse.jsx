@@ -20,9 +20,9 @@ const Browse = ({ currentView, schools, subjects, showSubjects, showCourses }) =
         <div>
           {subjects.map((subject) => (
             <RaisedButton
-              key={subject.id}
+              key={subject.abbv}
               label={subject.name}
-              onClick={() => showCourses(subject.id)}
+              onClick={() => showCourses(subject.abbv)}
             />
           ))}
         </div>
