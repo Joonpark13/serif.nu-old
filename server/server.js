@@ -28,3 +28,11 @@ app.get('/data/schools', (req, res) => {
         res.send(JSON.stringify(result));
     });
 });
+
+app.get('/data/subjects/:school', (req, res) => {
+    db4650.collection('subjects').find({ school: req.params.school }).toArray((err, result) => {
+        if (err) console.log(err);
+        res.setHeader('Content-Type', 'application/json');
+        res.send(JSON.stringify(result));
+    });
+});
