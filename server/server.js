@@ -36,3 +36,15 @@ app.get('/data/subjects/:school', (req, res) => {
         res.send(JSON.stringify(result));
     });
 });
+
+app.get('/data/courses/:school/:subject', (req, res) => {
+    db4650.collection('courses').find(
+        {
+            school: req.params.school,
+            subject: req.params.subject
+        }
+    ).toArray((err, result) => {
+        res.setHeader('Content-Type', 'application/json');
+        res.send(JSON.stringify(result));
+    });
+});
