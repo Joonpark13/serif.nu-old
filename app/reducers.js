@@ -7,7 +7,7 @@ const initialState = {
       hasComponents: false
     },
     calendar: {
-      courses: [],
+      sections: [],
       components: []
     },
     data: {
@@ -199,7 +199,7 @@ function reducer(state = initialState, action) {
       return {
         ...state,
         calendar: {
-          courses: state.calendar.courses.concat(action.section),
+          sections: state.calendar.sections.concat(action.section),
           components: state.calendar.components
         }
       };
@@ -207,7 +207,7 @@ function reducer(state = initialState, action) {
       return {
         ...state,
         calendar: {
-          courses: state.calendar.courses,
+          sections: state.calendar.sections,
           components: state.calendar.components.concat(action.detail)
         }
       };

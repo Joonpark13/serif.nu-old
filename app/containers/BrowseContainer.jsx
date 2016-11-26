@@ -14,15 +14,17 @@ import {
 } from '../action-creators';
 import Browse from '../components/Browse.jsx';
 
-const mapStateToProps = (state) => ({
-  currentView: state.currentView,
-  selected: state.selected,
-  schools: state.data.schools.items,
-  subjects: state.data.subjects.items,
-  courses: state.data.courses.items,
-  sections: state.data.sections.items,
-  details: state.data.details.items
-});
+const mapStateToProps = (state) => (
+  {
+    currentView: state.currentView,
+    selected: state.selected,
+    schools: state.data.schools.items,
+    subjects: state.data.subjects.items,
+    courses: state.data.courses.items,
+    sections: state.data.sections.items,
+    details: state.data.details.items
+  }
+);
 
 const mapDispatchToProps = (dispatch) => ({
   showSubjects: (schoolId) => {

@@ -39723,7 +39723,7 @@
 	    hasComponents: false
 	  },
 	  calendar: {
-	    courses: [],
+	    sections: [],
 	    components: []
 	  },
 	  data: {
@@ -39918,14 +39918,14 @@
 	    case 'ADD_COURSE':
 	      return _extends({}, state, {
 	        calendar: {
-	          courses: state.calendar.courses.concat(action.section),
+	          sections: state.calendar.sections.concat(action.section),
 	          components: state.calendar.components
 	        }
 	      });
 	    case 'ADD_COMPONENT':
 	      return _extends({}, state, {
 	        calendar: {
-	          courses: state.calendar.courses,
+	          sections: state.calendar.sections,
 	          components: state.calendar.components.concat(action.detail)
 	        }
 	      });
@@ -46757,9 +46757,9 @@
 
 	var _SearchContainer2 = _interopRequireDefault(_SearchContainer);
 
-	var _Calendar = __webpack_require__(812);
+	var _CalendarContainer = __webpack_require__(828);
 
-	var _Calendar2 = _interopRequireDefault(_Calendar);
+	var _CalendarContainer2 = _interopRequireDefault(_CalendarContainer);
 
 	var _BrowseContainer = __webpack_require__(813);
 
@@ -46845,7 +46845,7 @@
 	          _react2.default.createElement(
 	            _Card.CardText,
 	            null,
-	            _react2.default.createElement(_Calendar2.default, null)
+	            _react2.default.createElement(_CalendarContainer2.default, null)
 	          )
 	        ),
 	        _react2.default.createElement(
@@ -55972,25 +55972,27 @@
 	  _createClass(Calendar, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      $(document).ready(function () {
-	        $('#calendar').fullCalendar({
-	          editable: false, // Don't allow editing of events
-	          handleWindowResize: true,
-	          weekends: false, // Hide weekends
-	          defaultView: 'agendaWeek', // Only show week view
-	          header: false, // Hide buttons/titles
-	          minTime: '07:30:00', // Start time for the calendar
-	          maxTime: '22:00:00', // End time for the calendar
-	          columnFormat: 'ddd',
-	          displayEventTime: true, // Display event time
-	          allDaySlot: false, // Get rid of "all day" slot at the top
-	          height: 'auto' // Get rid of  empty space on the bottom
-	        });
+	      $('#calendar').fullCalendar({
+	        editable: false, // Don't allow editing of events
+	        handleWindowResize: true,
+	        weekends: false, // Hide weekends
+	        defaultView: 'agendaWeek', // Only show week view
+	        header: false, // Hide buttons/titles
+	        minTime: '07:30:00', // Start time for the calendar
+	        maxTime: '22:00:00', // End time for the calendar
+	        columnFormat: 'ddd',
+	        displayEventTime: true, // Display event time
+	        allDaySlot: false, // Get rid of "all day" slot at the top
+	        height: 'auto' // Get rid of  empty space on the bottom
 	      });
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var classes = this.props.classes;
+	      $('#calendar').fullCalendar({
+	        events: classes
+	      });
 	      return _react2.default.createElement('div', { id: 'calendar' });
 	    }
 	  }]);
@@ -58700,6 +58702,127 @@
 	} : void 0;
 	exports.default = FlatButtonLabel;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+
+/***/ },
+/* 828 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _reactRedux = __webpack_require__(631);
+
+	var _Calendar = __webpack_require__(812);
+
+	var _Calendar2 = _interopRequireDefault(_Calendar);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var parseDow = function parseDow(dow) {
+	    // Input examples: 'MoWeFr', 'TuTh', 'MoWe', etc
+	    // http://stackoverflow.com/questions/6259515/javascript-elegant-way-to-split-string-into-segments-n-characters-long
+	    var dowList = dow.match(/.{1,2}/g);
+	    var dowParsed = [];
+	    dowList.forEach(function (dowStr) {
+	        switch (dowStr) {
+	            case 'Mo':
+	                dowParsed.push(1);
+	                break;
+	            case 'Tu':
+	                dowParsed.push(2);
+	                break;
+	            case 'We':
+	                dowParsed.push(3);
+	                break;
+	            case 'Th':
+	                dowParsed.push(4);
+	                break;
+	            case 'Fr':
+	                dowParsed.push(5);
+	                break;
+	        }
+	    });
+	    // ouput format: see dow from https://fullcalendar.io/docs/event_ui/eventConstraint/
+	    return dowParsed;
+	};
+
+	var parseTime = function parseTime(time) {
+	    // Input examples: '10:00AM', '5:50PM'
+	    var numeric = time.slice(0, -2);
+	    var ampm = time.slice(-2); // Last two letters
+
+	    var timeArray = numeric.split(':');
+	    var output = void 0;
+	    if (ampm === 'PM') {
+	        timeArray[0] = (parseInt(timeArray[0]) + 12).toString();
+	        output = timeArray.join(':');
+	    } else {
+	        output = numeric;
+	    }
+
+	    // Make sure times that look like 5:00 end up 05:00
+	    if (output.length === 4) {
+	        return '0' + output;
+	    } else {
+	        return output;
+	    }
+	};
+
+	var parseMeetingTime = function parseMeetingTime(meetingTime) {
+	    // Take API's formatted meeting_time and output the
+	    // start time, end time, and days of the week for
+	    // fullcalendar to accept as event objects.
+	    // returns: {
+	    //     start:
+	    //     end:
+	    //     dow:
+	    // }
+	    // Example expected format of input: MoWeFr 10:00AM - 10:50AM
+	    var split = meetingTime.split(' ');
+	    var dow = parseDow(split[0]);
+	    var start = '2016-06-01T' + parseTime(split[1]); // Arbitrary date that will always be before today
+	    var end = '2016-06-01T' + parseTime(split[3]);
+	    return { dow: dow, start: start, end: end };
+	};
+
+	var parseSections = function parseSections(sections) {
+	    var events = [];
+	    sections.forEach(function (section) {
+	        events = events.concat(_extends({
+	            id: section.id,
+	            title: section.name
+	        }, parseMeetingTime(section.meeting_time[0])));
+	    });
+	    return events;
+	};
+
+	var parseComponents = function parseComponents(components) {
+	    return []; // TODO
+	};
+
+	var parseClasses = function parseClasses(calendar) {
+	    var sections = parseSections(calendar.sections);
+	    var components = parseComponents(calendar.components);
+	    // parse calendar.sections
+	    // parse calendar.components
+	    // return them all as one list
+	    return sections.concat(components);
+	};
+
+	var mapStateToProps = function mapStateToProps(state) {
+	    return {
+	        classes: parseClasses(state.calendar)
+	    };
+	};
+
+	var CalendarContainer = (0, _reactRedux.connect)(mapStateToProps)(_Calendar2.default);
+
+	exports.default = CalendarContainer;
 
 /***/ }
 /******/ ]);

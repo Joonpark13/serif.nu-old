@@ -7,7 +7,7 @@ import { Tabs, Tab } from 'material-ui/Tabs';
 
 import CurrentlyBrowsing from './CurrentlyBrowsing.jsx';
 import SearchContainer from './SearchContainer.jsx';
-import Calendar from './Calendar.jsx';
+import CalendarContainer from '../containers/CalendarContainer.jsx';
 import BrowseContainer from '../containers/BrowseContainer.jsx';
 
 const style = {
@@ -62,7 +62,7 @@ const Serif = () => (
       <Col style={style.column} md={9} mdPull={3}>
         <Card style={style.card}>
           <CardText>
-            <Calendar />
+            <CalendarContainer />
           </CardText>
         </Card>
 
