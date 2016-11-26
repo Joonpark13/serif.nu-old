@@ -169,6 +169,32 @@ function reducer(state = initialState, action) {
           hasComponents: false
         }
       };
+    case 'CLOSE_SECTIONS':
+      return {
+        ...state,
+        currentView: 'courses',
+        selected: {
+          school: state.selected.school,
+          subject: state.selected.subject,
+          course: '',
+          hasComponents: false
+        },
+        data: {
+          schools: state.data.schools,
+          subjects: state.data.subjects,
+          courses: state.data.courses,
+          sections: {
+            isFetching: false,
+            lastUpdated: 0,
+            items: []
+          },
+          details: {
+            isFetching: false,
+            lastUpdated: 0,
+            items: []
+          }
+        }
+      };
     case 'ADD_COURSE':
       return {
         ...state,

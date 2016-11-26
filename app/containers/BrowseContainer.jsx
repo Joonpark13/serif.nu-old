@@ -9,7 +9,8 @@ import {
   showCourses,
   showSections,
   addCourse,
-  addComponent
+  addComponent,
+  closeSections
 } from '../action-creators';
 import Browse from '../components/Browse.jsx';
 
@@ -44,6 +45,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   addComponent: (detail) => {
     dispatch(addComponent(detail));
+  },
+  closeSections: () => {
+    dispatch(closeSections());
   }
 });
 

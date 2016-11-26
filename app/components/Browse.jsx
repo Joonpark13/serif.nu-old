@@ -16,7 +16,8 @@ const Browse = (
     showSections,
     checkComponents,
     addCourse,
-    addComponent
+    addComponent,
+    closeSections
   }
 ) => {
   const courseView = courses.map((course) => (
@@ -72,7 +73,7 @@ const Browse = (
             checkComponents={checkComponents}
             addCourse={addCourse}
             addComponent={addComponent}
-            close={showCourses}
+            close={closeSections}
           />
         </div>
       );

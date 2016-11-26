@@ -55,7 +55,7 @@ const Sections = (
       actions={actions}
       modal
       open={isOpen}
-      onRequestClose={() => close(selected.school, selected.subject)}
+      onRequestClose={() => close()}
     >
       {list}
     </Dialog>
