@@ -64,8 +64,8 @@ const parseMeetingTime = (meetingTime) => {
     // Example expected format of input: MoWeFr 10:00AM - 10:50AM
     const split = meetingTime.split(' ');
     const dow = parseDow(split[0]);
-    const start = `2016-06-01T${parseTime(split[1])}`; // Arbitrary date that will always be before today
-    const end = `2016-06-01T${parseTime(split[3])}`;
+    const start = `${parseTime(split[1])}:00`; // Arbitrary date that will always be before today
+    const end = `${parseTime(split[3])}:00`;
     return { dow, start, end };
 }
 
@@ -88,17 +88,12 @@ const parseComponents = (components) => {
 const parseClasses = (calendar) => {
     const sections = parseSections(calendar.sections);
     const components = parseComponents(calendar.components);
-    // parse calendar.sections
-    // parse calendar.components
-    // return them all as one list
     return sections.concat(components);
 };
 
-const mapStateToProps = (state) => (
-    {
-        classes: parseClasses(state.calendar)
-    }
-);
+const mapStateToProps = (state) => ({
+    coursecomps: parseClasses(state.calendar)
+});
 
 const CalendarContainer = connect(mapStateToProps)(Calendar);
 
