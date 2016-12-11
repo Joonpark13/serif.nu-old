@@ -27,7 +27,6 @@ export default class Calendar extends React.Component {
     });
   }
   render() {
-    console.log(this.props.coursecomps);
     return <div id="calendar"></div>;
   }
 }
