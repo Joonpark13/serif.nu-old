@@ -21,6 +21,9 @@ const style = {
   },
   components: {
     marginBottom: '5px'
+  },
+  headings: {
+    marginTop: 0
   }
 };
 
@@ -88,6 +91,7 @@ const Browse = (
     case 'sections':
       return (
         <div>
+          <h3 style={style.headings}>Choose a section:</h3>
           {sections.map((section) => (
             <Card key={section.section} style={style.sections}>
               <CardTitle title={`Section ${section.section}`} subtitle={section.meeting_time} />
@@ -108,6 +112,7 @@ const Browse = (
       console.log(details);
       return (
         <div>
+          <h3 style={style.headings}>Choose a component:</h3>
           {details.associated_classes.map((comp, index) => (
             <Card key={index}  style={style.components}>
               <CardTitle title={comp.component} subtitle={comp.meeting_time} />
