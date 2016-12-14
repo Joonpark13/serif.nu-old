@@ -18,6 +18,11 @@ const mapStateToProps = (state) => (
   {
     currentView: state.currentView,
     selected: state.selected,
+    isFetching: state.data.schools.isFetching ||
+      state.data.subjects.isFetching ||
+      state.data.courses.isFetching ||
+      state.data.sections.isFeting ||
+      state.data.details.isFetching,
     schools: state.data.schools.items,
     subjects: state.data.subjects.items,
     courses: state.data.courses.items,

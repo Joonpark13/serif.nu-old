@@ -34,6 +34,7 @@ const style = {
     alignItems: 'center'
   },
   divider: {
+    marginTop: '5px',
     marginBottom: '10px'
   },
   loading: {
@@ -54,6 +55,7 @@ const Browse = (
   {
     currentView,
     selected,
+    isFetching,
     schools,
     subjects,
     courses,
@@ -74,7 +76,7 @@ const Browse = (
 
   switch (currentView) {
     case 'schools':
-      if (schools.length > 0) { // Make sure schools have loaded
+      if (!isFetching) { // Make sure data has loaded
         return (
           <div>
             {schools.map((school) => (
@@ -93,7 +95,7 @@ const Browse = (
       }
 
     case 'subjects':
-      if (subjects.length > 0) { // Make sure subjects have loaded
+      if (!isFetching) { // Make sure data has loaded
         return (
           <div>
             <div style={style.nav}>
@@ -121,36 +123,54 @@ const Browse = (
       }
 
     case 'courses':
-      if (courses.length > 0) {
-        return (
-          <div>
-            <div style={style.nav}>
-              {homeChip}
-              {arrow}
-              <Chip onTouchTap={() => showSubjects(selected.school)} style={style.nav}>{selected.school}</Chip>
-              {arrow}
-              <h4>{selected.subject}</h4>
+      if (!isFetching) { // Make sure data has loaded
+        if (courses.length > 0) {
+          return (
+            <div>
+              <div style={style.nav}>
+                {homeChip}
+                {arrow}
+                <Chip onTouchTap={() => showSubjects(selected.school)} style={style.nav}>{selected.school}</Chip>
+                {arrow}
+                <h4>{selected.subject}</h4>
+              </div>
+
+              <Divider style={style.divider} />
+
+              {courses.map((course) => (
+                <RaisedButton
+                  key={course.abbv}
+                  label={`${course.abbv} ${course.name}`}
+                  onClick={() => showSections(selected.school, selected.subject, course.abbv)}
+                  fullWidth
+                  style={style.courses}
+                />
+              ))}
             </div>
+          );
+        } else {
+          return (
+            <div>
+              <div style={style.nav}>
+                {homeChip}
+                {arrow}
+                <Chip onTouchTap={() => showSubjects(selected.school)} style={style.nav}>{selected.school}</Chip>
+                {arrow}
+                <h4>{selected.subject}</h4>
+              </div>
 
-            <Divider style={style.divider} />
+              <Divider style={style.divider} />
 
-            {courses.map((course) => (
-              <RaisedButton
-                key={course.abbv}
-                label={`${course.abbv} ${course.name}`}
-                onClick={() => showSections(selected.school, selected.subject, course.abbv)}
-                fullWidth
-                style={style.courses}
-              />
-            ))}
-          </div>
-        );
+              <h4>No Courses</h4>
+            </div>
+          );
+        }
       } else { // In case data did not load
         return <CircularProgress style={style.loading} />;
       }
 
     case 'sections':
-      if (sections.length > 0) {
+      if (!isFetching) { // Make sure data has loaded
         return (
           <div>
             <h3 style={style.headings}>Choose a section:</h3>
@@ -180,33 +200,37 @@ const Browse = (
       }
 
     case 'components':
-      let sectionTitle = '';
-      sections.forEach((section) => {
-        if (section.id === selected.section) {
-          sectionTitle = section.name;
-        }
-      });
-      return (
-        <div>
-          <h3 style={style.headings}>Choose a component:</h3>
-          {details.associated_classes.map((comp, index) => (
-            <Card key={index}  style={style.components}>
-              <CardTitle title={comp.component} subtitle={comp.meeting_time} />
-              <CardActions>
-                <FlatButton
-                  label="Add Component"
-                  primary
-                  onClick={() => addComponent({
-                    id: selected.section,
-                    title: sectionTitle + ' ' + comp.component,
-                    ...comp
-                  })}
-                />
-              </CardActions>
-            </Card>
-          ))}
-        </div>
-      );
+      if (!isFetching) { // Make sure data has loaded
+        let sectionTitle = '';
+        sections.forEach((section) => {
+          if (section.id === selected.section) {
+            sectionTitle = section.name;
+          }
+        });
+        return (
+          <div>
+            <h3 style={style.headings}>Choose a component:</h3>
+            {details.associated_classes.map((comp, index) => (
+              <Card key={index}  style={style.components}>
+                <CardTitle title={comp.component} subtitle={comp.meeting_time} />
+                <CardActions>
+                  <FlatButton
+                    label="Add Component"
+                    primary
+                    onClick={() => addComponent({
+                      id: selected.section,
+                      title: sectionTitle + ' ' + comp.component,
+                      ...comp
+                    })}
+                  />
+                </CardActions>
+              </Card>
+            ))}
+          </div>
+        );
+      } else {
+        return <CircularProgress style={style.loading} />;
+      }
 
     default:
       return <div></div>;

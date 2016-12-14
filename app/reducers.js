@@ -34,7 +34,7 @@ const initialState = {
       details: {
         isFetching: false,
         lastUpdated: 0,
-        items: []
+        info: {}
       }
     }
 };
