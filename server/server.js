@@ -6,7 +6,7 @@ const app = express();
 
 app.use(express.static('dist'));
 
-const url4650 = `mongodb://${process.env.MLAB_USER}:${process.env.MLAB_PASS}@${process.env.MLAB_URL}/4650`;
+const url4650 = process.env.MLAB_URL;
 let db4650;
 
 MongoClient.connect(url4650, (err, database) => {
