@@ -3,7 +3,8 @@ const initialState = {
     selected: {
       school: '',
       subject: '',
-      course: ''
+      course: '',
+      section: ''
     },
     calendar: {
       sections: [],
@@ -142,7 +143,8 @@ function reducer(state = initialState, action) {
         selected: {
           school: action.schoolId,
           subject: '',
-          course: ''
+          course: '',
+          section: ''
         }
       };
     case 'SHOW_COURSES':
@@ -152,7 +154,8 @@ function reducer(state = initialState, action) {
         selected: {
           school: state.selected.school,
           subject: action.subjectAbbv,
-          course: ''
+          course: '',
+          section: ''
         }
       };
     case 'SHOW_SECTIONS':
@@ -162,12 +165,19 @@ function reducer(state = initialState, action) {
         selected: {
           school: state.selected.school,
           subject: state.selected.subject,
-          course: action.courseAbbv
+          course: action.courseAbbv,
+          section: ''
         }
       };
     case 'ADD_COURSE':
       return {
         ...state,
+        selected: {
+          school: state.selected.school,
+          subject: state.selected.subject,
+          course: state.selected.course,
+          section: action.section.id
+        },
         calendar: {
           sections: state.calendar.sections.concat(action.section),
           components: state.calendar.components
@@ -176,6 +186,13 @@ function reducer(state = initialState, action) {
     case 'ADD_COMPONENT':
       return {
         ...state,
+        currentView: 'courses',
+        selected: {
+          school: state.selected.school,
+          subject: state.selected.subject,
+          course: '',
+          section: ''
+        },
         calendar: {
           sections: state.calendar.sections,
           components: state.calendar.components.concat(action.detail)
@@ -235,7 +252,8 @@ function reducer(state = initialState, action) {
         selected: {
           school: state.selected.school,
           subject: state.selected.subject,
-          course: state.selected.course
+          course: state.selected.course,
+          section: state.selected.section
         },
         data: {
           schools: state.data.schools,
@@ -254,7 +272,8 @@ function reducer(state = initialState, action) {
         selected: {
           school: state.selected.school,
           subject: state.selected.subject,
-          course: action.details[0].associated_classes ? state.selected.course : ''
+          course: action.details[0].associated_classes ? state.selected.course : '',
+          section: action.details[0].associated_classes ? state.selected.section : ''
         },
         data: {
           schools: state.data.schools,

@@ -82,7 +82,15 @@ const parseSections = (sections) => {
 };
 
 const parseComponents = (components) => {
-    return []; // TODO
+    let events = [];
+    components.forEach((comp) => {
+        events = events.concat({
+            id: comp.id,
+            title: comp.title,
+            ...parseMeetingTime(comp.meeting_time)
+        });
+    })
+    return events;
 };
 
 const parseClasses = (calendar) => {

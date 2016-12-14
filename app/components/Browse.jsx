@@ -109,7 +109,12 @@ const Browse = (
         </div>
       );
     case 'components':
-      console.log(details);
+      let sectionTitle = '';
+      sections.forEach((section) => {
+        if (section.id === selected.section) {
+          sectionTitle = section.name;
+        }
+      });
       return (
         <div>
           <h3 style={style.headings}>Choose a component:</h3>
@@ -119,6 +124,11 @@ const Browse = (
               <CardActions>
                 <FlatButton
                   label="Add Component"
+                  onClick={() => addComponent({
+                    id: selected.section,
+                    title: sectionTitle + ' ' + comp.component,
+                    ...comp
+                  })}
                 />
               </CardActions>
             </Card>
