@@ -1,5 +1,11 @@
 import fetch from 'isomorphic-fetch';
 
+export function showSchools() {
+  return {
+    type: 'SHOW_SCHOOLS'
+  };
+}
+
 export function showSubjects(schoolId) {
   return {
     type: 'SHOW_SUBJECTS',

@@ -5,6 +5,7 @@ import {
   fetchCourses,
   fetchSections,
   fetchDetails,
+  showSchools,
   showSubjects,
   showCourses,
   showSections,
@@ -26,6 +27,9 @@ const mapStateToProps = (state) => (
 );
 
 const mapDispatchToProps = (dispatch) => ({
+  showSchools: () => {
+    dispatch(showSchools());
+  },
   showSubjects: (schoolId) => {
     dispatch(fetchSubjects(schoolId));
     dispatch(showSubjects(schoolId));

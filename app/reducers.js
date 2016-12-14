@@ -136,6 +136,17 @@ function details(state = {}, action) {
 
 function reducer(state = initialState, action) {
   switch (action.type) {
+    case 'SHOW_SCHOOLS':
+      return {
+        ...state,
+        currentView: 'schools',
+        selected: {
+          school: '',
+          subject: '',
+          course: '',
+          section: ''
+        }
+      }
     case 'SHOW_SUBJECTS':
       return {
         ...state,
