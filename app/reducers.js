@@ -248,11 +248,11 @@ function reducer(state = initialState, action) {
     case 'RECEIVE_DETAILS':
       return {
         ...state,
-        currentView: action.details[0].associated_classes ? 'components' : state.currentView,
+        currentView: action.details[0].associated_classes ? 'components' : 'courses',
         selected: {
           school: state.selected.school,
           subject: state.selected.subject,
-          course: state.selected.course
+          course: action.details[0].associated_classes ? state.selected.course : ''
         },
         data: {
           schools: state.data.schools,
