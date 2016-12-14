@@ -32,13 +32,12 @@ const style = {
   },
   headings: {
     marginTop: 0,
-    marginBottom: 0
+    marginBottom: '5px'
   },
   header: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: '5px'
+    justifyContent: 'space-between'
   },
   nav: {
     display: 'flex',
@@ -58,8 +57,8 @@ const inCalendar = (sections, id) => {
   return sections.some(section => section.id === id);
 };
 
-const added = (section) => {
-  return section.id
+const getCourseName = (courses, abbv) => {
+  return courses.find(course => course.abbv == abbv).name;
 }
 
 const Browse = (
@@ -185,13 +184,15 @@ const Browse = (
         return (
           <div>
             <div style={style.header}>
-              <h3 style={style.headings}>Choose a section:</h3>
+              <h3 style={style.headings}>{getCourseName(courses, selected.course)}</h3>
               <FlatButton
                 label="Cancel"
                 secondary
                 onTouchTap={() => showCourses(selected.school, selected.subject)}
               />
             </div>
+            <Divider style={style.divider} />
+            <h3 style={style.headings}>Choose a course:</h3>
 
             {sections.map((section) => (
               <Card key={section.section} style={style.sections}>
@@ -226,8 +227,17 @@ const Browse = (
         return (
           <div>
             <div style={style.header}>
-              <h3 style={style.headings}>Choose a component:</h3>
+              <h3 style={style.headings}>{getCourseName(courses, selected.course)}</h3>
+              {/* TODO: remove corresponding section if cancel is clicked
+              <FlatButton
+                label="Cancel"
+                secondary
+                onTouchTap={() => showCourses(selected.school, selected.subject)}
+              />
+              */}
             </div>
+            <Divider style={style.divider} />
+            <h3 style={style.headings}>Choose a component:</h3>
 
             {details.associated_classes.map((comp, index) => (
               <Card key={index}  style={style.components}>
