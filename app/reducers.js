@@ -3,8 +3,7 @@ const initialState = {
     selected: {
       school: '',
       subject: '',
-      course: '',
-      hasComponents: false
+      course: ''
     },
     calendar: {
       sections: [],
@@ -126,7 +125,7 @@ function details(state = {}, action) {
       return {
         ...state,
         isFetching: false,
-        items: action.details,
+        info: action.details[0],
         lastUpdated: action.receivedAt
       };
     default:
@@ -143,8 +142,7 @@ function reducer(state = initialState, action) {
         selected: {
           school: action.schoolId,
           subject: '',
-          course: '',
-          hasComponents: false
+          course: ''
         }
       };
     case 'SHOW_COURSES':
@@ -154,8 +152,7 @@ function reducer(state = initialState, action) {
         selected: {
           school: state.selected.school,
           subject: action.subjectAbbv,
-          course: '',
-          hasComponents: false
+          course: ''
         }
       };
     case 'SHOW_SECTIONS':
@@ -165,34 +162,7 @@ function reducer(state = initialState, action) {
         selected: {
           school: state.selected.school,
           subject: state.selected.subject,
-          course: action.courseAbbv,
-          hasComponents: false
-        }
-      };
-    case 'CLOSE_SECTIONS':
-      return {
-        ...state,
-        currentView: 'courses',
-        selected: {
-          school: state.selected.school,
-          subject: state.selected.subject,
-          course: '',
-          hasComponents: false
-        },
-        data: {
-          schools: state.data.schools,
-          subjects: state.data.subjects,
-          courses: state.data.courses,
-          sections: {
-            isFetching: false,
-            lastUpdated: 0,
-            items: []
-          },
-          details: {
-            isFetching: false,
-            lastUpdated: 0,
-            items: []
-          }
+          course: action.courseAbbv
         }
       };
     case 'ADD_COURSE':
@@ -265,8 +235,7 @@ function reducer(state = initialState, action) {
         selected: {
           school: state.selected.school,
           subject: state.selected.subject,
-          course: state.selected.course,
-          hasComponents: false
+          course: state.selected.course
         },
         data: {
           schools: state.data.schools,
@@ -279,11 +248,11 @@ function reducer(state = initialState, action) {
     case 'RECEIVE_DETAILS':
       return {
         ...state,
+        currentView: action.details[0].associated_classes ? 'components' : state.currentView,
         selected: {
           school: state.selected.school,
           subject: state.selected.subject,
-          course: state.selected.course,
-          hasComponents: 'associated_classes' in action.details[0]
+          course: state.selected.course
         },
         data: {
           schools: state.data.schools,

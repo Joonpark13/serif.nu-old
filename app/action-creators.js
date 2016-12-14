@@ -21,12 +21,6 @@ export function showSections(courseAbbv) {
   };
 }
 
-export function closeSections() {
-  return {
-    type: 'CLOSE_SECTIONS'
-  }
-}
-
 export function addCourse(section) {
   return {
     type: 'ADD_COURSE',
