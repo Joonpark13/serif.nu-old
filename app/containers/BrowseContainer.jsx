@@ -22,7 +22,8 @@ const mapStateToProps = (state) => (
     subjects: state.data.subjects.items,
     courses: state.data.courses.items,
     sections: state.data.sections.items,
-    details: state.data.details.info
+    details: state.data.details.info,
+    calendar: state.calendar
   }
 );
 

@@ -37,6 +37,14 @@ const style = {
   }
 };
 
+const inCalendar = (sections, id) => {
+  return sections.some(section => section.id === id);
+};
+
+const added = (section) => {
+  return section.id
+}
+
 const Browse = (
   {
     currentView,
@@ -46,6 +54,7 @@ const Browse = (
     courses,
     sections,
     details,
+    calendar,
     showSchools,
     showSubjects,
     showCourses,
@@ -132,7 +141,8 @@ const Browse = (
               <CardTitle title={`Section ${section.section}`} subtitle={section.meeting_time} />
               <CardActions>
                 <FlatButton
-                  label="Add Course"
+                  label="Add Section"
+                  disabled={inCalendar(calendar.sections, section.id)}
                   onClick={() => {
                     checkComponents(selected.school, selected.subject, selected.course, section.id);
                     addCourse(section);
