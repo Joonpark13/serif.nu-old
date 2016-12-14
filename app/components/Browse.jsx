@@ -5,6 +5,7 @@ import FlatButton from 'material-ui/FlatButton';
 import Chip from 'material-ui/Chip';
 import FontIcon from 'material-ui/FontIcon';
 import Divider from 'material-ui/Divider';
+import CircularProgress from 'material-ui/CircularProgress';
 
 const style = {
   schools: {
@@ -34,6 +35,10 @@ const style = {
   },
   divider: {
     marginBottom: '10px'
+  },
+  loading: {
+    display: 'block',
+    margin: 'auto'
   }
 };
 
@@ -69,90 +74,110 @@ const Browse = (
 
   switch (currentView) {
     case 'schools':
-      return (
-        <div>
-          {schools.map((school) => (
-            <RaisedButton
-              key={school.id}
-              label={school.id}
-              onClick={() => showSubjects(school.id)}
-              primary
-              style={style.schools}
-            />
-          ))}
-        </div>
-      );
+      if (schools.length > 0) { // Make sure schools have loaded
+        return (
+          <div>
+            {schools.map((school) => (
+              <RaisedButton
+                key={school.id}
+                label={school.id}
+                onClick={() => showSubjects(school.id)}
+                primary
+                style={style.schools}
+              />
+            ))}
+          </div>
+        );
+      } else { // In case data did not load
+        return <CircularProgress style={style.loading} />;
+      }
 
     case 'subjects':
-      return (
-        <div>
-          <div style={style.nav}>
-            {homeChip}
-            {arrow}
-            <h4>{selected.school}</h4>
-          </div>
+      if (subjects.length > 0) { // Make sure subjects have loaded
+        return (
+          <div>
+            <div style={style.nav}>
+              {homeChip}
+              {arrow}
+              <h4>{selected.school}</h4>
+            </div>
 
-          <Divider style={style.divider} />
-          
-          {subjects.map((subject) => (
-            <RaisedButton
-              key={subject.abbv}
-              label={subject.name}
-              onClick={() => showCourses(selected.school, subject.abbv)}
-              fullWidth
-              primary
-              style={style.subjects}
-            />
-          ))}
-        </div>
-      );
+            <Divider style={style.divider} />
+            
+            {subjects.map((subject) => (
+              <RaisedButton
+                key={subject.abbv}
+                label={subject.name}
+                onClick={() => showCourses(selected.school, subject.abbv)}
+                fullWidth
+                primary
+                style={style.subjects}
+              />
+            ))}
+          </div>
+        );
+      } else { // In case data did not load
+        return <CircularProgress style={style.loading}/>;
+      }
 
     case 'courses':
-      return (
-        <div>
-          <div style={style.nav}>
-            {homeChip}
-            {arrow}
-            <Chip onTouchTap={() => showSubjects(selected.school)} style={style.nav}>{selected.school}</Chip>
-            {arrow}
-            <h4>{selected.subject}</h4>
+      if (courses.length > 0) {
+        return (
+          <div>
+            <div style={style.nav}>
+              {homeChip}
+              {arrow}
+              <Chip onTouchTap={() => showSubjects(selected.school)} style={style.nav}>{selected.school}</Chip>
+              {arrow}
+              <h4>{selected.subject}</h4>
+            </div>
+
+            <Divider style={style.divider} />
+
+            {courses.map((course) => (
+              <RaisedButton
+                key={course.abbv}
+                label={`${course.abbv} ${course.name}`}
+                onClick={() => showSections(selected.school, selected.subject, course.abbv)}
+                fullWidth
+                style={style.courses}
+              />
+            ))}
           </div>
-
-          <Divider style={style.divider} />
-
-          {courses.map((course) => (
-            <RaisedButton
-              key={course.abbv}
-              label={`${course.abbv} ${course.name}`}
-              onClick={() => showSections(selected.school, selected.subject, course.abbv)}
-              fullWidth
-              style={style.courses}
-            />
-          ))}
-        </div>
-      );
+        );
+      } else { // In case data did not load
+        return <CircularProgress style={style.loading} />;
+      }
 
     case 'sections':
-      return (
-        <div>
-          <h3 style={style.headings}>Choose a section:</h3>
-          {sections.map((section) => (
-            <Card key={section.section} style={style.sections}>
-              <CardTitle title={`Section ${section.section}`} subtitle={section.meeting_time} />
-              <CardActions>
-                <FlatButton
-                  label="Add Section"
-                  disabled={inCalendar(calendar.sections, section.id)}
-                  onClick={() => {
-                    checkComponents(selected.school, selected.subject, selected.course, section.id);
-                    addCourse(section);
-                  }}
-                />
-              </CardActions>
-            </Card>
-          ))}
-        </div>
-      );
+      if (sections.length > 0) {
+        return (
+          <div>
+            <h3 style={style.headings}>Choose a section:</h3>
+
+            {sections.map((section) => (
+              <Card key={section.section} style={style.sections}>
+                <CardTitle title={`Section ${section.section}`} subtitle={section.meeting_time} />
+                <CardActions>
+                  <FlatButton
+                    label="Add Section"
+                    primary
+                    disabled={inCalendar(calendar.sections, section.id)}
+                    onClick={() => {
+                      checkComponents(selected.school, selected.subject, selected.course, section.id);
+                      addCourse(section);
+                    }}
+                  />
+                </CardActions>
+              </Card>
+            ))}
+
+            <FlatButton label="Cancel" onClick={() => showCourses(selected.school, selected.subject)} />
+          </div>
+        );
+      } else { // In case data did not load
+        return <CircularProgress style={style.loading} />;
+      }
 
     case 'components':
       let sectionTitle = '';
@@ -170,6 +195,7 @@ const Browse = (
               <CardActions>
                 <FlatButton
                   label="Add Component"
+                  primary
                   onClick={() => addComponent({
                     id: selected.section,
                     title: sectionTitle + ' ' + comp.component,
