@@ -6,6 +6,7 @@ import Chip from 'material-ui/Chip';
 import FontIcon from 'material-ui/FontIcon';
 import Divider from 'material-ui/Divider';
 import CircularProgress from 'material-ui/CircularProgress';
+import Avatar from 'material-ui/Avatar';
 
 const style = {
   schools: {
@@ -26,8 +27,18 @@ const style = {
   components: {
     marginBottom: '5px'
   },
+  back: {
+    display: 'inline-block'
+  },
   headings: {
-    marginTop: 0
+    marginTop: 0,
+    marginBottom: 0
+  },
+  header: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: '5px'
   },
   nav: {
     display: 'flex',
@@ -130,7 +141,7 @@ const Browse = (
               <div style={style.nav}>
                 {homeChip}
                 {arrow}
-                <Chip onTouchTap={() => showSubjects(selected.school)} style={style.nav}>{selected.school}</Chip>
+                <Chip onTouchTap={() => showSubjects(selected.school)}>{selected.school}</Chip>
                 {arrow}
                 <h4>{selected.subject}</h4>
               </div>
@@ -154,7 +165,7 @@ const Browse = (
               <div style={style.nav}>
                 {homeChip}
                 {arrow}
-                <Chip onTouchTap={() => showSubjects(selected.school)} style={style.nav}>{selected.school}</Chip>
+                <Chip onTouchTap={() => showSubjects(selected.school)}>{selected.school}</Chip>
                 {arrow}
                 <h4>{selected.subject}</h4>
               </div>
@@ -173,7 +184,14 @@ const Browse = (
       if (!isFetching) { // Make sure data has loaded
         return (
           <div>
-            <h3 style={style.headings}>Choose a section:</h3>
+            <div style={style.header}>
+              <h3 style={style.headings}>Choose a section:</h3>
+              <FlatButton
+                label="Cancel"
+                secondary
+                onTouchTap={() => showCourses(selected.school, selected.subject)}
+              />
+            </div>
 
             {sections.map((section) => (
               <Card key={section.section} style={style.sections}>
@@ -191,8 +209,6 @@ const Browse = (
                 </CardActions>
               </Card>
             ))}
-
-            <FlatButton label="Cancel" onClick={() => showCourses(selected.school, selected.subject)} />
           </div>
         );
       } else { // In case data did not load
@@ -209,7 +225,10 @@ const Browse = (
         });
         return (
           <div>
-            <h3 style={style.headings}>Choose a component:</h3>
+            <div style={style.header}>
+              <h3 style={style.headings}>Choose a component:</h3>
+            </div>
+
             {details.associated_classes.map((comp, index) => (
               <Card key={index}  style={style.components}>
                 <CardTitle title={comp.component} subtitle={comp.meeting_time} />
