@@ -24,6 +24,6 @@ export default class Search extends React.Component {
 }
 
 Search.propTypes = {
-  searchdata: React.PropTypes.array.isRequired,
+  searchdata: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
   onSelect: React.PropTypes.func
 };
