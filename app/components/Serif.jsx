@@ -17,6 +17,10 @@ const style = {
   },
   card: {
     margin: 10
+  },
+  browse: {
+    maxHeight: '675px',
+    overflow: 'scroll'
   }
 };
 
@@ -43,7 +47,7 @@ const Serif = () => (
           </Tab>
 
           <Tab label="Browse">
-            <Card>
+            <Card style={style.browse}>
               <CardText>
                 <BrowseContainer />
               </CardText>
