@@ -248,6 +248,8 @@ function reducer(state = initialState, action) {
     case 'RECEIVE_DETAILS':
       return {
         ...state,
+        // If there are components to select, show components
+        // If not, go back to course view
         currentView: action.details[0].associated_classes ? 'components' : 'courses',
         selected: {
           school: state.selected.school,
