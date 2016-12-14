@@ -123,7 +123,7 @@ const Browse = (
           {courses.map((course) => (
             <RaisedButton
               key={course.abbv}
-              label={course.name}
+              label={`${course.abbv} ${course.name}`}
               onClick={() => showSections(selected.school, selected.subject, course.abbv)}
               fullWidth
               style={style.courses}
