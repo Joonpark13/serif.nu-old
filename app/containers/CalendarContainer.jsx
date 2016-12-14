@@ -37,7 +37,7 @@ const parseTime = (time) => {
 
     const timeArray = numeric.split(':');
     let output;
-    if (ampm === 'PM') {
+    if (ampm === 'PM' && numeric.substring(0, 2) !== '12') { // 12PM noon should not have 12 added onto it
         timeArray[0] = (parseInt(timeArray[0]) + 12).toString();
         output = timeArray.join(':');
     } else {
