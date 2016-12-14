@@ -2,6 +2,9 @@ import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Card, CardTitle, CardActions } from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
+import Chip from 'material-ui/Chip';
+import FontIcon from 'material-ui/FontIcon';
+import Divider from 'material-ui/Divider';
 
 const style = {
   schools: {
@@ -24,6 +27,13 @@ const style = {
   },
   headings: {
     marginTop: 0
+  },
+  nav: {
+    display: 'flex',
+    alignItems: 'center'
+  },
+  divider: {
+    marginBottom: '10px'
   }
 };
 
@@ -36,6 +46,7 @@ const Browse = (
     courses,
     sections,
     details,
+    showSchools,
     showSubjects,
     showCourses,
     showSections,
@@ -44,6 +55,9 @@ const Browse = (
     addComponent
   }
 ) => {
+  const homeChip = <Chip onTouchTap={() => showSchools()}>All</Chip>;
+  const arrow = <FontIcon className="material-icons">chevron_right</FontIcon>;
+
   switch (currentView) {
     case 'schools':
       return (
@@ -59,9 +73,18 @@ const Browse = (
           ))}
         </div>
       );
+
     case 'subjects':
       return (
         <div>
+          <div style={style.nav}>
+            {homeChip}
+            {arrow}
+            <h4>{selected.school}</h4>
+          </div>
+
+          <Divider style={style.divider} />
+          
           {subjects.map((subject) => (
             <RaisedButton
               key={subject.abbv}
@@ -74,9 +97,20 @@ const Browse = (
           ))}
         </div>
       );
+
     case 'courses':
       return (
         <div>
+          <div style={style.nav}>
+            {homeChip}
+            {arrow}
+            <Chip onTouchTap={() => showSubjects(selected.school)} style={style.nav}>{selected.school}</Chip>
+            {arrow}
+            <h4>{selected.subject}</h4>
+          </div>
+
+          <Divider style={style.divider} />
+
           {courses.map((course) => (
             <RaisedButton
               key={course.abbv}
@@ -88,6 +122,7 @@ const Browse = (
           ))}
         </div>
       );
+
     case 'sections':
       return (
         <div>
@@ -108,6 +143,7 @@ const Browse = (
           ))}
         </div>
       );
+
     case 'components':
       let sectionTitle = '';
       sections.forEach((section) => {
@@ -135,6 +171,7 @@ const Browse = (
           ))}
         </div>
       );
+
     default:
       return <div></div>;
   }
