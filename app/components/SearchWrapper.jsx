@@ -4,10 +4,6 @@ import Search from './Search.jsx';
 import CircularProgress from 'material-ui/CircularProgress';
 
 const style = {
-  searchGroup: {
-    margin: 'auto',
-    width: 300
-  },
   icon: {
     verticalAlign: 'middle'
   },
@@ -19,20 +15,15 @@ const style = {
 
 const SearchWrapper = ({ searchData, isFetching }) => {
   if (!isFetching) {
-    return (
-      <div style={style.searchGroup}>
-        <FontIcon style={style.icon} className="material-icons">search</FontIcon>
-        <Search searchdata={searchData} />
-      </div>
-    );
+    return <Search searchData={searchData} />;
   }
   // If data did not load
   return <CircularProgress style={style.loading} />;
 };
 
-export default SearchWrapper;
-
 SearchWrapper.propTypes = {
   searchData: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
   isFetching: React.PropTypes.bool
 };
+
+export default SearchWrapper;
