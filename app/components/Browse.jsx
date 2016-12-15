@@ -234,14 +234,18 @@ const Browse = (
       return <CircularProgress style={style.loading} />;
 
     case 'components':
-      return <Components
-        isFetching={isFetching}
-        sections={sections}
-        selected={selected}
-        courses={courses}
-        details={details}
-        addComponent={addComponent}
-      />;
+      if (!isFetching) { // Make sure data has loaded
+        // TODO: Add nav and make sure if user cancels, the corresponding section is removed from calendar
+        return <Components
+          sections={sections}
+          selected={selected}
+          courses={courses}
+          details={details}
+          addComponent={addComponent}
+        />;
+      }
+      // In case data did not load
+      return <CircularProgress style={style.loading} />;
 
     default:
       return <div></div>;
