@@ -79,6 +79,59 @@ const Browse = (
 ) => {
   const homeChip = <Chip onTouchTap={() => showSchools()}>All</Chip>;
   const arrow = <FontIcon className="material-icons">chevron_right</FontIcon>;
+  const schoolNav = <Chip onTouchTap={() => showSubjects(selected.school)}>{selected.school}</Chip>;
+  const subjectNav = <Chip onTouchTap={() => showCourses(selected.subject)}>{selected.subject}</Chip>;
+  const divider = <Divider style={style.divider} />;
+  let nav;
+  switch(currentView) {
+    case 'subjects':
+      nav = (
+        <div>
+          <div style={style.nav}>
+            {homeChip}
+            {arrow}
+            <h4>{selected.school}</h4>
+          </div>
+
+          {divider}
+        </div>
+      );
+      break;
+    case 'courses':
+      nav = (
+        <div>
+          <div style={style.nav}>
+            {homeChip}
+            {arrow}
+            {schoolNav}
+            {arrow}
+            <h4>{selected.subject}</h4>
+          </div>
+
+          {divider}
+        </div>
+      );
+      break;
+    case 'sections':
+      nav = (
+        <div>
+          <div style={style.nav}>
+            {homeChip}
+            {arrow}
+            {schoolNav}
+            {arrow}
+            {subjectNav}
+            {arrow}
+            <h4>{selected.course}</h4>
+          </div>
+
+          {divider}
+        </div>
+      );
+      break;
+    default:
+      nav = null;
+  }
 
   switch (currentView) {
     case 'schools':
@@ -104,14 +157,7 @@ const Browse = (
       if (!isFetching) { // Make sure data has loaded
         return (
           <div>
-            <div style={style.nav}>
-              {homeChip}
-              {arrow}
-              <h4>{selected.school}</h4>
-            </div>
-
-            <Divider style={style.divider} />
-            
+            {nav}
             {subjects.map((subject) => (
               <RaisedButton
                 key={subject.abbv}
@@ -133,16 +179,7 @@ const Browse = (
         if (courses.length > 0) {
           return (
             <div>
-              <div style={style.nav}>
-                {homeChip}
-                {arrow}
-                <Chip onTouchTap={() => showSubjects(selected.school)}>{selected.school}</Chip>
-                {arrow}
-                <h4>{selected.subject}</h4>
-              </div>
-
-              <Divider style={style.divider} />
-
+              {nav}
               {courses.map((course) => (
                 <RaisedButton
                   key={course.abbv}
@@ -177,16 +214,24 @@ const Browse = (
       }
 
     case 'sections':
-      return <Sections
-        selected={selected}
-        isFetching={isFetching}
-        courses={courses}
-        sections={sections}
-        calendar={calendar}
-        showCourses={showCourses}
-        checkComponents={checkComponents}
-        addCourse={addCourse}
-      />;
+      if (!isFetching) { // Make sure data has loaded
+        return (
+          <div>
+            {nav}
+            <Sections
+              selected={selected}
+              courses={courses}
+              sections={sections}
+              calendar={calendar}
+              showCourses={showCourses}
+              checkComponents={checkComponents}
+              addCourse={addCourse}
+            />
+          </div>
+        );
+      }
+      // In case data did not load
+      return <CircularProgress style={style.loading} />;
 
     case 'components':
       return <Components
