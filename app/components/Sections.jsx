@@ -37,7 +37,7 @@ const Sections = ({
     <div>
       <h3 style={style.headings}>Choose a section:</h3>
 
-      {sections.map((section) => (
+      {sections.map(section => (
         <Card key={section.section} style={style.sections}>
           <CardTitle title={`Section ${section.section}`} subtitle={section.meeting_time} />
           <CardActions>
