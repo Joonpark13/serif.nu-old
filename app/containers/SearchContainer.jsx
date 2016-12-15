@@ -7,5 +7,11 @@ const mapStateToProps = (state) => ({
   isFetching: state.data.search.isFetching
 });
 
-const SearchContainer = connect(mapStateToProps)(SearchWrapper);
+const mapDispatchToProps = (dispatch) => ({
+  onSelect: () => {
+    dispatch();
+  }
+});
+
+const SearchContainer = connect(mapStateToProps, mapDispatchToProps)(SearchWrapper);
 export default SearchContainer;

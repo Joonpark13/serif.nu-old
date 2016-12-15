@@ -8,6 +8,9 @@ import Divider from 'material-ui/Divider';
 import CircularProgress from 'material-ui/CircularProgress';
 import Avatar from 'material-ui/Avatar';
 
+import Sections from './Sections.jsx';
+import { getCourseName } from '../helpers';
+
 const style = {
   schools: {
     marginBottom: '3px',
@@ -52,14 +55,6 @@ const style = {
     margin: 'auto'
   }
 };
-
-const inCalendar = (sections, id) => {
-  return sections.some(section => section.id === id);
-};
-
-const getCourseName = (courses, abbv) => {
-  return courses.find(course => course.abbv == abbv).name;
-}
 
 const Browse = (
   {
@@ -181,41 +176,16 @@ const Browse = (
       }
 
     case 'sections':
-      if (!isFetching) { // Make sure data has loaded
-        return (
-          <div>
-            <div style={style.header}>
-              <h3 style={style.headings}>{getCourseName(courses, selected.course)}</h3>
-              <FlatButton
-                label="Cancel"
-                secondary
-                onTouchTap={() => showCourses(selected.school, selected.subject)}
-              />
-            </div>
-            <Divider style={style.divider} />
-            <h3 style={style.headings}>Choose a course:</h3>
-
-            {sections.map((section) => (
-              <Card key={section.section} style={style.sections}>
-                <CardTitle title={`Section ${section.section}`} subtitle={section.meeting_time} />
-                <CardActions>
-                  <FlatButton
-                    label="Add Section"
-                    primary
-                    disabled={inCalendar(calendar.sections, section.id)}
-                    onClick={() => {
-                      checkComponents(selected.school, selected.subject, selected.course, section.id);
-                      addCourse(section);
-                    }}
-                  />
-                </CardActions>
-              </Card>
-            ))}
-          </div>
-        );
-      } else { // In case data did not load
-        return <CircularProgress style={style.loading} />;
-      }
+      return <Sections
+        selected={selected}
+        isFetching={isFetching}
+        courses={courses}
+        sections={sections}
+        calendar={calendar}
+        showCourses={showCourses}
+        checkComponents={checkComponents}
+        addCourse={addCourse}
+      />;
 
     case 'components':
       if (!isFetching) { // Make sure data has loaded

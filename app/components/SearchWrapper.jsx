@@ -1,5 +1,4 @@
 import React from 'react';
-import FontIcon from 'material-ui/FontIcon';
 import Search from './Search.jsx';
 import CircularProgress from 'material-ui/CircularProgress';
 
