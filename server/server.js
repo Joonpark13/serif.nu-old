@@ -26,7 +26,9 @@ app.get('/data/search', (req, res) => {
             prepared.push({
                 text: `${course.subject} ${course.abbv} ${course.name}`,
                 value: `${course.subject} ${course.abbv} ${course.name}`,
-                abbv: course.abbv
+                school: course.school,
+                subject: course.subject,
+                course: course.abbv
             });
         });
 

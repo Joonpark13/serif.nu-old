@@ -1,47 +1,48 @@
 const initialState = {
-    currentView: 'schools',
-    selected: {
-      school: '',
-      subject: '',
-      course: '',
-      section: ''
+  searchState: '',
+  currentView: 'schools',
+  selected: {
+    school: '',
+    subject: '',
+    course: '',
+    section: ''
+  },
+  calendar: {
+    sections: [],
+    components: []
+  },
+  data: {
+    search: {
+      isFetching: false,
+      lastUpdated: 0,
+      items: []
     },
-    calendar: {
-      sections: [],
-      components: []
+    schools: {
+      isFetching: false,
+      lastUpdated: 0,
+      items: []
     },
-    data: {
-      search: {
-        isFetching: false,
-        lastUpdated: 0,
-        items: []
-      },
-      schools: {
-        isFetching: false,
-        lastUpdated: 0,
-        items: []
-      },
-      subjects: {
-        isFetching: false,
-        lastUpdated: 0,
-        items: []
-      },
-      courses: {
-        isFetching: false,
-        lastUpdated: 0,
-        items: []
-      },
-      sections: {
-        isFetching: false,
-        lastUpdated: 0,
-        items: []
-      },
-      details: {
-        isFetching: false,
-        lastUpdated: 0,
-        info: {}
-      }
+    subjects: {
+      isFetching: false,
+      lastUpdated: 0,
+      items: []
+    },
+    courses: {
+      isFetching: false,
+      lastUpdated: 0,
+      items: []
+    },
+    sections: {
+      isFetching: false,
+      lastUpdated: 0,
+      items: []
+    },
+    details: {
+      isFetching: false,
+      lastUpdated: 0,
+      info: {}
     }
+  }
 };
 
 function schools(state = {}, action) {
@@ -336,7 +337,18 @@ function reducer(state = initialState, action) {
           sections: state.data.sections,
           details: state.data.details
         }
-      }
+      };
+    case 'POPULATE_SELECTED':
+      return {
+        ...state,
+        searchState: 'sections',
+        selected: {
+          school: action.school,
+          subject: action.subject,
+          course: action.course,
+          section: ''
+        }
+      };
     default:
       return state;
   }

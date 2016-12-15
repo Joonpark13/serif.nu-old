@@ -178,3 +178,12 @@ export function fetchSearchData() {
       .then(json => dispatch(receiveSearchData(json)));
   };
 }
+
+export function populateSelected(schoolId, subjectAbbv, courseAbbv) {
+  return {
+    type: 'POPULATE_SELECTED',
+    school: schoolId,
+    subject: subjectAbbv,
+    course: courseAbbv
+  };
+}
