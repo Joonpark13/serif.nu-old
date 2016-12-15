@@ -7,7 +7,7 @@ export default class Search extends React.Component {
         <AutoComplete
           hintText="Search for classes"
           dataSource={this.props.searchdata}
-          maxSearchResults={15}
+          maxSearchResults={12}
           filter={AutoComplete.caseInsensitiveFilter}
           onNewRequest={(chosenRequest, index) => {
             if (index !== -1) { // Make sure not triggered by hitting enter.
@@ -24,6 +24,6 @@ export default class Search extends React.Component {
 }
 
 Search.propTypes = {
-  searchdata: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+  searchdata: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
   onSelect: React.PropTypes.func
 };

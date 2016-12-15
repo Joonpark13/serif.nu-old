@@ -155,3 +155,26 @@ export function fetchDetails(schoolId, subjectAbbv, courseAbbv, sectionId, callb
       .then(json => dispatch(receiveDetails(json)));
   };
 }
+
+export function requestSearchData() {
+  return {
+    type: 'REQUEST_SEARCH_DATA'
+  };
+}
+
+export function receiveSearchData(json) {
+  return {
+    type: 'RECEIVE_SEARCH_DATA',
+    searchData: json,
+    receivedAt: Date.now()
+  };
+}
+
+export function fetchSearchData() {
+  return function (dispatch) {
+    dispatch(requestSearchData());
+    return fetch('/data/search')
+      .then(response => response.json())
+      .then(json => dispatch(receiveSearchData(json)));
+  };
+}

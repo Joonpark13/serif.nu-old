@@ -6,7 +6,7 @@ import { Card, CardText, CardTitle } from 'material-ui/Card';
 import { Tabs, Tab } from 'material-ui/Tabs';
 
 import CurrentlyBrowsing from './CurrentlyBrowsing.jsx';
-import SearchContainer from './SearchContainer.jsx';
+import SearchContainer from '../containers/SearchContainer.jsx';
 import CalendarContainer from '../containers/CalendarContainer.jsx';
 import BrowseContainer from '../containers/BrowseContainer.jsx';
 

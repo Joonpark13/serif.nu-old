@@ -152,6 +152,7 @@ const Browse = (
                   key={course.abbv}
                   label={`${course.abbv} ${course.name}`}
                   onClick={() => showSections(selected.school, selected.subject, course.abbv)}
+                  primary
                   fullWidth
                   style={style.courses}
                 />

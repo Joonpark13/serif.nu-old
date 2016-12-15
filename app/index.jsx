@@ -13,7 +13,7 @@ import store from './store';
 import NavBar from './components/NavBar.jsx';
 import Serif from './components/Serif.jsx';
 
-import { fetchSchools } from './action-creators';
+import { fetchSchools, fetchSearchData } from './action-creators';
 
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
@@ -40,6 +40,7 @@ const muiTheme = getMuiTheme({
 class App extends React.Component {
   render() {
     store.dispatch(fetchSchools());
+    store.dispatch(fetchSearchData());
 
     return (
       <Provider store={store}>

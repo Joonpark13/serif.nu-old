@@ -11,6 +11,11 @@ const initialState = {
       components: []
     },
     data: {
+      search: {
+        isFetching: false,
+        lastUpdated: 0,
+        items: []
+      },
       schools: {
         isFetching: false,
         lastUpdated: 0,
@@ -134,6 +139,25 @@ function details(state = {}, action) {
   }
 }
 
+function search(state = {}, action) {
+  switch(action.type) {
+    case 'REQUEST_SEARCH_DATA':
+      return {
+        ...state,
+        isFetching: true
+      };
+    case 'RECEIVE_SEARCH_DATA':
+      return {
+        ...state,
+        isFetching: false,
+        items: action.searchData,
+        lastUpdated: action.receivedAt
+      };
+    default:
+      return state;
+  }
+}
+
 function reducer(state = initialState, action) {
   switch (action.type) {
     case 'SHOW_SCHOOLS':
@@ -214,6 +238,7 @@ function reducer(state = initialState, action) {
       return {
         ...state,
         data: {
+          search: state.data.search,
           schools: schools(state.data.schools, action),
           subjects: state.data.subjects,
           courses: state.data.courses,
@@ -226,6 +251,7 @@ function reducer(state = initialState, action) {
       return {
         ...state,
         data: {
+          search: state.data.search,
           schools: state.data.schools,
           subjects: subjects(state.data.subjects, action),
           courses: state.data.courses,
@@ -238,6 +264,7 @@ function reducer(state = initialState, action) {
       return {
         ...state,
         data: {
+          search: state.data.search,
           schools: state.data.schools,
           subjects: state.data.subjects,
           courses: courses(state.data.courses, action),
@@ -250,6 +277,7 @@ function reducer(state = initialState, action) {
       return {
         ...state,
         data: {
+          search: state.data.search,
           schools: state.data.schools,
           subjects: state.data.subjects,
           courses: state.data.courses,
@@ -267,6 +295,7 @@ function reducer(state = initialState, action) {
           section: state.selected.section
         },
         data: {
+          search: state.data.search,
           schools: state.data.schools,
           subjects: state.data.subjects,
           courses: state.data.courses,
@@ -287,6 +316,7 @@ function reducer(state = initialState, action) {
           section: action.details[0].associated_classes ? state.selected.section : ''
         },
         data: {
+          search: state.data.search,
           schools: state.data.schools,
           subjects: state.data.subjects,
           courses: state.data.courses,
@@ -294,6 +324,19 @@ function reducer(state = initialState, action) {
           details: details(state.data.details, action)
         }
       };
+    case 'REQUEST_SEARCH_DATA':
+    case 'RECEIVE_SEARCH_DATA':
+      return {
+        ...state,
+        data: {
+          search: search(state.data.search, action),
+          schools: state.data.schools,
+          subjects: state.data.subjects,
+          courses: state.data.courses,
+          sections: state.data.sections,
+          details: state.data.details
+        }
+      }
     default:
       return state;
   }
