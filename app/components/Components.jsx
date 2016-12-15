@@ -1,10 +1,6 @@
 import React from 'react';
 import { Card, CardTitle, CardActions } from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
-import CircularProgress from 'material-ui/CircularProgress';
-import Divider from 'material-ui/Divider';
-
-import { getCourseName } from '../helpers';
 
 const style = {
   components: {
