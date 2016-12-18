@@ -5,60 +5,40 @@ const initialSelected = {
   section: ''
 };
 
+const initialData = {
+  isFetching: false,
+  lastUpdated: 0,
+  items: []
+};
+
+const initialDataDetails = {
+  isFetching: false,
+  lastUpdated: 0,
+  info: {}
+};
+
 const initialState = {
   search: {
     currentView: 'search',
     selected: initialSelected,
     data: {
-      autocomplete: {
-        isFetching: false,
-        lastUpdated: 0,
-        items: []
-      },
+      autocomplete: initialData,
       school: '',
       subject: '',
       course: '',
-      sections: {
-        isFetching: false,
-        lastUpdated: 0,
-        items: []
-      },
-      details: {
-        isFetching: false,
-        lastUpdated: 0,
-        info: {}
-      }
+      sections: initialData,
+      details: initialDataDetails
     }
   },
   browse: {
     currentView: 'schools',
     selected: initialSelected,
     data: {
-      schools: {
-        isFetching: false,
-        lastUpdated: 0,
-        items: []
-      },
-      subjects: {
-        isFetching: false,
-        lastUpdated: 0,
-        items: []
-      },
-      courses: {
-        isFetching: false,
-        lastUpdated: 0,
-        items: []
-      },
-      sections: {
-        isFetching: false,
-        lastUpdated: 0,
-        items: []
-      },
-      details: {
-        isFetching: false,
-        lastUpdated: 0,
-        info: {}
-      }
+      schools: initialData,
+      subjects: initialData,
+      courses: initialData,
+      sections: initialData,
+      details: initialDataDetails
     }
   },
   calendar: {
@@ -148,7 +128,7 @@ function sections(state = {}, action) {
 function details(state = {}, action) {
   switch(action.type) {
     case 'REQUEST_DETAILS':
-    case 'REQUEST_DETAILS_SEARCh':
+    case 'REQUEST_DETAILS_SEARCH':
       return {
         ...state,
         isFetching: true
@@ -197,6 +177,12 @@ function reducer(state = initialState, action) {
             subject: '',
             course: '',
             section: ''
+          },
+          data: {
+            subjects: initialData,
+            courses: initialData,
+            sections: initialData,
+            details: initialDataDetails
           }
         }
       };
