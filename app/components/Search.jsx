@@ -10,11 +10,7 @@ const Search = ({ searchData, onSelect }) => (
     fullWidth
     onNewRequest={(chosenRequest, index) => {
       if (index !== -1) { // Make sure not triggered by hitting enter.
-        onSelect(chosenRequest);
-        // This function should:
-            // Check if components exist for the chosen course
-            // If so, display the select component dialog
-            // Otherwise, add the course to the calendar
+        onSelect(chosenRequest.school, chosenRequest.subject, chosenRequest.course);
       }
     }}
   />

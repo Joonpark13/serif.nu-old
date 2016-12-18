@@ -1,16 +1,12 @@
 import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
-import { Card, CardTitle, CardActions } from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
 import Chip from 'material-ui/Chip';
 import FontIcon from 'material-ui/FontIcon';
 import Divider from 'material-ui/Divider';
 import CircularProgress from 'material-ui/CircularProgress';
-import Avatar from 'material-ui/Avatar';
 
 import Sections from './Sections.jsx';
 import Components from './Components.jsx';
-import { getCourseName } from '../helpers';
 
 const style = {
   schools: {
@@ -81,7 +77,11 @@ const Browse = (
   const homeChip = <Chip onTouchTap={() => showSchools()}>All</Chip>;
   const arrow = <FontIcon className="material-icons">chevron_right</FontIcon>;
   const schoolNav = <Chip onTouchTap={() => showSubjects(selected.school)}>{selected.school}</Chip>;
-  const subjectNav = <Chip onTouchTap={() => showCourses(selected.subject)}>{selected.subject}</Chip>;
+  const subjectNav = (
+    <Chip onTouchTap={() => showCourses(selected.subject)}>
+      {selected.subject}
+    </Chip>
+  );
   const divider = <Divider style={style.divider} />;
   let nav;
   switch (currentView) {
@@ -236,14 +236,16 @@ const Browse = (
 
     case 'components':
       if (!isFetching) { // Make sure data has loaded
-        // TODO: Add nav and make sure if user cancels, the corresponding section is removed from calendar
-        return <Components
-          sections={sections}
-          selected={selected}
-          courses={courses}
-          details={details}
-          addComponent={addComponent}
-        />;
+        // TODO: Add nav and make sure if user cancels, the corresponding
+        // section is removed from calendar
+        return (
+          <Components
+            sections={sections}
+            selected={selected}
+            details={details}
+            addComponent={addComponent}
+          />
+        );
       }
       // In case data did not load
       return <CircularProgress style={style.loading} />;
@@ -256,11 +258,13 @@ const Browse = (
 Browse.propTypes = {
   currentView: React.PropTypes.string.isRequired,
   selected: React.PropTypes.object.isRequired,
+  isFetching: React.PropTypes.bool.isRequired,
   schools: React.PropTypes.arrayOf(React.PropTypes.object),
   subjects: React.PropTypes.arrayOf(React.PropTypes.object),
   courses: React.PropTypes.arrayOf(React.PropTypes.object),
   sections: React.PropTypes.arrayOf(React.PropTypes.object),
   details: React.PropTypes.object,
+  showSchools: React.PropTypes.func.isRequired,
   showSubjects: React.PropTypes.func.isRequired,
   showCourses: React.PropTypes.func.isRequired,
   showSections: React.PropTypes.func.isRequired,

@@ -34,9 +34,23 @@ export function addCourse(section) {
   };
 }
 
+export function addCourseSearch(section) {
+  return {
+    type: 'ADD_COURSE_SEARCH',
+    section
+  };
+}
+
 export function addComponent(detail) {
   return {
     type: 'ADD_COMPONENT',
+    detail
+  };
+}
+
+export function addComponentSearch(detail) {
+  return {
+    type: 'ADD_COMPONENT_SEARCH',
     detail
   };
 }
@@ -133,6 +147,29 @@ export function fetchSections(schoolId, subjectAbbv, courseAbbv) {
   };
 }
 
+export function requestSectionsSearch() {
+  return {
+    type: 'REQUEST_SECTIONS_SEARCH'
+  };
+}
+
+export function receiveSectionsSearch(json) {
+  return {
+    type: 'RECEIVE_SECTIONS_SEARCH',
+    sections: json,
+    receivedAt: Date.now()
+  };
+}
+
+export function fetchSectionsSearch(schoolId, subjectAbbv, courseAbbv) {
+  return function (dispatch) {
+    dispatch(requestSectionsSearch());
+    return fetch(`/data/sections/${schoolId}/${subjectAbbv}/${courseAbbv}`)
+      .then(response => response.json())
+      .then(json => dispatch(receiveSectionsSearch(json)));
+  };
+}
+
 export function requestDetails() {
   return {
     type: 'REQUEST_DETAILS'
@@ -156,6 +193,29 @@ export function fetchDetails(schoolId, subjectAbbv, courseAbbv, sectionId, callb
   };
 }
 
+export function requestDetailsSearch() {
+  return {
+    type: 'REQUEST_DETAILS_SEARCH'
+  };
+}
+
+export function receiveDetailsSearch(json) {
+  return {
+    type: 'RECEIVE_DETAILS_SEARCH',
+    details: json,
+    receivedAt: Date.now()
+  };
+}
+
+export function fetchDetailsSearch(schoolId, subjectAbbv, courseAbbv, sectionId, callback) {
+  return function (dispatch) {
+    dispatch(requestDetailsSearch());
+    return fetch(`/data/details/${schoolId}/${subjectAbbv}/${courseAbbv}/${sectionId}`)
+      .then(response => response.json())
+      .then(json => dispatch(receiveDetailsSearch(json)));
+  };
+}
+
 export function requestSearchData() {
   return {
     type: 'REQUEST_SEARCH_DATA'
@@ -176,5 +236,14 @@ export function fetchSearchData() {
     return fetch('/data/search')
       .then(response => response.json())
       .then(json => dispatch(receiveSearchData(json)));
+  };
+}
+
+export function populateSelected(schoolId, subjectAbbv, courseAbbv) {
+  return {
+    type: 'POPULATE_SELECTED',
+    school: schoolId,
+    subject: subjectAbbv,
+    course: courseAbbv
   };
 }
