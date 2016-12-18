@@ -133,6 +133,29 @@ export function fetchSections(schoolId, subjectAbbv, courseAbbv) {
   };
 }
 
+export function requestSectionsSearch() {
+  return {
+    type: 'REQUEST_SECTIONS_SEARCH'
+  };
+}
+
+export function receiveSectionsSearch(json) {
+  return {
+    type: 'RECEIVE_SECTIONS_SEARCH',
+    sections: json,
+    receivedAt: Date.now()
+  };
+}
+
+export function fetchSectionsSearch(schoolId, subjectAbbv, courseAbbv) {
+  return function (dispatch) {
+    dispatch(requestSectionsSearch());
+    return fetch(`/data/sections/${schoolId}/${subjectAbbv}/${courseAbbv}`)
+      .then(response => response.json())
+      .then(json => dispatch(receiveSectionsSearch(json)));
+  };
+}
+
 export function requestDetails() {
   return {
     type: 'REQUEST_DETAILS'

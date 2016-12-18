@@ -17,7 +17,7 @@ const style = {
 const SearchWrapper = ({
   searchData,
   isFetching,
-  searchState,
+  currentView,
   selected,
   sections,
   calendar,
@@ -29,7 +29,7 @@ const SearchWrapper = ({
     return (
       <div>
         <Search searchData={searchData} onSelect={onSelect} />
-        {searchState === 'sections' &&
+        {currentView === 'sections' &&
           <Sections
             selected={selected}
             sections={sections}
@@ -48,7 +48,21 @@ const SearchWrapper = ({
 SearchWrapper.propTypes = {
   searchData: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
   isFetching: React.PropTypes.bool,
-  searchState: React.PropTypes.string
+  currentView: React.PropTypes.string,
+  selected: React.PropTypes.shape({
+    school: React.PropTypes.string,
+    subject: React.PropTypes.string,
+    course: React.PropTypes.string,
+    section: React.PropTypes.string
+  }),
+  sections: React.PropTypes.arrayOf(React.PropTypes.object),
+  calendar: React.PropTypes.shape({
+    sections: React.PropTypes.array,
+    components: React.PropTypes.array
+  }),
+  checkComponents: React.PropTypes.func,
+  addCourse: React.PropTypes.func,
+  onSelect: React.PropTypes.func
 };
 
 export default SearchWrapper;

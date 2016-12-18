@@ -127,11 +127,13 @@ function courses(state = {}, action) {
 function sections(state = {}, action) {
   switch(action.type) {
     case 'REQUEST_SECTIONS':
+    case 'REQUEST_SECTIONS_SEARCH':
       return {
         ...state,
         isFetching: true
       };
     case 'RECEIVE_SECTIONS':
+    case 'RECEIVE_SECTIONS_SEARCH':
       return {
         ...state,
         isFetching: false,
@@ -299,6 +301,16 @@ function reducer(state = initialState, action) {
         }
       };
       break;
+    case 'REQUEST_SECTIONS_SEARCH':
+    case 'RECEIVE_SECTIONS_SEARCH':
+      newState = {
+        search: {
+          data: {
+            sections: sections(state.search.data.sections, action)
+          }
+        }
+      };
+      break;
     case 'REQUEST_DETAILS':
       newState = {
         browse: {
@@ -338,12 +350,11 @@ function reducer(state = initialState, action) {
     case 'POPULATE_SELECTED':
       newState = {
         search: {
-          searchState: 'sections',
+          currentView: 'sections',
           selected: {
             school: action.school,
             subject: action.subject,
-            course: action.course,
-            section: ''
+            course: action.course
           }
         }
       };
