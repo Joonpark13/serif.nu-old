@@ -41,12 +41,18 @@ function search(state = initialSearch, action) {
       break;
     case 'REQUEST_SECTIONS_SEARCH':
     case 'RECEIVE_SECTIONS_SEARCH':
-      newState = {
+      return { // Do not deep copy
+        currentView: state.currentView,
+        selected: state.selected,
         data: {
-          sections: sections(state.data.sections, action)
+          autocomplete: state.data.autocomplete,
+          school: state.data.school,
+          subject: state.data.subject,
+          course: state.data.course,
+          sections: sections(state.data.sections, action),
+          details: state.data.details
         }
       };
-      break;
     case 'REQUEST_DETAILS_SEARCH':
       newState = {
         data: {
@@ -91,7 +97,7 @@ function search(state = initialSearch, action) {
     default:
       return state;
   }
-  return $.extend(true, {}, state, newState);
+  return $.extend(true, {}, state, newState); // Deep copy
 }
 
 export default search;
