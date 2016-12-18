@@ -1,13 +1,9 @@
 import React from 'react';
-import { Card, CardTitle, CardActions } from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
+import { List, ListItem } from 'material-ui/List';
 
 import { inCalendar } from '../helpers';
 
 const style = {
-  sections: {
-    marginBottom: '5px'
-  },
   headings: {
     marginTop: 0,
     marginBottom: '5px'
@@ -37,22 +33,21 @@ const Sections = ({
     <div>
       <h3 style={style.headings}>Choose a section:</h3>
 
-      {sections.map(section => (
-        <Card key={section.section} style={style.sections}>
-          <CardTitle title={`Section ${section.section}`} subtitle={section.meeting_time} />
-          <CardActions>
-            <FlatButton
-              label="Add Section"
-              primary
-              disabled={inCalendar(calendar.sections, section.id)}
-              onClick={() => {
-                checkComponents(selected.school, selected.subject, selected.course, section.id);
-                addCourse(section);
-              }}
-            />
-          </CardActions>
-        </Card>
-      ))}
+      <List>
+        {sections.map(section => (
+          <ListItem
+            key={section.section}
+            primaryText={`Section ${section.section}`}
+            secondaryText={section.meeting_time}
+            // Make sure the section is not already in calendar
+            disabled={inCalendar(calendar.sections, section.id)}
+            onTouchTap={() => {
+              checkComponents(selected.school, selected.subject, selected.course, section.id);
+              addCourse(section);
+            }}
+          />
+        ))}
+      </List>
     </div>
 );
 
