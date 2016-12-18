@@ -1,47 +1,69 @@
+const initialSelected = {
+  school: '',
+  subject: '',
+  course: '',
+  section: ''
+};
+
 const initialState = {
-  searchState: '',
-  currentView: 'schools',
-  selected: {
-    school: '',
-    subject: '',
-    course: '',
-    section: ''
+  search: {
+    currentView: 'search',
+    selected: initialSelected,
+    data: {
+      autocomplete: {
+        isFetching: false,
+        lastUpdated: 0,
+        items: []
+      },
+      school: '',
+      subject: '',
+      course: '',
+      sections: {
+        isFetching: false,
+        lastUpdated: 0,
+        items: []
+      },
+      details: {
+        isFetching: false,
+        lastUpdated: 0,
+        info: {}
+      }
+    }
+  },
+  browse: {
+    currentView: 'schools',
+    selected: initialSelected,
+    data: {
+      schools: {
+        isFetching: false,
+        lastUpdated: 0,
+        items: []
+      },
+      subjects: {
+        isFetching: false,
+        lastUpdated: 0,
+        items: []
+      },
+      courses: {
+        isFetching: false,
+        lastUpdated: 0,
+        items: []
+      },
+      sections: {
+        isFetching: false,
+        lastUpdated: 0,
+        items: []
+      },
+      details: {
+        isFetching: false,
+        lastUpdated: 0,
+        info: {}
+      }
+    }
   },
   calendar: {
     sections: [],
     components: []
-  },
-  data: {
-    search: {
-      isFetching: false,
-      lastUpdated: 0,
-      items: []
-    },
-    schools: {
-      isFetching: false,
-      lastUpdated: 0,
-      items: []
-    },
-    subjects: {
-      isFetching: false,
-      lastUpdated: 0,
-      items: []
-    },
-    courses: {
-      isFetching: false,
-      lastUpdated: 0,
-      items: []
-    },
-    sections: {
-      isFetching: false,
-      lastUpdated: 0,
-      items: []
-    },
-    details: {
-      isFetching: false,
-      lastUpdated: 0,
-      info: {}
-    }
   }
 };
 
@@ -160,198 +182,176 @@ function search(state = {}, action) {
 }
 
 function reducer(state = initialState, action) {
+  let newState = {};
   switch (action.type) {
     case 'SHOW_SCHOOLS':
-      return {
-        ...state,
-        currentView: 'schools',
-        selected: {
-          school: '',
-          subject: '',
-          course: '',
-          section: ''
+      newState = {
+        browse: {
+          currentView: 'schools',
+          selected: {
+            school: '',
+            subject: '',
+            course: '',
+            section: ''
+          }
         }
-      }
+      };
+      break;
     case 'SHOW_SUBJECTS':
-      return {
-        ...state,
-        currentView: 'subjects',
-        selected: {
-          school: action.schoolId,
-          subject: '',
-          course: '',
-          section: ''
+      newState = {
+        browse: {
+          currentView: 'subjects',
+          selected: {
+            school: action.schoolId,
+            subject: '',
+            course: '',
+            section: ''
+          }
         }
       };
+      break;
     case 'SHOW_COURSES':
-      return {
-        ...state,
-        currentView: 'courses',
-        selected: {
-          school: state.selected.school,
-          subject: action.subjectAbbv,
-          course: '',
-          section: ''
+      newState = {
+        browse: {
+          currentView: 'courses',
+          selected: {
+            subject: action.subjectAbbv,
+            course: '',
+            section: ''
+          }
         }
       };
+      break;
     case 'SHOW_SECTIONS':
-      return {
-        ...state,
-        currentView: 'sections',
-        selected: {
-          school: state.selected.school,
-          subject: state.selected.subject,
-          course: action.courseAbbv,
-          section: ''
+      newState = {
+        browse: {
+          currentView: 'sections',
+          selected: {
+            course: action.courseAbbv,
+            section: ''
+          }
         }
       };
+      break;
     case 'ADD_COURSE':
-      return {
-        ...state,
-        selected: {
-          school: state.selected.school,
-          subject: state.selected.subject,
-          course: state.selected.course,
-          section: action.section.id
+      newState = {
+        browse: {
+          selected: {
+            section: action.section.id
+          }
         },
         calendar: {
-          sections: state.calendar.sections.concat(action.section),
-          components: state.calendar.components
+          sections: state.calendar.sections.concat(action.section)
         }
       };
+      break;
     case 'ADD_COMPONENT':
-      return {
-        ...state,
-        currentView: 'courses',
-        selected: {
-          school: state.selected.school,
-          subject: state.selected.subject,
-          course: '',
-          section: ''
+      newState = {
+        browse: {
+          currentView: 'courses',
+          selected: {
+            course: '',
+            section: ''
+          }
         },
         calendar: {
-          sections: state.calendar.sections,
           components: state.calendar.components.concat(action.detail)
         }
       };
+      break;
     case 'REQUEST_SCHOOLS':
     case 'RECEIVE_SCHOOLS':
-      return {
-        ...state,
-        data: {
-          search: state.data.search,
-          schools: schools(state.data.schools, action),
-          subjects: state.data.subjects,
-          courses: state.data.courses,
-          sections: state.data.sections,
-          details: state.data.details
+      newState = {
+        browse: {
+          data: {
+            schools: schools(state.browse.data.schools, action)
+          }
         }
       };
+      break;
     case 'REQUEST_SUBJECTS':
     case 'RECEIVE_SUBJECTS':
-      return {
-        ...state,
-        data: {
-          search: state.data.search,
-          schools: state.data.schools,
-          subjects: subjects(state.data.subjects, action),
-          courses: state.data.courses,
-          sections: state.data.sections,
-          details: state.data.details
+      newState = {
+        browse: {
+          data: {
+            subjects: subjects(state.browse.data.subjects, action)
+          }
         }
       };
+      break;
     case 'REQUEST_COURSES':
     case 'RECEIVE_COURSES':
-      return {
-        ...state,
-        data: {
-          search: state.data.search,
-          schools: state.data.schools,
-          subjects: state.data.subjects,
-          courses: courses(state.data.courses, action),
-          sections: state.data.sections,
-          details: state.data.details
+      newState = {
+        browse: {
+          data: {
+            courses: courses(state.browse.data.courses, action)
+          }
         }
       };
+      break;
     case 'REQUEST_SECTIONS':
     case 'RECEIVE_SECTIONS':
-      return {
-        ...state,
-        data: {
-          search: state.data.search,
-          schools: state.data.schools,
-          subjects: state.data.subjects,
-          courses: state.data.courses,
-          sections: sections(state.data.sections, action),
-          details: state.data.details
+      newState = {
+        browse: {
+          data: {
+            sections: sections(state.browse.data.sections, action)
+          }
         }
       };
+      break;
     case 'REQUEST_DETAILS':
-      return {
-        ...state,
-        selected: {
-          school: state.selected.school,
-          subject: state.selected.subject,
-          course: state.selected.course,
-          section: state.selected.section
-        },
-        data: {
-          search: state.data.search,
-          schools: state.data.schools,
-          subjects: state.data.subjects,
-          courses: state.data.courses,
-          sections: state.data.sections,
-          details: details(state.data.details, action)
-        }
-      }
-    case 'RECEIVE_DETAILS':
-      return {
-        ...state,
-        // If there are components to select, show components
-        // If not, go back to course view
-        currentView: action.details[0].associated_classes ? 'components' : 'courses',
-        selected: {
-          school: state.selected.school,
-          subject: state.selected.subject,
-          course: action.details[0].associated_classes ? state.selected.course : '',
-          section: action.details[0].associated_classes ? state.selected.section : ''
-        },
-        data: {
-          search: state.data.search,
-          schools: state.data.schools,
-          subjects: state.data.subjects,
-          courses: state.data.courses,
-          sections: state.data.sections,
-          details: details(state.data.details, action)
+      newState = {
+        browse: {
+          data: {
+            details: details(state.browse.data.details, action)
+          }
         }
       };
+      break;
+    case 'RECEIVE_DETAILS':
+      newState = {
+        browse: {
+          // If there are components to select, show components
+          // If not, go back to course view
+          currentView: action.details[0].associated_classes ? 'components' : 'courses',
+          selected: {
+            course: action.details[0].associated_classes ? state.selected.course : '',
+            section: action.details[0].associated_classes ? state.selected.section : ''
+          },
+          data: {
+            details: details(state.browse.data.details, action)
+          }
+        }
+      };
+      break;
     case 'REQUEST_SEARCH_DATA':
     case 'RECEIVE_SEARCH_DATA':
-      return {
-        ...state,
-        data: {
-          search: search(state.data.search, action),
-          schools: state.data.schools,
-          subjects: state.data.subjects,
-          courses: state.data.courses,
-          sections: state.data.sections,
-          details: state.data.details
+      newState = {
+        search: {
+          data: {
+            autocomplete: search(state.search.data.autocomplete, action),
+          },
+          currentView: state.search.currentView,
         }
       };
+      break;
     case 'POPULATE_SELECTED':
-      return {
-        ...state,
-        searchState: 'sections',
-        selected: {
-          school: action.school,
-          subject: action.subject,
-          course: action.course,
-          section: ''
+      newState = {
+        search: {
+          searchState: 'sections',
+          selected: {
+            school: action.school,
+            subject: action.subject,
+            course: action.course,
+            section: ''
+          }
         }
       };
+      break;
     default:
       return state;
   }
+  return $.extend(true, {}, state, newState);
 }
 
 export default reducer;

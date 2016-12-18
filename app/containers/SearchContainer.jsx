@@ -4,11 +4,11 @@ import SearchWrapper from '../components/SearchWrapper.jsx';
 import { fetchDetails, addCourse, populateSelected, fetchSections } from '../action-creators';
 
 const mapStateToProps = state => ({
-  searchData: state.data.search.items,
-  isFetching: state.data.search.isFetching,
-  searchState: state.searchState,
-  selected: state.selected,
-  sections: state.data.sections.items,
+  searchData: state.search.data.autocomplete.items,
+  isFetching: state.search.data.isFetching,
+  searchState: state.search.searchState,
+  selected: state.search.selected,
+  sections: state.search.data.sections.items,
   calendar: state.calendar
 });
 
