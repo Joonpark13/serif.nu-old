@@ -45,7 +45,8 @@ const style = {
   },
   nav: {
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
+    flexWrap: 'wrap'
   },
   divider: {
     marginTop: '5px',
@@ -83,7 +84,7 @@ const Browse = (
   const subjectNav = <Chip onTouchTap={() => showCourses(selected.subject)}>{selected.subject}</Chip>;
   const divider = <Divider style={style.divider} />;
   let nav;
-  switch(currentView) {
+  switch (currentView) {
     case 'subjects':
       nav = (
         <div>
