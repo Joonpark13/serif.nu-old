@@ -148,11 +148,13 @@ function sections(state = {}, action) {
 function details(state = {}, action) {
   switch(action.type) {
     case 'REQUEST_DETAILS':
+    case 'REQUEST_DETAILS_SEARCh':
       return {
         ...state,
         isFetching: true
       };
     case 'RECEIVE_DETAILS':
+    case 'RECEIVE_DETAILS_SEARCH':
       return {
         ...state,
         isFetching: false,
@@ -247,10 +249,36 @@ function reducer(state = initialState, action) {
         }
       };
       break;
+    case 'ADD_COURSE_SEARCH':
+      newState = {
+        search: {
+          selected: {
+            section: action.section.id
+          }
+        },
+        calendar: {
+          sections: state.calendar.sections.concat(action.section)
+        }
+      };
+      break;
     case 'ADD_COMPONENT':
       newState = {
         browse: {
           currentView: 'courses',
+          selected: {
+            course: '',
+            section: ''
+          }
+        },
+        calendar: {
+          components: state.calendar.components.concat(action.detail)
+        }
+      };
+      break;
+    case 'ADD_COMPONENT_SEARCH':
+      newState = {
+        search: {
+          currentView: 'search',
           selected: {
             course: '',
             section: ''
@@ -306,7 +334,7 @@ function reducer(state = initialState, action) {
       newState = {
         search: {
           data: {
-            sections: sections(state.search.data.sections, action)
+            sections: sections(state.browse.data.sections, action)
           }
         }
       };
@@ -327,11 +355,36 @@ function reducer(state = initialState, action) {
           // If not, go back to course view
           currentView: action.details[0].associated_classes ? 'components' : 'courses',
           selected: {
-            course: action.details[0].associated_classes ? state.selected.course : '',
-            section: action.details[0].associated_classes ? state.selected.section : ''
+            course: action.details[0].associated_classes ? state.browse.selected.course : '',
+            section: action.details[0].associated_classes ? state.browse.selected.section : ''
           },
           data: {
             details: details(state.browse.data.details, action)
+          }
+        }
+      };
+      break;
+    case 'REQUEST_DETAILS_SEARCH':
+      newState = {
+        search: {
+          data: {
+            details: details(state.browse.data.details, action)
+          }
+        }
+      };
+      break;
+    case 'RECEIVE_DETAILS_SEARCH':
+      newState = {
+        search: {
+          // If there are components to select, show components
+          // If not, go back to course view
+          currentView: action.details[0].associated_classes ? 'components' : 'courses',
+          selected: {
+            course: action.details[0].associated_classes ? state.search.selected.course : '',
+            section: action.details[0].associated_classes ? state.search.selected.section : ''
+          },
+          data: {
+            details: details(state.search.data.details, action)
           }
         }
       };
@@ -354,7 +407,8 @@ function reducer(state = initialState, action) {
           selected: {
             school: action.school,
             subject: action.subject,
-            course: action.course
+            course: action.course,
+            section: ''
           }
         }
       };

@@ -3,6 +3,7 @@ import CircularProgress from 'material-ui/CircularProgress';
 
 import Search from './Search.jsx';
 import Sections from './Sections.jsx';
+import Components from './Components.jsx';
 
 const style = {
   icon: {
@@ -20,24 +21,39 @@ const SearchWrapper = ({
   currentView,
   selected,
   sections,
+  details,
   calendar,
   checkComponents,
   addCourse,
+  addComponent,
   onSelect
 }) => {
+  let selectionView = null;
+  if (currentView === 'sections') {
+    selectionView = (
+      <Sections
+        selected={selected}
+        sections={sections}
+        calendar={calendar}
+        checkComponents={checkComponents}
+        addCourse={addCourse}
+      />
+    );
+  } else if (currentView === 'components') {
+    selectionView = (
+      <Components
+        selected={selected}
+        sections={sections}
+        details={details}
+        addComponent={addComponent}
+      />
+    );
+  }
   if (!isFetching) {
     return (
       <div>
         <Search searchData={searchData} onSelect={onSelect} />
-        {currentView === 'sections' &&
-          <Sections
-            selected={selected}
-            sections={sections}
-            calendar={calendar}
-            checkComponents={checkComponents}
-            addCourse={addCourse}
-          />
-        }
+        {selectionView}
       </div>
     );
   }

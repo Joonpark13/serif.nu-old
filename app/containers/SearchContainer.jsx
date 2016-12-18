@@ -1,7 +1,13 @@
 import { connect } from 'react-redux';
 
 import SearchWrapper from '../components/SearchWrapper.jsx';
-import { fetchDetails, addCourse, populateSelected, fetchSectionsSearch } from '../action-creators';
+import {
+  fetchDetailsSearch,
+  addCourseSearch,
+  populateSelected,
+  fetchSectionsSearch,
+  addComponentSearch
+} from '../action-creators';
 
 const mapStateToProps = state => ({
   searchData: state.search.data.autocomplete.items,
@@ -9,6 +15,7 @@ const mapStateToProps = state => ({
   currentView: state.search.currentView,
   selected: state.search.selected,
   sections: state.search.data.sections.items,
+  details: state.search.data.details.info,
   calendar: state.calendar
 });
 
@@ -18,10 +25,13 @@ const mapDispatchToProps = dispatch => ({
     dispatch(fetchSectionsSearch(schoolId, subjectAbbv, courseAbbv));
   },
   checkComponents: (schoolId, subjectAbbv, courseAbbv, sectionId) => {
-    dispatch(fetchDetails(schoolId, subjectAbbv, courseAbbv, sectionId));
+    dispatch(fetchDetailsSearch(schoolId, subjectAbbv, courseAbbv, sectionId));
   },
   addCourse: (section) => {
-    dispatch(addCourse(section));
+    dispatch(addCourseSearch(section));
+  },
+  addComponent: (detail) => {
+    dispatch(addComponentSearch(detail));
   }
 });
 

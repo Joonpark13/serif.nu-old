@@ -34,9 +34,23 @@ export function addCourse(section) {
   };
 }
 
+export function addCourseSearch(section) {
+  return {
+    type: 'ADD_COURSE_SEARCH',
+    section
+  };
+}
+
 export function addComponent(detail) {
   return {
     type: 'ADD_COMPONENT',
+    detail
+  };
+}
+
+export function addComponentSearch(detail) {
+  return {
+    type: 'ADD_COMPONENT_SEARCH',
     detail
   };
 }
@@ -176,6 +190,29 @@ export function fetchDetails(schoolId, subjectAbbv, courseAbbv, sectionId, callb
     return fetch(`/data/details/${schoolId}/${subjectAbbv}/${courseAbbv}/${sectionId}`)
       .then(response => response.json())
       .then(json => dispatch(receiveDetails(json)));
+  };
+}
+
+export function requestDetailsSearch() {
+  return {
+    type: 'REQUEST_DETAILS_SEARCH'
+  };
+}
+
+export function receiveDetailsSearch(json) {
+  return {
+    type: 'RECEIVE_DETAILS_SEARCH',
+    details: json,
+    receivedAt: Date.now()
+  };
+}
+
+export function fetchDetailsSearch(schoolId, subjectAbbv, courseAbbv, sectionId, callback) {
+  return function (dispatch) {
+    dispatch(requestDetailsSearch());
+    return fetch(`/data/details/${schoolId}/${subjectAbbv}/${courseAbbv}/${sectionId}`)
+      .then(response => response.json())
+      .then(json => dispatch(receiveDetailsSearch(json)));
   };
 }
 
