@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import Calendar from '../components/Calendar.jsx';
+import CalendarWrapper from '../components/CalendarWrapper.jsx';
 
 const parseDow = (dow) => {
     // Input examples: 'MoWeFr', 'TuTh', 'MoWe', etc
@@ -53,6 +53,7 @@ const parseTime = (time) => {
 };
 
 const parseMeetingTime = (meetingTime) => {
+    if (meetingTime === 'TBA') return { unscheduled: true };
     // Take API's formatted meeting_time and output the
     // start time, end time, and days of the week for
     // fullcalendar to accept as event objects.
@@ -103,6 +104,6 @@ const mapStateToProps = (state) => ({
     coursecomps: parseClasses(state.calendar)
 });
 
-const CalendarContainer = connect(mapStateToProps)(Calendar);
+const CalendarContainer = connect(mapStateToProps)(CalendarWrapper);
 
 export default CalendarContainer;

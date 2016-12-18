@@ -15,9 +15,6 @@ const style = {
     paddingRight: 0,
     paddingLeft: 0
   },
-  card: {
-    margin: 10
-  },
   browse: {
     maxHeight: '675px',
     overflow: 'scroll'
@@ -64,16 +61,7 @@ const Serif = () => (
       </Col>
 
       <Col style={style.column} md={9} mdPull={3}>
-        <Card style={style.card}>
-          <CardText>
-            <CalendarContainer />
-          </CardText>
-        </Card>
-
-        <Card style={style.card}>
-          <CardTitle title="Unscheduled Courses" />
-          <CardText></CardText>
-        </Card>
+        <CalendarContainer />
       </Col>
     </Row>
   </Grid>
