@@ -22,55 +22,73 @@ const initialBrowse = {
 };
 
 function browse(state = initialBrowse, action) {
+  // newState will be deepcopied with state into a new object and returned
+  // unless otherwise specified
   let newState = {};
   switch (action.type) {
     case 'SHOW_SCHOOLS':
-      newState = {
+      return { // Do not deep copy
         currentView: 'schools',
-        selected: {
-          school: '',
-          subject: '',
-          course: '',
-          section: ''
-        },
+        selected: initialSelected,
         data: {
+          schools: state.data.schools,
           subjects: initialData,
           courses: initialData,
           sections: initialData,
           details: initialDataDetails
         }
       };
-      break;
     case 'SHOW_SUBJECTS':
-      newState = {
+      return { // Do not deep copy
         currentView: 'subjects',
         selected: {
           school: action.schoolId,
           subject: '',
           course: '',
           section: ''
+        },
+        data: {
+          schools: state.data.schools,
+          subjects: state.data.subjects,
+          courses: initialData,
+          sections: initialData,
+          details: initialDataDetails
         }
       };
-      break;
     case 'SHOW_COURSES':
-      newState = {
+      return { // Do not deep copy
         currentView: 'courses',
         selected: {
+          school: state.selected.school,
           subject: action.subjectAbbv,
           course: '',
           section: ''
+        },
+        data: {
+          schools: state.data.schools,
+          subjects: state.data.subjects,
+          courses: state.data.courses,
+          sections: initialData,
+          details: initialDataDetails
         }
       };
-      break;
     case 'SHOW_SECTIONS':
-      newState = {
+      return { // Do not deep copy
         currentView: 'sections',
         selected: {
+          school: state.selected.school,
+          subject: state.selected.subject,
           course: action.courseAbbv,
           section: ''
+        },
+        data: {
+          schools: state.data.schools,
+          subjects: state.data.subjects,
+          courses: state.data.courses,
+          sections: state.data.sections,
+          details: initialDataDetails
         }
       };
-      break;
     case 'ADD_COURSE':
       newState = {
         selected: {
@@ -113,12 +131,17 @@ function browse(state = initialBrowse, action) {
       break;
     case 'REQUEST_SECTIONS':
     case 'RECEIVE_SECTIONS':
-      newState = {
+      return { // Do not deep copy
+        currentView: state.currentView,
+        selected: state.selected,
         data: {
-          sections: sections(state.data.sections, action)
+          schools: state.data.schools,
+          subjects: state.data.subjects,
+          courses: state.data.courses,
+          sections: sections(state.data.sections, action),
+          details: initialDataDetails
         }
       };
-      break;
     case 'REQUEST_DETAILS':
       newState = {
         data: {
@@ -143,7 +166,7 @@ function browse(state = initialBrowse, action) {
     default:
       return state;
   }
-  return $.extend(true, {}, state, newState);
+  return $.extend(true, {}, state, newState); // Deep (recursive) copy
 }
 
 export default browse;

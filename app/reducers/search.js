@@ -3,7 +3,8 @@ import {
   initialData,
   initialDataDetails,
   sections,
-  details
+  details,
+  searchHandler
 } from './helpers';
 
 const initialSearch = {
