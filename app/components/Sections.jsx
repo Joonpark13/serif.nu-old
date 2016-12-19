@@ -38,7 +38,16 @@ const Sections = ({
           <ListItem
             key={section.section}
             primaryText={`Section ${section.section}`}
-            secondaryText={section.meeting_time}
+            secondaryText={
+              <div>
+                <p>
+                  {section.meeting_time}
+                  <br />
+                  {section.instructor.join(', ')}
+                </p>
+              </div>
+            }
+            secondaryTextLines={2}
             // Make sure the section is not already in calendar
             disabled={inCalendar(calendar.sections, section.id)}
             onTouchTap={() => {

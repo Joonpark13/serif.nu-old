@@ -150,9 +150,8 @@ const Browse = (
             ))}
           </div>
         );
-      } else { // In case data did not load
-        return <CircularProgress style={style.loading} />;
-      }
+      } // In case data did not load
+      return <CircularProgress style={style.loading} />;
 
     case 'subjects':
       if (!isFetching) { // Make sure data has loaded
@@ -171,9 +170,8 @@ const Browse = (
             ))}
           </div>
         );
-      } else { // In case data did not load
-        return <CircularProgress style={style.loading}/>;
-      }
+      } // In case data did not load
+      return <CircularProgress style={style.loading}/>;
 
     case 'courses':
       if (!isFetching) { // Make sure data has loaded
@@ -210,9 +208,8 @@ const Browse = (
             </div>
           );
         }
-      } else { // In case data did not load
-        return <CircularProgress style={style.loading} />;
-      }
+      } // In case data did not load
+      return <CircularProgress style={style.loading} />;
 
     case 'sections':
       if (!isFetching) { // Make sure data has loaded
@@ -230,8 +227,7 @@ const Browse = (
             />
           </div>
         );
-      }
-      // In case data did not load
+      } // In case data did not load
       return <CircularProgress style={style.loading} />;
 
     case 'components':
@@ -246,8 +242,7 @@ const Browse = (
             addComponent={addComponent}
           />
         );
-      }
-      // In case data did not load
+      } // In case data did not load
       return <CircularProgress style={style.loading} />;
 
     default:
@@ -270,7 +265,11 @@ Browse.propTypes = {
   showSections: React.PropTypes.func.isRequired,
   checkComponents: React.PropTypes.func.isRequired,
   addCourse: React.PropTypes.func.isRequired,
-  addComponent: React.PropTypes.func.isRequired
+  addComponent: React.PropTypes.func.isRequired,
+  calendar: React.PropTypes.shape({
+    sections: React.PropTypes.array,
+    components: React.PropTypes.array
+  })
 };
 
 export default Browse;
