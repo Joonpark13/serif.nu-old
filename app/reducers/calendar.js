@@ -26,6 +26,21 @@ function calendar(state = initialCalendar, action) {
         components: state.components.concat(action.detail)
       };
       break;
+    case 'REMOVE': {
+      const newSections = [];
+      const newComponents = [];
+      // Take out any matching ids to sectionId in both sections and components
+      state.sections.forEach((section) => {
+        if (section.id !== action.sectionId) newSections.push(section);
+      });
+      state.components.forEach((component) => {
+        if (component.id !== action.sectionId) newComponents.push(component);
+      });
+      return {
+        sections: newSections,
+        components: newComponents
+      };
+    }
     default:
       return state;
   }

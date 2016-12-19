@@ -8,7 +8,7 @@ const style = {
   }
 };
 
-const Cart = ({ sections, components }) => (
+const Cart = ({ sections, components, remove }) => (
     <div>
       {sections.map((section) => (
         <Card key={section.id} style={style.card}>
@@ -26,7 +26,7 @@ const Cart = ({ sections, components }) => (
             <p>ID: {section.id}</p>
           </CardText>
           <CardActions>
-            <FlatButton label="Remove" />
+            <FlatButton label="Remove" onTouchTap={() => remove(section.id)} />
           </CardActions>
         </Card>
       ))}
@@ -37,5 +37,6 @@ export default Cart;
 
 Cart.propTypes = {
   sections: React.PropTypes.arrayOf(React.PropTypes.object),
-  components: React.PropTypes.arrayOf(React.PropTypes.object)
+  components: React.PropTypes.arrayOf(React.PropTypes.object),
+  remove: React.PropTypes.func
 };

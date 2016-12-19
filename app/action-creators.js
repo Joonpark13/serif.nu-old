@@ -247,3 +247,10 @@ export function populateSelected(schoolId, subjectAbbv, courseAbbv) {
     course: courseAbbv
   };
 }
+
+export function remove(sectionId) {
+  return {
+    type: 'REMOVE',
+    sectionId
+  };
+}

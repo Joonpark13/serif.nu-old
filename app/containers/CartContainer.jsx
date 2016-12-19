@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 
+import { remove } from '../action-creators';
 import Cart from '../components/Cart.jsx';
 
 const mapStateToProps = (state) => ({
@@ -7,6 +8,12 @@ const mapStateToProps = (state) => ({
   components: state.calendar.components
 });
 
-const CartContainer = connect(mapStateToProps)(Cart);
+const mapDispatchToProps = (dispatch) => ({
+  remove: (sectionId) => {
+    dispatch(remove(sectionId));
+  }
+});
+
+const CartContainer = connect(mapStateToProps, mapDispatchToProps)(Cart);
 
 export default CartContainer;
