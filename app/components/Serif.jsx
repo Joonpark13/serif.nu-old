@@ -2,13 +2,14 @@ import React from 'react';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
-import { Card, CardText, CardTitle } from 'material-ui/Card';
+import { Card, CardText } from 'material-ui/Card';
 import { Tabs, Tab } from 'material-ui/Tabs';
 
 import CurrentlyBrowsing from './CurrentlyBrowsing.jsx';
 import SearchContainer from '../containers/SearchContainer.jsx';
 import CalendarContainer from '../containers/CalendarContainer.jsx';
 import BrowseContainer from '../containers/BrowseContainer.jsx';
+import CartContainer from '../containers/CartContainer.jsx';
 
 const style = {
   column: {
@@ -54,6 +55,7 @@ const Serif = () => (
           <Tab label="Cart">
             <Card>
               <CardText>
+                <CartContainer />
               </CardText>
             </Card>
           </Tab>
