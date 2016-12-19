@@ -1,11 +1,8 @@
 import React from 'react';
-import { Card, CardTitle, CardActions } from 'material-ui/Card';
+import { List, ListItem } from 'material-ui/List';
 import FlatButton from 'material-ui/FlatButton';
 
 const style = {
-  components: {
-    marginBottom: '5px'
-  },
   headings: {
     marginTop: 0,
     marginBottom: '5px'
@@ -41,22 +38,20 @@ const Components = ({
     <div>
       <h3 style={style.headings}>Choose a component:</h3>
 
-      {details.associated_classes.map((comp, index) => (
-        <Card key={index} style={style.components}>
-          <CardTitle title={comp.component} subtitle={comp.meeting_time} />
-          <CardActions>
-            <FlatButton
-              label="Add Component"
-              primary
-              onClick={() => addComponent({
-                id: selected.section,
-                title: `${sectionTitle} ${comp.component}`,
-                ...comp
-              })}
-            />
-          </CardActions>
-        </Card>
-      ))}
+      <List>
+        {details.associated_classes.map((comp, index) => (
+          <ListItem
+            key={index}
+            primaryText={comp.component}
+            secondaryText={comp.meeting_time}
+            onTouchTap={() => addComponent({
+              id: selected.section,
+              title: `${sectionTitle} ${comp.component}`,
+              ...comp
+            })}
+          />
+        ))}
+      </List>
     </div>
   );
 };
