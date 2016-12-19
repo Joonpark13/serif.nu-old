@@ -1,10 +1,17 @@
 import React from 'react';
-import { Card, CardHeader, CardText } from 'material-ui/Card';
+import { Card, CardHeader, CardText, CardActions } from 'material-ui/Card';
+import FlatButton from 'material-ui/FlatButton';
+
+const style = {
+  card: {
+    marginBottom: '10px'
+  }
+};
 
 const Cart = ({ sections, components }) => (
     <div>
       {sections.map((section) => (
-        <Card key={section.id}>
+        <Card key={section.id} style={style.card}>
           <CardHeader
             title={section.name}
             subtitle={`${section.subject} ${section.course}`}
@@ -12,11 +19,15 @@ const Cart = ({ sections, components }) => (
             showExpandableButton
           />
           <CardText expandable>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-            Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-            Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
+            <p>{section.meeting_time}</p>
+            <p>{section.instructor.join(', ')}</p>
+            {section.topic && <p>{section.topic}</p>}
+            <p>{section.overview_of_class}</p>
+            <p>ID: {section.id}</p>
           </CardText>
+          <CardActions>
+            <FlatButton label="Remove" />
+          </CardActions>
         </Card>
       ))}
     </div>
