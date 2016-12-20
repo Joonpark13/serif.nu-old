@@ -8,9 +8,16 @@ const style = {
   }
 };
 
+const matchId = (id) => (
+  (component) => (id === component.id)
+);
+
 const Cart = ({ sections, components, remove }) => (
-    <div>
-      {sections.map((section) => (
+  <div>
+    {sections.map((section) => {
+      // There should at most be one match
+      const component = components.filter(matchId(section.id))[0];
+      return (
         <Card key={section.id} style={style.card}>
           <CardHeader
             title={section.name}
@@ -24,13 +31,21 @@ const Cart = ({ sections, components, remove }) => (
             {section.topic && <p>{section.topic}</p>}
             <p>{section.overview_of_class}</p>
             <p>ID: {section.id}</p>
+            {component && (
+              <div>
+                <h4>{component.component}</h4>
+                <p>{component.meeting_time}</p>
+                <p>{component.room}</p>
+              </div>
+            )}
           </CardText>
           <CardActions>
-            <FlatButton label="Remove" onTouchTap={() => remove(section.id)} />
+            <FlatButton label="Remove" primary onTouchTap={() => remove(section.id)} />
           </CardActions>
         </Card>
-      ))}
-    </div>
+      );
+    })}
+  </div>
 );
 
 export default Cart;
