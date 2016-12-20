@@ -2,7 +2,7 @@ const initialCalendar = {
   sections: [],
   components: [],
   eventOpen: false,
-  selectedEvent: {}
+  selectedEvents: {}
 };
 
 const filterComponents = (components, sectionId) => {
@@ -44,7 +44,7 @@ function calendar(state = initialCalendar, action) {
         sections: newSections,
         components: newComponents,
         eventOpen: state.eventOpen,
-        selectedEvent: state.selectedEvent
+        selectedEvents: state.selectedEvents
       };
     }
     case 'SWAP_COMPONENT': {
@@ -54,7 +54,7 @@ function calendar(state = initialCalendar, action) {
         sections: state.sections,
         components: newComponents,
         eventOpen: state.eventOpen,
-        selectedEvent: state.selectedEvent
+        selectedEvents: state.selectedEvents
       };
     }
     case 'SELECT_EVENT':
@@ -62,14 +62,14 @@ function calendar(state = initialCalendar, action) {
         sections: state.sections,
         components: state.components,
         eventOpen: true,
-        selectedEvent: action.event
+        selectedEvents: action.coursecomps
       };
     case 'CLOSE_EVENT_DIALOG':
       return {
         sections: state.sections,
         components: state.components,
         eventOpen: false,
-        selectedEvent: state.selectedEvent
+        selectedEvents: state.selectedEvents
       };
     default:
       return state;

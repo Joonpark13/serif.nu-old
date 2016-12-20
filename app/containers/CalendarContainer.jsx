@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import CalendarWrapper from '../components/CalendarWrapper.jsx';
-import { selectEvent, remove, closeEventDialog } from '../action-creators';
+import { selectEvent, remove, closeEventDialog, fetchDetailsCart, swapComponent } from '../action-creators';
 
 const parseDow = (dow) => {
     // Input examples: 'MoWeFr', 'TuTh', 'MoWe', etc
@@ -104,12 +104,14 @@ const parseClasses = (calendar) => {
 const mapStateToProps = (state) => ({
     coursecomps: parseClasses(state.calendar),
     eventOpen: state.calendar.eventOpen,
-    selectedEvent: state.calendar.selectedEvent
+    selectedEvents: state.calendar.selectedEvents,
+    sections: state.calendar.sections,
+    components: state.calendar.components
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    selectEvent: (event) => {
-        dispatch(selectEvent(event));
+    selectEvent: (coursecomps) => {
+        dispatch(selectEvent(coursecomps));
     },
     remove: (sectionId) => {
         dispatch(remove(sectionId));
@@ -117,7 +119,12 @@ const mapDispatchToProps = (dispatch) => ({
     },
     closeDialog: () => {
         dispatch(closeEventDialog());
-    }
+    },
+    swapComponent: (schoolId, subjectAbbv, courseAbbv, sectionId) => {
+        dispatch(fetchDetailsCart(schoolId, subjectAbbv, courseAbbv, sectionId));
+        dispatch(closeEventDialog());
+        dispatch(swapComponent(schoolId, subjectAbbv, courseAbbv, sectionId));
+    },
 });
 
 const CalendarContainer = connect(mapStateToProps, mapDispatchToProps)(CalendarWrapper);

@@ -297,10 +297,10 @@ export function swapComponent(schoolId, subjectAbbv, courseAbbv, sectionId) {
   };
 }
 
-export function selectEvent(event) {
+export function selectEvent(coursecomps) {
   return {
     type: 'SELECT_EVENT',
-    event
+    coursecomps
   };
 }
 

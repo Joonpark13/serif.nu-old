@@ -11,7 +11,18 @@ const style = {
   }
 };
 
-const CalendarWrapper = ({ coursecomps, selectEvent, eventOpen, selectedEvent, remove, closeDialog }) => {
+const CalendarWrapper = ({
+  coursecomps,
+  selectEvent,
+  eventOpen,
+  selectedEvents,
+  remove,
+  closeDialog,
+  swapComponent,
+  sections,
+  components
+}) => {
+  console.log(selectedEvents);
   // Take care of unscheduled courses
   const unscheduled = [];
   const scheduled = [];
@@ -22,28 +33,43 @@ const CalendarWrapper = ({ coursecomps, selectEvent, eventOpen, selectedEvent, r
       scheduled.push(coursecomp);
     }
   });
-  const actions = [
+  const selected = selectedEvents.section;
+  const component = selectedEvents.component;
+  const removeButton = (
     <FlatButton
       label="Remove"
       primary
-      onTouchTap={() => remove(selectedEvent.id)}
-    />,
-    <FlatButton
-      label="Swap Component"
-      primary
-      // onTouchTap={}
-    />,
+      onTouchTap={() => remove(selected.id)}
+    />
+  );
+  const cancelButton = (
     <FlatButton
       label="Cancel"
       primary
-      // onTouchTap={}
+      onTouchTap={() => closeDialog()}
     />
-  ];
+  );
+  const swapButton = (
+    <FlatButton
+      label="Swap Component"
+      primary
+      onTouchTap={() => swapComponent(selected.school, selected.subject, selected.course, selected.id)}
+    />
+  );
+  const actions = [];
+  actions.push(removeButton);
+  if (component) actions.push(swapButton);
+  actions.push(cancelButton);
   return (
     <div>
       <Card style={style.card}>
         <CardText>
-          <Calendar coursecomps={scheduled} selectEvent={selectEvent} />
+          <Calendar
+            coursecomps={scheduled}
+            selectEvent={selectEvent}
+            sections={sections}
+            components={components}
+          />
         </CardText>
       </Card>
 
@@ -58,13 +84,27 @@ const CalendarWrapper = ({ coursecomps, selectEvent, eventOpen, selectedEvent, r
         </CardText>
       </Card>
 
-      <Dialog
-        title={selectedEvent.title}
-        actions={actions}
-        open={eventOpen}
-        onRequestClose={() => closeDialog()}
-      >
-      </Dialog>
+      {selected && (
+        <Dialog
+          title={`${selected.subject} ${selected.course} ${selected.name}`}
+          actions={actions}
+          open={eventOpen}
+          onRequestClose={() => closeDialog()}
+        >
+          <p>{selected.meeting_time}</p>
+          <p>{selected.instructor.join(', ')}</p>
+          {selected.topic && <p>{selected.topic}</p>}
+          <p>{selected.overview_of_class}</p>
+          <p>ID: {selected.id}</p>
+          {component && (
+            <div>
+              <h4>{selected.component}</h4>
+              <p>{selected.meeting_time}</p>
+              <p>{selected.room}</p>
+            </div>
+          )}
+        </Dialog>
+      )}
     </div>
   );
 };
@@ -75,5 +115,8 @@ CalendarWrapper.propTypes = {
   coursecomps: React.PropTypes.arrayOf(React.PropTypes.object),
   eventOpen: React.PropTypes.bool,
   remove: React.PropTypes.func,
-  closeDialog: React.PropTypes.func
+  closeDialog: React.PropTypes.func,
+  swapComponent: React.PropTypes.func,
+  sections: React.PropTypes.arrayOf(React.PropTypes.object),
+  components: React.PropTypes.arrayOf(React.PropTypes.object)
 };
