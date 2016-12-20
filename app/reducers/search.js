@@ -64,7 +64,7 @@ function search(state = initialSearch, action) {
       newState = {
         // If there are components to select, show components
         // If not, go back to course view
-        currentView: action.details[0].associated_classes ? 'components' : 'courses',
+        currentView: action.details[0].associated_classes ? 'components' : 'search',
         selected: {
           course: action.details[0].associated_classes ? state.selected.course : '',
           section: action.details[0].associated_classes ? state.selected.section : ''
