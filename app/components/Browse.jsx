@@ -78,7 +78,7 @@ const Browse = (
   const arrow = <FontIcon className="material-icons">chevron_right</FontIcon>;
   const schoolNav = <Chip onTouchTap={() => showSubjects(selected.school)}>{selected.school}</Chip>;
   const subjectNav = (
-    <Chip onTouchTap={() => showCourses(selected.subject)}>
+    <Chip onTouchTap={() => showCourses(selected.school, selected.subject)}>
       {selected.subject}
     </Chip>
   );
