@@ -1,5 +1,6 @@
 import React from 'react';
 import CircularProgress from 'material-ui/CircularProgress';
+import Divider from 'material-ui/Divider';
 
 import Search from './Search.jsx';
 import Sections from './Sections.jsx';
@@ -12,6 +13,9 @@ const style = {
   loading: {
     display: 'block',
     margin: 'auto'
+  },
+  divider: {
+    marginBottom: '10px'
   }
 };
 
@@ -28,36 +32,45 @@ const SearchWrapper = ({
   addComponent,
   onSelect
 }) => {
-  let selectionView = null;
-  if (currentView === 'sections') {
-    selectionView = (
-      <Sections
-        selected={selected}
-        sections={sections}
-        calendar={calendar}
-        checkComponents={checkComponents}
-        addCourse={addCourse}
-      />
+  let view = null;
+  const header = (
+    <div>
+      <h3>{`${selected.subject} ${selected.course}`}</h3>
+      <Divider style={style.divider} />
+    </div>
+  );
+  if (currentView === 'search') {
+    view = <Search searchData={searchData} onSelect={onSelect} />;
+  } else if (currentView === 'sections') {
+    view = (
+      <div>
+        {header}
+        <Sections
+          selected={selected}
+          sections={sections}
+          calendar={calendar}
+          checkComponents={checkComponents}
+          addCourse={addCourse}
+        />
+      </div>
     );
   } else if (currentView === 'components') {
-    selectionView = (
-      <Components
-        selected={selected}
-        sections={sections}
-        details={details}
-        addComponent={addComponent}
-      />
-    );
-  }
-  if (!isFetching) {
-    return (
+    view = (
       <div>
-        <Search searchData={searchData} onSelect={onSelect} />
-        {selectionView}
+        {header}
+        <Components
+          selected={selected}
+          sections={sections}
+          details={details}
+          addComponent={addComponent}
+        />
       </div>
     );
   }
-  // If data did not load
+  if (!isFetching) {
+    return view;
+  }
+  // If data has not yet loaded
   return <CircularProgress style={style.loading} />;
 };
 
