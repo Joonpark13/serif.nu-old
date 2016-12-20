@@ -26,6 +26,7 @@ const Cart = ({
   addComponent
 }) => (
   <div>
+    {sections.length === 0 && <h3>Cart is empty</h3>}
     {sections.map((section) => {
       // There should at most be one match
       const component = components.filter(matchId(section.id))[0];
