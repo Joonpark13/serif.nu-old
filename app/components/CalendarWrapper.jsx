@@ -1,5 +1,7 @@
 import React from 'react';
 import { Card, CardText, CardTitle } from 'material-ui/Card';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
 
 import Calendar from './Calendar.jsx';
 
@@ -9,7 +11,7 @@ const style = {
   }
 };
 
-const CalendarWrapper = ({ coursecomps }) => {
+const CalendarWrapper = ({ coursecomps, selectEvent, eventOpen, selectedEvent, remove, closeDialog }) => {
   // Take care of unscheduled courses
   const unscheduled = [];
   const scheduled = [];
@@ -20,11 +22,28 @@ const CalendarWrapper = ({ coursecomps }) => {
       scheduled.push(coursecomp);
     }
   });
+  const actions = [
+    <FlatButton
+      label="Remove"
+      primary
+      onTouchTap={() => remove(selectedEvent.id)}
+    />,
+    <FlatButton
+      label="Swap Component"
+      primary
+      // onTouchTap={}
+    />,
+    <FlatButton
+      label="Cancel"
+      primary
+      // onTouchTap={}
+    />
+  ];
   return (
     <div>
       <Card style={style.card}>
         <CardText>
-          <Calendar coursecomps={scheduled} />
+          <Calendar coursecomps={scheduled} selectEvent={selectEvent} />
         </CardText>
       </Card>
 
@@ -38,6 +57,14 @@ const CalendarWrapper = ({ coursecomps }) => {
           ))}
         </CardText>
       </Card>
+
+      <Dialog
+        title={selectedEvent.title}
+        actions={actions}
+        open={eventOpen}
+        onRequestClose={() => closeDialog()}
+      >
+      </Dialog>
     </div>
   );
 };
@@ -45,5 +72,8 @@ const CalendarWrapper = ({ coursecomps }) => {
 export default CalendarWrapper;
 
 CalendarWrapper.propTypes = {
-  coursecomps: React.PropTypes.arrayOf(React.PropTypes.object)
+  coursecomps: React.PropTypes.arrayOf(React.PropTypes.object),
+  eventOpen: React.PropTypes.bool,
+  remove: React.PropTypes.func,
+  closeDialog: React.PropTypes.func
 };

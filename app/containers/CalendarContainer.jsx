@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 
 import CalendarWrapper from '../components/CalendarWrapper.jsx';
+import { selectEvent, remove, closeEventDialog } from '../action-creators';
 
 const parseDow = (dow) => {
     // Input examples: 'MoWeFr', 'TuTh', 'MoWe', etc
@@ -101,9 +102,24 @@ const parseClasses = (calendar) => {
 };
 
 const mapStateToProps = (state) => ({
-    coursecomps: parseClasses(state.calendar)
+    coursecomps: parseClasses(state.calendar),
+    eventOpen: state.calendar.eventOpen,
+    selectedEvent: state.calendar.selectedEvent
 });
 
-const CalendarContainer = connect(mapStateToProps)(CalendarWrapper);
+const mapDispatchToProps = (dispatch) => ({
+    selectEvent: (event) => {
+        dispatch(selectEvent(event));
+    },
+    remove: (sectionId) => {
+        dispatch(remove(sectionId));
+        dispatch(closeEventDialog());
+    },
+    closeDialog: () => {
+        dispatch(closeEventDialog());
+    }
+});
+
+const CalendarContainer = connect(mapStateToProps, mapDispatchToProps)(CalendarWrapper);
 
 export default CalendarContainer;

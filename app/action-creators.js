@@ -296,3 +296,16 @@ export function swapComponent(schoolId, subjectAbbv, courseAbbv, sectionId) {
     sectionId
   };
 }
+
+export function selectEvent(event) {
+  return {
+    type: 'SELECT_EVENT',
+    event
+  };
+}
+
+export function closeEventDialog() {
+  return {
+    type: 'CLOSE_EVENT_DIALOG'
+  };
+}
