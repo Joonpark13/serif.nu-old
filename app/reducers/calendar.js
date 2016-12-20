@@ -3,6 +3,14 @@ const initialCalendar = {
   components: []
 };
 
+const filterComponents = (components, sectionId) => {
+  const newComponents = [];
+  components.forEach((component) => {
+    if (component.id !== sectionId) newComponents.push(component);
+  });
+  return newComponents;
+};
+
 function calendar(state = initialCalendar, action) {
   let newState = {};
   switch (action.type) {
@@ -17,27 +25,29 @@ function calendar(state = initialCalendar, action) {
       };
       break;
     case 'ADD_COMPONENT':
-      newState = {
-        components: state.components.concat(action.detail)
-      };
-      break;
     case 'ADD_COMPONENT_SEARCH':
+    case 'ADD_COMPONENT_CART':
       newState = {
         components: state.components.concat(action.detail)
       };
       break;
     case 'REMOVE': {
-      const newSections = [];
-      const newComponents = [];
       // Take out any matching ids to sectionId in both sections and components
+      const newSections = [];
       state.sections.forEach((section) => {
         if (section.id !== action.sectionId) newSections.push(section);
       });
-      state.components.forEach((component) => {
-        if (component.id !== action.sectionId) newComponents.push(component);
-      });
+      const newComponents = filterComponents(state.components, action.sectionId);
       return {
         sections: newSections,
+        components: newComponents
+      };
+    }
+    case 'SWAP_COMPONENT': {
+      // Remove currently selection component
+      const newComponents = filterComponents(state.components, action.sectionId);
+      return {
+        sections: state.sections,
         components: newComponents
       };
     }

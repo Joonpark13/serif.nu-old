@@ -55,6 +55,13 @@ export function addComponentSearch(detail) {
   };
 }
 
+export function addComponentCart(detail) {
+  return {
+    type: 'ADD_COMPONENT_CART',
+    detail
+  };
+}
+
 export function requestSchools() {
   return {
     type: 'REQUEST_SCHOOLS'
@@ -184,7 +191,7 @@ export function receiveDetails(json) {
   };
 }
 
-export function fetchDetails(schoolId, subjectAbbv, courseAbbv, sectionId, callback) {
+export function fetchDetails(schoolId, subjectAbbv, courseAbbv, sectionId) {
   return function (dispatch) {
     dispatch(requestDetails());
     return fetch(`/data/details/${schoolId}/${subjectAbbv}/${courseAbbv}/${sectionId}`)
@@ -207,7 +214,7 @@ export function receiveDetailsSearch(json) {
   };
 }
 
-export function fetchDetailsSearch(schoolId, subjectAbbv, courseAbbv, sectionId, callback) {
+export function fetchDetailsSearch(schoolId, subjectAbbv, courseAbbv, sectionId) {
   return function (dispatch) {
     dispatch(requestDetailsSearch());
     return fetch(`/data/details/${schoolId}/${subjectAbbv}/${courseAbbv}/${sectionId}`)
@@ -215,6 +222,31 @@ export function fetchDetailsSearch(schoolId, subjectAbbv, courseAbbv, sectionId,
       .then(json => dispatch(receiveDetailsSearch(json)));
   };
 }
+
+export function requestDetailsCart() {
+  return {
+    type: 'REQUEST_DETAILS_CART'
+  };
+}
+
+export function receiveDetailsCart(json) {
+  return {
+    type: 'RECEIVE_DETAILS_CART',
+    details: json,
+    receivedAt: Date.now()
+  };
+}
+
+export function fetchDetailsCart(schoolId, subjectAbbv, courseAbbv, sectionId) {
+  return function (dispatch) {
+    dispatch(requestDetailsCart());
+    return fetch(`/data/details/${schoolId}/${subjectAbbv}/${courseAbbv}/${sectionId}`)
+      .then(response => response.json())
+      .then(json => dispatch(receiveDetailsCart(json)));
+  };
+}
+
+
 
 export function requestSearchData() {
   return {
@@ -251,6 +283,16 @@ export function populateSelected(schoolId, subjectAbbv, courseAbbv) {
 export function remove(sectionId) {
   return {
     type: 'REMOVE',
+    sectionId
+  };
+}
+
+export function swapComponent(schoolId, subjectAbbv, courseAbbv, sectionId) {
+  return {
+    type: 'SWAP_COMPONENT',
+    schoolId,
+    subjectAbbv,
+    courseAbbv,
     sectionId
   };
 }

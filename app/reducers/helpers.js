@@ -99,12 +99,14 @@ export function details(state = {}, action) {
   switch(action.type) {
     case 'REQUEST_DETAILS':
     case 'REQUEST_DETAILS_SEARCH':
+    case 'REQUEST_DETAILS_CART':
       return {
         ...state,
         isFetching: true
       };
     case 'RECEIVE_DETAILS':
     case 'RECEIVE_DETAILS_SEARCH':
+    case 'RECEIVE_DETAILS_CART':
       return {
         ...state,
         isFetching: false,
