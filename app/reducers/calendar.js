@@ -1,3 +1,5 @@
+import $ from 'jquery';
+
 const initialCalendar = {
   sections: [],
   components: [],

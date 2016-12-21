@@ -1,4 +1,9 @@
 import React from 'react';
+import $ from 'jquery';
+import 'fullcalendar';
+import 'fullcalendar/dist/fullcalendar.css';
+
+import '../stylesheets/materialFullCalendar.css';
 
 export default class Calendar extends React.Component {
   constructor(props) {
