@@ -6,6 +6,7 @@ import Col from 'react-bootstrap/lib/Col';
 import { Card, CardText } from 'material-ui/Card';
 import { Tabs, Tab } from 'material-ui/Tabs';
 
+import 'bootstrap/dist/css/bootstrap.min.css';
 import CurrentlyBrowsing from './CurrentlyBrowsing.jsx';
 import SearchContainer from '../containers/SearchContainer.jsx';
 import CalendarContainer from '../containers/CalendarContainer.jsx';

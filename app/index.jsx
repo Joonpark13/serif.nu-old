@@ -8,11 +8,11 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { grey500, white, fullBlack } from 'material-ui/styles/colors';
 import { fade } from 'material-ui/utils/colorManipulator';
 import { Provider } from 'react-redux';
+
 import colors from './colors';
 import store from './store';
 import NavBar from './components/NavBar.jsx';
 import Serif from './components/Serif.jsx';
-
 import { fetchSchools, fetchSearchData } from './action-creators';
 
 // http://stackoverflow.com/a/34015469/988941
