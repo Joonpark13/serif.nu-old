@@ -2,6 +2,21 @@ import { connect } from 'react-redux';
 
 import CalendarWrapper from '../components/CalendarWrapper.jsx';
 import { selectEvent, remove, closeEventDialog, fetchDetailsCart, swapComponent, showCart } from '../action-creators';
+import {
+    northwesternPurple30,
+    brightGreen,
+    brightCyan,
+    brightBlue,
+    brightYellow,
+    brightOrange,
+    brightRed,
+    darkGreen,
+    darkCyan,
+    darkBlue,
+    darkYellow,
+    darkOrange,
+    darkRed
+} from '../colors';
 
 const parseDow = (dow) => {
     // Input examples: 'MoWeFr', 'TuTh', 'MoWe', etc
@@ -111,14 +126,20 @@ const parseClasses = (calendar) => {
     return sections.concat(components);
 };
 
+const addHoverColor = (coursecomp) => {
+    if (!coursecomp) return null;
+    coursecomp.color = northwesternPurple30;
+    return coursecomp;
+}
+
 const mapStateToProps = (state) => ({
     coursecomps: parseClasses(state.calendar),
     eventOpen: state.calendar.eventOpen,
     selectedEvents: state.calendar.selectedEvents,
     sections: state.calendar.sections,
     components: state.calendar.components,
-    hoverSection: parseSection(state.calendar.hover.section),
-    hoverComponent: parseComponent(state.calendar.hover.component)
+    hoverSection: addHoverColor(parseSection(state.calendar.hover.section)),
+    hoverComponent: addHoverColor(parseComponent(state.calendar.hover.component))
 });
 
 const mapDispatchToProps = (dispatch) => ({
