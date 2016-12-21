@@ -22,7 +22,6 @@ const CalendarWrapper = ({
   sections,
   components
 }) => {
-  console.log(selectedEvents);
   // Take care of unscheduled courses
   const unscheduled = [];
   const scheduled = [];
