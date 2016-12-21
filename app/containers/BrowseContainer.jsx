@@ -12,6 +12,7 @@ import {
   addCourse,
   addComponent,
   addCourseHover,
+  addComponentHover,
   removeHover
 } from '../action-creators';
 import Browse from '../components/Browse.jsx';
@@ -61,6 +62,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   addCourseHover: (section) => {
     dispatch(addCourseHover(section));
+  },
+  addComponentHover: (detail) => {
+    dispatch(addComponentHover(detail));
   },
   removeHover: (sectionId) => {
     dispatch(removeHover(sectionId));

@@ -73,6 +73,7 @@ const Browse = (
     addCourse,
     addComponent,
     addCourseHover,
+    addComponentHover,
     removeHover
   }
 ) => {
@@ -244,6 +245,8 @@ const Browse = (
             selected={selected}
             details={details}
             addComponent={addComponent}
+            addComponentHover={addComponentHover}
+            removeHover={removeHover}
           />
         );
       } // In case data did not load
