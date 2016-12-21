@@ -8,6 +8,8 @@ export default class Calendar extends React.Component {
   componentDidMount() {
     if (this.props.hoverSection) {
       this.updateEvents(this.props.coursecomps.concat(this.props.hoverSection));
+    } else if (this.props.hoverComponent) {
+      this.updateEvents(this.props.coursecomps.concat(this.props.hoverComponent));
     } else {
       this.updateEvents(this.props.coursecomps);
     }
@@ -15,6 +17,8 @@ export default class Calendar extends React.Component {
   componentDidUpdate() {
     if (this.props.hoverSection) {
       this.updateEvents(this.props.coursecomps.concat(this.props.hoverSection));
+    } else if (this.props.hoverComponent) {
+      this.updateEvents(this.props.coursecomps.concat(this.props.hoverComponent));
     } else {
       this.updateEvents(this.props.coursecomps);
     }

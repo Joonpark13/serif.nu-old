@@ -31,6 +31,7 @@ const SearchWrapper = ({
   addCourse,
   addComponent,
   addCourseHover,
+  addComponentHover,
   removeHover,
   onSelect
 }) => {
@@ -67,6 +68,8 @@ const SearchWrapper = ({
           sections={sections}
           details={details}
           addComponent={addComponent}
+          addComponentHover={addComponentHover}
+          removeHover={removeHover}
         />
       </div>
     );

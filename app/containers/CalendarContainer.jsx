@@ -78,7 +78,7 @@ const parseSection = (section) => {
         title: section.name,
         ...parseMeetingTime(section.meeting_time[0])
     };
-}
+};
 
 const parseSections = (sections) => {
     let events = [];
@@ -88,15 +88,20 @@ const parseSections = (sections) => {
     return events;
 };
 
+const parseComponent = (comp) => {
+    if (!comp) return null;
+    return {
+        id: comp.id,
+        title: comp.title,
+        ...parseMeetingTime(comp.meeting_time)
+    };
+};
+
 const parseComponents = (components) => {
     let events = [];
     components.forEach((comp) => {
-        events = events.concat({
-            id: comp.id,
-            title: comp.title,
-            ...parseMeetingTime(comp.meeting_time)
-        });
-    })
+        events = events.concat(parseComponent(comp));
+    });
     return events;
 };
 
@@ -112,7 +117,8 @@ const mapStateToProps = (state) => ({
     selectedEvents: state.calendar.selectedEvents,
     sections: state.calendar.sections,
     components: state.calendar.components,
-    hoverSection: parseSection(state.calendar.hover.section)
+    hoverSection: parseSection(state.calendar.hover.section),
+    hoverComponent: parseComponent(state.calendar.hover.component)
 });
 
 const mapDispatchToProps = (dispatch) => ({

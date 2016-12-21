@@ -8,6 +8,7 @@ import {
   fetchSectionsSearch,
   addComponentSearch,
   addCourseHover,
+  addComponentHover,
   removeHover
 } from '../action-creators';
 
@@ -37,6 +38,9 @@ const mapDispatchToProps = dispatch => ({
   },
   addCourseHover: (section) => {
     dispatch(addCourseHover(section));
+  },
+  addComponentHover: (detail) => {
+    dispatch(addComponentHover(detail));
   },
   removeHover: (sectionId) => {
     dispatch(removeHover(sectionId));

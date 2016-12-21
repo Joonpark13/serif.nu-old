@@ -330,6 +330,13 @@ export function addCourseHover(section) {
   };
 }
 
+export function addComponentHover(detail) {
+  return {
+    type: 'ADD_COMPONENT_HOVER',
+    detail
+  };
+}
+
 export function removeHover(sectionId) {
   return {
     type: 'REMOVE_HOVER',

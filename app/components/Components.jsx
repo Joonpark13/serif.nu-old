@@ -26,7 +26,9 @@ const Components = ({
   sections,
   selected,
   details,
-  addComponent
+  addComponent,
+  addComponentHover,
+  removeHover
 }) => {
   let sectionTitle = '';
   sections.forEach((section) => {
@@ -39,18 +41,26 @@ const Components = ({
       <h3 style={style.headings}>Choose a component:</h3>
 
       <List>
-        {details.associated_classes.map((comp, index) => (
-          <ListItem
-            key={index}
-            primaryText={comp.component}
-            secondaryText={comp.meeting_time}
-            onTouchTap={() => addComponent({
-              id: selected.section,
-              title: `${sectionTitle} ${comp.component}`,
-              ...comp
-            })}
-          />
-        ))}
+        {details.associated_classes.map((comp, index) => {
+          const formattedComp = {
+            id: selected.section,
+            title: `${sectionTitle} ${comp.component}`,
+            ...comp
+          };
+          return (
+            <ListItem
+              key={index}
+              primaryText={comp.component}
+              secondaryText={comp.meeting_time}
+              onMouseEnter={() => addComponentHover(formattedComp)}
+              onMouseLeave={() => removeHover(comp.id)}
+              onTouchTap={() => {
+                addComponent(formattedComp);
+                removeHover(comp.id);
+              }}
+            />
+          );
+        })}
       </List>
     </div>
   );

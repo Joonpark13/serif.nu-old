@@ -87,6 +87,14 @@ function calendar(state = initialCalendar, action) {
         }
       };
       break;
+    case 'ADD_COMPONENT_HOVER':
+      newState = {
+        hover: {
+          section: null,
+          component: action.detail
+        }
+      };
+      break;
     case 'REMOVE_HOVER':
       return {
         sections: state.sections,
