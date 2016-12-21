@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import CalendarWrapper from '../components/CalendarWrapper.jsx';
-import { selectEvent, remove, closeEventDialog, fetchDetailsCart, swapComponent } from '../action-creators';
+import { selectEvent, remove, closeEventDialog, fetchDetailsCart, swapComponent, showCart } from '../action-creators';
 
 const parseDow = (dow) => {
     // Input examples: 'MoWeFr', 'TuTh', 'MoWe', etc
@@ -122,6 +122,7 @@ const mapDispatchToProps = (dispatch) => ({
     },
     swapComponent: (schoolId, subjectAbbv, courseAbbv, sectionId) => {
         dispatch(fetchDetailsCart(schoolId, subjectAbbv, courseAbbv, sectionId));
+        dispatch(showCart());
         dispatch(closeEventDialog());
         dispatch(swapComponent(schoolId, subjectAbbv, courseAbbv, sectionId));
     },
