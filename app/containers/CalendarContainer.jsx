@@ -4,19 +4,13 @@ import CalendarWrapper from '../components/CalendarWrapper.jsx';
 import { selectEvent, remove, closeEventDialog, fetchDetailsCart, swapComponent, showCart } from '../action-creators';
 import {
     northwesternPurple30,
-    brightGreen,
-    brightCyan,
-    brightBlue,
-    brightYellow,
-    brightOrange,
-    brightRed,
-    darkGreen,
-    darkCyan,
-    darkBlue,
-    darkYellow,
-    darkOrange,
-    darkRed
+    brightGreen, brightCyan, brightBlue, brightYellow, brightOrange, brightRed,
+    darkGreen, darkCyan, darkBlue, darkYellow, darkOrange, darkRed
 } from '../colors';
+
+const colorArray = [brightGreen, brightOrange, brightBlue, brightYellow, brightCyan, brightRed,
+    darkGreen, darkOrange, darkBlue, darkYellow, darkCyan, darkRed
+];
 
 const parseDow = (dow) => {
     // Input examples: 'MoWeFr', 'TuTh', 'MoWe', etc
@@ -97,8 +91,11 @@ const parseSection = (section) => {
 
 const parseSections = (sections) => {
     let events = [];
-    sections.forEach((section) => {
-        events = events.concat(parseSection(section));
+    sections.forEach((section, index) => {
+        events = events.concat({
+            color: colorArray[index % colorArray.length],
+            ...parseSection(section)
+        });
     });
     return events;
 };
@@ -114,8 +111,11 @@ const parseComponent = (comp) => {
 
 const parseComponents = (components) => {
     let events = [];
-    components.forEach((comp) => {
-        events = events.concat(parseComponent(comp));
+    components.forEach((comp, index) => {
+        events = events.concat({
+            color: colorArray[index % colorArray.length],
+            ...parseComponent(comp)
+        });
     });
     return events;
 };
