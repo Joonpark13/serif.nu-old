@@ -30,6 +30,8 @@ const SearchWrapper = ({
   checkComponents,
   addCourse,
   addComponent,
+  addCourseHover,
+  removeHover,
   onSelect
 }) => {
   let view = null;
@@ -51,6 +53,8 @@ const SearchWrapper = ({
           calendar={calendar}
           checkComponents={checkComponents}
           addCourse={addCourse}
+          addCourseHover={addCourseHover}
+          removeHover={removeHover}
         />
       </div>
     );

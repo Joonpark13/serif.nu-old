@@ -6,7 +6,9 @@ import {
   addCourseSearch,
   populateSelected,
   fetchSectionsSearch,
-  addComponentSearch
+  addComponentSearch,
+  addCourseHover,
+  removeHover
 } from '../action-creators';
 
 const mapStateToProps = state => ({
@@ -32,6 +34,12 @@ const mapDispatchToProps = dispatch => ({
   },
   addComponent: (detail) => {
     dispatch(addComponentSearch(detail));
+  },
+  addCourseHover: (section) => {
+    dispatch(addCourseHover(section));
+  },
+  removeHover: (sectionId) => {
+    dispatch(removeHover(sectionId));
   }
 });
 
