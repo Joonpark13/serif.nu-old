@@ -109,11 +109,16 @@ const parseComponent = (comp) => {
     };
 };
 
-const parseComponents = (components) => {
+const parseComponents = (components, sections) => {
     let events = [];
-    components.forEach((comp, index) => {
+    components.forEach((comp) => {
+        // Make sure the component has the same color as the corresponding section
+        let sectionIndex = '';
+        sections.forEach((section, index) => {
+            if (section.id === comp.id) sectionIndex = index;
+        });
         events = events.concat({
-            color: colorArray[index % colorArray.length],
+            color: colorArray[sectionIndex % colorArray.length],
             ...parseComponent(comp)
         });
     });
@@ -122,7 +127,7 @@ const parseComponents = (components) => {
 
 const parseClasses = (calendar) => {
     const sections = parseSections(calendar.sections);
-    const components = parseComponents(calendar.components);
+    const components = parseComponents(calendar.components, calendar.sections);
     return sections.concat(components);
 };
 
