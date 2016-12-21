@@ -28,13 +28,17 @@ const Sections = ({
   sections,
   calendar,
   checkComponents,
-  addCourse
+  addCourse,
+  addCourseHover,
+  removeHover
 }) => (
-    <div>
-      <h3 style={style.headings}>Choose a section:</h3>
+  <div>
+    <h3 style={style.headings}>Choose a section:</h3>
 
-      <List>
-        {sections.map(section => (
+    <List>
+      {sections.map(section => {
+        const inCal = inCalendar(calendar.sections, section.id);
+        return (
           <ListItem
             key={section.section}
             primaryText={`Section ${section.section}`}
@@ -49,15 +53,18 @@ const Sections = ({
             }
             secondaryTextLines={2}
             // Make sure the section is not already in calendar
-            disabled={inCalendar(calendar.sections, section.id)}
+            disabled={inCal}
+            onMouseEnter={() => { if (!inCal) addCourseHover(section); }}
+            onMouseLeave={() => { if (!inCal) removeHover(section.id); }}
             onTouchTap={() => {
               checkComponents(selected.school, selected.subject, selected.course, section.id);
               addCourse(section);
             }}
           />
-        ))}
-      </List>
-    </div>
+         );
+      })}
+    </List>
+  </div>
 );
 
 Sections.propTypes = {
@@ -73,7 +80,9 @@ Sections.propTypes = {
   }),
   sections: React.PropTypes.arrayOf(React.PropTypes.object),
   checkComponents: React.PropTypes.func.isRequired,
-  addCourse: React.PropTypes.func.isRequired
+  addCourse: React.PropTypes.func.isRequired,
+  addCourseHover: React.PropTypes.func,
+  removeHover: React.PropTypes.func
 };
 
 export default Sections;

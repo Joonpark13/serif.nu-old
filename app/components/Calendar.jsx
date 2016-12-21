@@ -6,10 +6,18 @@ export default class Calendar extends React.Component {
     this.updateEvents = this.updateEvents.bind(this);
   }
   componentDidMount() {
-    this.updateEvents(this.props.coursecomps);
+    if (this.props.hoverSection) {
+      this.updateEvents(this.props.coursecomps.concat(this.props.hoverSection));
+    } else {
+      this.updateEvents(this.props.coursecomps);
+    }
   }
   componentDidUpdate() {
-    this.updateEvents(this.props.coursecomps);
+    if (this.props.hoverSection) {
+      this.updateEvents(this.props.coursecomps.concat(this.props.hoverSection));
+    } else {
+      this.updateEvents(this.props.coursecomps);
+    }
   }
   updateEvents(events) {
     $('#calendar').fullCalendar('destroy'); // Make sure it resets before every load
@@ -24,6 +32,7 @@ export default class Calendar extends React.Component {
       allDaySlot: false, // Get rid of "all day" slot at the top
       height: 'auto', // Get rid of  empty space on the bottom
       events,
+      // TODO: Add state.calendar.hover as a new event source object
       eventClick: (event) => {
         const selected = {};
         // Find the corresponding event from the state arrays

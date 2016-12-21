@@ -322,3 +322,17 @@ export function changeTab(value) {
     tab: value
   };
 }
+
+export function addCourseHover(section) {
+  return {
+    type: 'ADD_COURSE_HOVER',
+    section
+  };
+}
+
+export function removeHover(sectionId) {
+  return {
+    type: 'REMOVE_HOVER',
+    sectionId
+  };
+}

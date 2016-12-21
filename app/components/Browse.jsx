@@ -71,7 +71,9 @@ const Browse = (
     showSections,
     checkComponents,
     addCourse,
-    addComponent
+    addComponent,
+    addCourseHover,
+    removeHover
   }
 ) => {
   const homeChip = <Chip onTouchTap={() => showSchools()}>All</Chip>;
@@ -224,6 +226,8 @@ const Browse = (
               showCourses={showCourses}
               checkComponents={checkComponents}
               addCourse={addCourse}
+              addCourseHover={addCourseHover}
+              removeHover={removeHover}
             />
           </div>
         );
@@ -269,7 +273,9 @@ Browse.propTypes = {
   calendar: React.PropTypes.shape({
     sections: React.PropTypes.array,
     components: React.PropTypes.array
-  })
+  }),
+  addCourseHover: React.PropTypes.func,
+  removeHover: React.PropTypes.func
 };
 
 export default Browse;

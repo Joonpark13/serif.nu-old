@@ -1,6 +1,10 @@
 const initialCalendar = {
   sections: [],
   components: [],
+  hover: {
+    section: null,
+    component: null
+  },
   eventOpen: false,
   selectedEvents: {}
 };
@@ -43,6 +47,7 @@ function calendar(state = initialCalendar, action) {
       return {
         sections: newSections,
         components: newComponents,
+        hover: state.hover,
         eventOpen: state.eventOpen,
         selectedEvents: state.selectedEvents
       };
@@ -53,6 +58,7 @@ function calendar(state = initialCalendar, action) {
       return {
         sections: state.sections,
         components: newComponents,
+        hover: state.hover,
         eventOpen: state.eventOpen,
         selectedEvents: state.selectedEvents
       };
@@ -61,6 +67,7 @@ function calendar(state = initialCalendar, action) {
       return {
         sections: state.sections,
         components: state.components,
+        hover: state.hover,
         eventOpen: true,
         selectedEvents: action.coursecomps
       };
@@ -68,7 +75,27 @@ function calendar(state = initialCalendar, action) {
       return {
         sections: state.sections,
         components: state.components,
+        hover: state.hover,
         eventOpen: false,
+        selectedEvents: state.selectedEvents
+      };
+    case 'ADD_COURSE_HOVER':
+      newState = {
+        hover: {
+          section: action.section,
+          component: null
+        }
+      };
+      break;
+    case 'REMOVE_HOVER':
+      return {
+        sections: state.sections,
+        components: state.components,
+        hover: {
+          section: null,
+          component: null
+        },
+        eventOpen: state.eventOpen,
         selectedEvents: state.selectedEvents
       };
     default:

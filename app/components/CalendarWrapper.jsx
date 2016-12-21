@@ -20,7 +20,8 @@ const CalendarWrapper = ({
   closeDialog,
   swapComponent,
   sections,
-  components
+  components,
+  hoverSection
 }) => {
   // Take care of unscheduled courses
   const unscheduled = [];
@@ -68,6 +69,7 @@ const CalendarWrapper = ({
             selectEvent={selectEvent}
             sections={sections}
             components={components}
+            hoverSection={hoverSection}
           />
         </CardText>
       </Card>
