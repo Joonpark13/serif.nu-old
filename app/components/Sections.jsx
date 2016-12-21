@@ -59,6 +59,7 @@ const Sections = ({
             onTouchTap={() => {
               checkComponents(selected.school, selected.subject, selected.course, section.id);
               addCourse(section);
+              removeHover(section.id);
             }}
           />
          );
