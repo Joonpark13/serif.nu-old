@@ -309,3 +309,16 @@ export function closeEventDialog() {
     type: 'CLOSE_EVENT_DIALOG'
   };
 }
+
+export function showCart() {
+  return {
+    type: 'SHOW_CART'
+  };
+}
+
+export function changeTab(value) {
+  return {
+    type: 'CHANGE_TAB',
+    tab: value
+  };
+}
