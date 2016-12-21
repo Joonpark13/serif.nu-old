@@ -23,10 +23,18 @@ export default class Calendar extends React.Component {
       columnFormat: 'ddd',
       allDaySlot: false, // Get rid of "all day" slot at the top
       height: 'auto', // Get rid of  empty space on the bottom
-      events
+      events,
+      eventClick: () => {
+        this.props.showCart();
+      }
     });
   }
   render() {
     return <div id="calendar"></div>;
   }
 }
+
+Calendar.propTypes = {
+  coursecomps: React.PropTypes.arrayOf(React.PropTypes.object),
+  showCart: React.PropTypes.func
+};

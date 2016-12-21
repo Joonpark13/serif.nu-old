@@ -9,7 +9,7 @@ const style = {
   }
 };
 
-const CalendarWrapper = ({ coursecomps }) => {
+const CalendarWrapper = ({ coursecomps, showCart }) => {
   // Take care of unscheduled courses
   const unscheduled = [];
   const scheduled = [];
@@ -24,7 +24,7 @@ const CalendarWrapper = ({ coursecomps }) => {
     <div>
       <Card style={style.card}>
         <CardText>
-          <Calendar coursecomps={scheduled} />
+          <Calendar coursecomps={scheduled} showCart={showCart} />
         </CardText>
       </Card>
 
@@ -45,5 +45,6 @@ const CalendarWrapper = ({ coursecomps }) => {
 export default CalendarWrapper;
 
 CalendarWrapper.propTypes = {
-  coursecomps: React.PropTypes.arrayOf(React.PropTypes.object)
+  coursecomps: React.PropTypes.arrayOf(React.PropTypes.object),
+  showCart: React.PropTypes.func
 };

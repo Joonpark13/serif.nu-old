@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 
 import CalendarWrapper from '../components/CalendarWrapper.jsx';
+import { showCart } from '../action-creators';
 
 const parseDow = (dow) => {
     // Input examples: 'MoWeFr', 'TuTh', 'MoWe', etc
@@ -104,6 +105,12 @@ const mapStateToProps = (state) => ({
     coursecomps: parseClasses(state.calendar)
 });
 
-const CalendarContainer = connect(mapStateToProps)(CalendarWrapper);
+const mapDispatchToProps = (dispatch) => ({
+    showCart: () => {
+        dispatch(showCart());
+    }
+});
+
+const CalendarContainer = connect(mapStateToProps, mapDispatchToProps)(CalendarWrapper);
 
 export default CalendarContainer;
