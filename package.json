@@ -48,6 +48,7 @@
     "react-redux": "^4.4.6",
     "react-tap-event-plugin": "^2.0.1",
     "redux": "^3.6.0",
+    "redux-localstorage": "^0.4.1",
     "redux-thunk": "^2.1.0",
     "request": "^2.79.0",
     "request-json": "^0.6.1"
