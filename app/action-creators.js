@@ -296,3 +296,16 @@ export function swapComponent(schoolId, subjectAbbv, courseAbbv, sectionId) {
     sectionId
   };
 }
+
+export function showCart() {
+  return {
+    type: 'SHOW_CART'
+  };
+}
+
+export function changeTab(value) {
+  return {
+    type: 'CHANGE_TAB',
+    tab: value
+  };
+}

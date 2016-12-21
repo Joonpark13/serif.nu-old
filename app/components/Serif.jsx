@@ -11,6 +11,7 @@ import SearchContainer from '../containers/SearchContainer.jsx';
 import CalendarContainer from '../containers/CalendarContainer.jsx';
 import BrowseContainer from '../containers/BrowseContainer.jsx';
 import CartContainer from '../containers/CartContainer.jsx';
+import { changeTab } from '../action-creators';
 
 const style = {
   column: {
@@ -43,10 +44,17 @@ const style = {
 };
 
 const mapStateToProps = (state) => ({
-  selectingComponent: state.selectingComponent
+  selectingComponent: state.selectingComponent,
+  tabState: state.tabState
 });
 
-let Serif = ({ selectingComponent }) => (
+const mapDispatchToProps = (dispatch) => ({
+  handleTabChange: (value) => {
+    dispatch(changeTab(value));
+  }
+});
+
+let Serif = ({ selectingComponent, tabState, handleTabChange }) => (
   <div>
     <Grid fluid>
       <Row>
@@ -60,8 +68,8 @@ let Serif = ({ selectingComponent }) => (
             </CardText>
           </Card>
 
-          <Tabs>
-            <Tab label="Search">
+          <Tabs value={tabState} onChange={handleTabChange}>
+            <Tab label="Search" value="search">
               <Card style={style.search}>
                 <CardText>
                   <SearchContainer />
@@ -69,7 +77,7 @@ let Serif = ({ selectingComponent }) => (
               </Card>
             </Tab>
 
-            <Tab label="Browse">
+            <Tab label="Browse" value="browse">
               <Card style={style.browse}>
                 <CardText>
                   <BrowseContainer />
@@ -77,7 +85,7 @@ let Serif = ({ selectingComponent }) => (
               </Card>
             </Tab>
 
-            <Tab label="Cart">
+            <Tab label="Cart" value="cart">
               <Card style={style.cart}>
                 <CardText>
                   <CartContainer />
@@ -98,9 +106,11 @@ let Serif = ({ selectingComponent }) => (
 );
 
 Serif.propTypes = {
-  selectingComponent: React.PropTypes.bool
+  selectingComponent: React.PropTypes.bool,
+  tabState: React.PropTypes.string,
+  handleTabChange: React.PropTypes.func
 };
 
-Serif = connect(mapStateToProps)(Serif);
+Serif = connect(mapStateToProps, mapDispatchToProps)(Serif);
 
 export default Serif;

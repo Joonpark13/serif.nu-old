@@ -19,12 +19,24 @@ function selectingComponent(state = false, action) {
   }
 }
 
+function tabState(state = 'search', action) {
+  switch (action.type) {
+    case 'SHOW_CART':
+      return 'cart';
+    case 'CHANGE_TAB':
+      return action.tab;
+    default:
+      return state;
+  }
+}
+
 const reducer = combineReducers({
   browse,
   search,
   calendar,
   cart,
-  selectingComponent
+  selectingComponent,
+  tabState
 });
 
 export default reducer;
