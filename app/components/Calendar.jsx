@@ -36,7 +36,9 @@ export default class Calendar extends React.Component {
       allDaySlot: false, // Get rid of "all day" slot at the top
       height: 'auto', // Get rid of  empty space on the bottom
       events,
-      // TODO: Add state.calendar.hover as a new event source object
+      eventRender: (event, element) => {
+        $(element).css('cursor', 'pointer'); // Make events look clickable
+      },
       eventClick: (event) => {
         const selected = {};
         // Find the corresponding event from the state arrays
