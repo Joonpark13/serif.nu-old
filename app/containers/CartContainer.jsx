@@ -1,6 +1,13 @@
 import { connect } from 'react-redux';
 
-import { remove, swapComponent, addComponentCart, fetchDetailsCart } from '../action-creators';
+import {
+  remove,
+  swapComponent,
+  addComponentCart,
+  fetchDetailsCart,
+  addComponentHover,
+  removeHover
+} from '../action-creators';
 import Cart from '../components/Cart.jsx';
 
 const mapStateToProps = (state) => ({
@@ -22,6 +29,12 @@ const mapDispatchToProps = (dispatch) => ({
   },
   addComponent: (detail) => {
     dispatch(addComponentCart(detail));
+  },
+  addComponentHover: (detail) => {
+    dispatch(addComponentHover(detail));
+  },
+  removeHover: (sectionId) => {
+    dispatch(removeHover(sectionId));
   }
 });
 

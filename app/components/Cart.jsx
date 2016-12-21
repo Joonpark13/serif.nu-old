@@ -23,7 +23,9 @@ const Cart = ({
   swapping,
   remove,
   swapComponent,
-  addComponent
+  addComponent,
+  addComponentHover,
+  removeHover
 }) => (
   <div>
     {sections.length === 0 && <h3>Cart is empty</h3>}
@@ -37,6 +39,8 @@ const Cart = ({
             selected={selected}
             details={details}
             addComponent={addComponent}
+            addComponentHover={addComponentHover}
+            removeHover={removeHover}
           />}
           {!swapping &&
             <Card style={style.card}>
