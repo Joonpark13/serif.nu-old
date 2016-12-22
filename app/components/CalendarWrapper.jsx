@@ -5,10 +5,14 @@ import FlatButton from 'material-ui/FlatButton';
 
 import Calendar from './Calendar.jsx';
 import Unscheduled from './Unscheduled.jsx';
+import { matchId } from '../helpers';
 
 const style = {
   card: {
     margin: 10
+  },
+  dialogContent: {
+    marginTop: '24px'
   }
 };
 
@@ -43,7 +47,7 @@ const CalendarWrapper = ({
     else scheduled.push(hoverComponent);
   }
   const selected = selectedEvents.section;
-  const component = selectedEvents.component;
+  const selectedComponent = selectedEvents.component;
   const removeButton = (
     <FlatButton
       label="Remove"
@@ -67,8 +71,9 @@ const CalendarWrapper = ({
   );
   const actions = [];
   actions.push(removeButton);
-  if (component) actions.push(swapButton);
+  if (selectedComponent) actions.push(swapButton);
   actions.push(cancelButton);
+  const component = components.filter(matchId(selected.id))[0];
   return (
     <div>
       <Card style={style.card}>
@@ -105,17 +110,18 @@ const CalendarWrapper = ({
           actions={actions}
           open={eventOpen}
           onRequestClose={() => closeDialog()}
+          autoScrollBodyContent
         >
-          <p>{selected.meeting_time}</p>
+          <p style={style.dialogContent}>{selected.meeting_time}</p>
           <p>{selected.instructor.join(', ')}</p>
           {selected.topic && <p>{selected.topic}</p>}
           <p>{selected.overview_of_class}</p>
           <p>ID: {selected.id}</p>
           {component && (
             <div>
-              <h4>{selected.component}</h4>
-              <p>{selected.meeting_time}</p>
-              <p>{selected.room}</p>
+              <h4>{component.component}</h4>
+              <p>{component.meeting_time}</p>
+              <p>{component.room}</p>
             </div>
           )}
         </Dialog>

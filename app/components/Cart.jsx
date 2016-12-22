@@ -3,16 +3,13 @@ import { Card, CardHeader, CardText, CardActions } from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 
 import Components from './Components.jsx';
+import { matchId } from '../helpers';
 
 const style = {
   card: {
     marginBottom: '10px'
   }
 };
-
-const matchId = (id) => (
-  (component) => (id === component.id)
-);
 
 const Cart = ({
   isFetching,
