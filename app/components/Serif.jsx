@@ -23,24 +23,24 @@ const style = {
     maxHeight: '675px',
     overflow: 'scroll',
     position: 'relative', // Necessary for z-index
-    zIndex: 1
+    zIndex: 2
   },
   overlay: {
-    backgroundColor: 'rgba(1, 1, 1, 0.6)',
+    backgroundColor: 'rgba(1, 1, 1, 0.4)',
     bottom: 0,
     left: 0,
     position: 'fixed',
     right: 0,
     top: 0,
-    zIndex: 0
+    zIndex: 1
   },
   search: {
     position: 'relative', // Necessary for z-index
-    zIndex: 1
+    zIndex: 2
   },
   cart: {
     position: 'relative', // Necessary for z-index
-    zIndex: 1
+    zIndex: 2
   }
 };
 

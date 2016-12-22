@@ -54,8 +54,16 @@ const Sections = ({
             secondaryTextLines={2}
             // Make sure the section is not already in calendar
             disabled={inCal}
-            onMouseEnter={() => { if (!inCal) addCourseHover(section); }}
-            onMouseLeave={() => { if (!inCal) removeHover(section.id); }}
+            onMouseEnter={() => {
+              if (!inCal) {
+                addCourseHover(section);
+              }
+            }}
+            onMouseLeave={() => {
+              if (!inCal) {
+                removeHover(section.id);
+              }
+            }}
             onTouchTap={() => {
               checkComponents(selected.school, selected.subject, selected.course, section.id);
               addCourse(section);
