@@ -18,7 +18,7 @@ export default class NavBar extends React.Component {
   render() {
     return (
       <div>
-        <AppBar onLeftIconButtonTouchTap={this.handleToggle} title="Serif" />
+        <AppBar onLeftIconButtonTouchTap={this.handleToggle} title="Serif.nu" />
         <Drawer
           docked={false}
           width={200}
