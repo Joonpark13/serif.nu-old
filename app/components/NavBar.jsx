@@ -1,6 +1,8 @@
 import React from 'react';
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
+import { List, ListItem } from 'material-ui/List';
+import { IndexLink, Link } from 'react-router';
 
 export default class NavBar extends React.Component {
   constructor(props) {
@@ -25,7 +27,10 @@ export default class NavBar extends React.Component {
           open={this.state.open}
           onRequestChange={(open) => this.setState({ open })}
         >
-          Welcome to Serif! More info about the app will be coming soon.
+          <List>
+            <ListItem containerElement={<IndexLink to="/" />} primaryText="Serif.nu" />
+            <ListItem containerElement={<Link to="/about" />} primaryText="About" />
+          </List>
         </Drawer>
       </div>
     );
