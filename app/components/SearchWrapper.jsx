@@ -115,6 +115,10 @@ SearchWrapper.propTypes = {
   }),
   checkComponents: React.PropTypes.func,
   addCourse: React.PropTypes.func,
+  addComponent: React.PropTypes.func,
+  addCourseHover: React.PropTypes.func,
+  addComponentHover: React.PropTypes.func,
+  removeHover: React.PropTypes.func,
   onSelect: React.PropTypes.func,
   showSearch: React.PropTypes.func
 };
