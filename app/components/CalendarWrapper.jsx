@@ -4,6 +4,7 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 
 import Calendar from './Calendar.jsx';
+import Unscheduled from './Unscheduled.jsx';
 
 const style = {
   card: {
@@ -85,9 +86,15 @@ const CalendarWrapper = ({
         <CardTitle title="Unscheduled Courses" />
         <CardText>
           {unscheduled.map((event) => (
-            <Card key={event.id}>
-              <CardTitle title={event.title} />
-            </Card>
+            <Unscheduled
+              key={event.id}
+              id={event.id}
+              title={event.title}
+              color={event.color}
+              sections={sections}
+              components={components}
+              selectEvent={selectEvent}
+            />
           ))}
         </CardText>
       </Card>
