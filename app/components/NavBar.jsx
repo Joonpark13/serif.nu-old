@@ -28,8 +28,8 @@ export default class NavBar extends React.Component {
           onRequestChange={(open) => this.setState({ open })}
         >
           <List>
-            <ListItem containerElement={<IndexLink to="/" />} primaryText="Serif.nu" />
-            <ListItem containerElement={<Link to="/about" />} primaryText="About" />
+            <ListItem containerElement={<IndexLink to="/" />} onTouchTap={this.handleToggle} primaryText="Serif.nu" />
+            <ListItem containerElement={<Link to="/about" />} onTouchTap={this.handleToggle} primaryText="About" />
           </List>
         </Drawer>
       </div>
