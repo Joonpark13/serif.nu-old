@@ -24,7 +24,7 @@ const CalendarWrapper = ({
   hoverSection,
   hoverComponent
 }) => {
-  // Take care of unscheduled courses
+  // Separate unschedule courses from scheduled ones
   const unscheduled = [];
   const scheduled = [];
   coursecomps.forEach((coursecomp) => {
@@ -34,6 +34,13 @@ const CalendarWrapper = ({
       scheduled.push(coursecomp);
     }
   });
+  if (hoverSection) {
+    if (hoverSection.unscheduled) unscheduled.push(hoverSection);
+    else scheduled.push(hoverSection);
+  } else if (hoverComponent) {
+    if (hoverComponent.unscheduled) unscheduled.push(hoverComponent);
+    else scheduled.push(hoverComponent);
+  }
   const selected = selectedEvents.section;
   const component = selectedEvents.component;
   const removeButton = (
@@ -70,8 +77,6 @@ const CalendarWrapper = ({
             selectEvent={selectEvent}
             sections={sections}
             components={components}
-            hoverSection={hoverSection}
-            hoverComponent={hoverComponent}
           />
         </CardText>
       </Card>

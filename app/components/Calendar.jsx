@@ -11,22 +11,10 @@ export default class Calendar extends React.Component {
     this.updateEvents = this.updateEvents.bind(this);
   }
   componentDidMount() {
-    if (this.props.hoverSection) {
-      this.updateEvents(this.props.coursecomps.concat(this.props.hoverSection));
-    } else if (this.props.hoverComponent) {
-      this.updateEvents(this.props.coursecomps.concat(this.props.hoverComponent));
-    } else {
-      this.updateEvents(this.props.coursecomps);
-    }
+    this.updateEvents(this.props.coursecomps);
   }
   componentDidUpdate() {
-    if (this.props.hoverSection) {
-      this.updateEvents(this.props.coursecomps.concat(this.props.hoverSection));
-    } else if (this.props.hoverComponent) {
-      this.updateEvents(this.props.coursecomps.concat(this.props.hoverComponent));
-    } else {
-      this.updateEvents(this.props.coursecomps);
-    }
+    this.updateEvents(this.props.coursecomps);
   }
   updateEvents(events) {
     $('#calendar').fullCalendar('destroy'); // Make sure it resets before every load
