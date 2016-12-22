@@ -1,3 +1,5 @@
+import $ from 'jquery';
+
 import { initialSelected, initialDataDetails, details } from './helpers';
 
 const initialCart = {
