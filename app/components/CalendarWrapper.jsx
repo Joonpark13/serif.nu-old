@@ -87,7 +87,7 @@ const CalendarWrapper = ({
         </CardText>
       </Card>
 
-      {selected && (
+      {selected && ( // Dialog that appears on event select
         <Dialog
           title={`${selected.subject} ${selected.course} ${selected.name}`}
           actions={actions}
