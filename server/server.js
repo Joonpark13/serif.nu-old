@@ -17,6 +17,10 @@ MongoClient.connect(url4650, (err, database) => {
     });
 });
 
+app.get(['/', '/about'], (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'app', 'index.html'));
+});
+
 app.get('/data/search', (req, res) => {
     db4650.collection('courses').find().toArray((err, result) => {
         if (err) console.log(err);
@@ -35,10 +39,6 @@ app.get('/data/search', (req, res) => {
         res.setHeader('Content-Type', 'application/json');
         res.send(JSON.stringify(prepared));
     });
-});
-
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'app', 'index.html'));
 });
 
 app.get('/data/schools', (req, res) => {

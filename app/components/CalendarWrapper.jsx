@@ -73,7 +73,7 @@ const CalendarWrapper = ({
   actions.push(removeButton);
   if (selectedComponent) actions.push(swapButton);
   actions.push(cancelButton);
-  const component = components.filter(matchId(selected.id))[0];
+  const component = selected ? components.filter(matchId(selected.id))[0] : null;
   return (
     <div>
       <Card style={style.card}>
