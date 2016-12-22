@@ -343,3 +343,9 @@ export function removeHover(sectionId) {
     sectionId
   };
 }
+
+export function showSearch() {
+  return {
+    type: 'SHOW_SEARCH'
+  };
+}

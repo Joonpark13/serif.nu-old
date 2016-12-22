@@ -9,7 +9,8 @@ import {
   addComponentSearch,
   addCourseHover,
   addComponentHover,
-  removeHover
+  removeHover,
+  showSearch
 } from '../action-creators';
 
 const mapStateToProps = state => ({
@@ -44,6 +45,9 @@ const mapDispatchToProps = dispatch => ({
   },
   removeHover: (sectionId) => {
     dispatch(removeHover(sectionId));
+  },
+  showSearch: () => {
+    dispatch(showSearch());
   }
 });
 

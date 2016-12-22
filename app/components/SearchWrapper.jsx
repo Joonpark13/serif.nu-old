@@ -1,6 +1,7 @@
 import React from 'react';
 import CircularProgress from 'material-ui/CircularProgress';
 import Divider from 'material-ui/Divider';
+import FlatButton from 'material-ui/FlatButton';
 
 import Search from './Search.jsx';
 import Sections from './Sections.jsx';
@@ -15,7 +16,17 @@ const style = {
     margin: 'auto'
   },
   divider: {
+    marginTop: '5px',
     marginBottom: '10px'
+  },
+  header: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+  subjectName: {
+    marginTop: 0,
+    marginBottom: 0
   }
 };
 
@@ -33,12 +44,18 @@ const SearchWrapper = ({
   addCourseHover,
   addComponentHover,
   removeHover,
-  onSelect
+  onSelect,
+  showSearch
 }) => {
   let view = null;
   const header = (
     <div>
-      <h3>{`${selected.subject} ${selected.course}`}</h3>
+      <div style={style.header}>
+        <h3 style={style.subjectName}>{`${selected.subject} ${selected.course}`}</h3>
+        {currentView === 'sections' &&
+          <FlatButton label="cancel" primary onTouchTap={() => showSearch()} />
+        }
+      </div>
       <Divider style={style.divider} />
     </div>
   );
@@ -98,7 +115,8 @@ SearchWrapper.propTypes = {
   }),
   checkComponents: React.PropTypes.func,
   addCourse: React.PropTypes.func,
-  onSelect: React.PropTypes.func
+  onSelect: React.PropTypes.func,
+  showSearch: React.PropTypes.func
 };
 
 export default SearchWrapper;

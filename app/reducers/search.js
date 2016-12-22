@@ -95,6 +95,19 @@ function search(state = initialSearch, action) {
         }
       };
       break;
+    case 'SHOW_SEARCH':
+      return {
+        currentView: 'search',
+        selected: initialSelected,
+        data: {
+          autocomplete: state.data.autocomplete,
+          school: '',
+          subject: '',
+          course: '',
+          sections: initialData,
+          details: initialDataDetails
+        }
+      };
     default:
       return state;
   }
