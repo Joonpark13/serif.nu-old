@@ -7,7 +7,9 @@ const style = {
     backgroundImage: `url(${heroImage})`,
     backgroundRepeat: 'no-repeat',
     backgroundAttachment: 'fixed',
-    height: '600px'
+    minHeight: '600px',
+    backgroundPosition: 'center',
+    backgroundSize: 'cover'
   }
 };
 
