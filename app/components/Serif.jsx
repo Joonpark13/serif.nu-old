@@ -5,6 +5,9 @@ import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 import { Card, CardText } from 'material-ui/Card';
 import { Tabs, Tab } from 'material-ui/Tabs';
+import Dialog from 'material-ui/Dialog';
+import RaisedButton from 'material-ui/RaisedButton';
+import { Link } from 'react-router';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import CurrentlyBrowsing from './CurrentlyBrowsing.jsx';
@@ -12,7 +15,7 @@ import SearchContainer from '../containers/SearchContainer.jsx';
 import CalendarContainer from '../containers/CalendarContainer.jsx';
 import BrowseContainer from '../containers/BrowseContainer.jsx';
 import CartContainer from '../containers/CartContainer.jsx';
-import { changeTab } from '../action-creators';
+import { changeTab, onFirstVisit } from '../action-creators';
 
 const style = {
   column: {
@@ -41,22 +44,58 @@ const style = {
   cart: {
     position: 'relative', // Necessary for z-index
     zIndex: 2
+  },
+  buttonBox: {
+    display: 'flex',
+    justifyContent: 'space-around',
+    flexWrap: 'wrap'
+  },
+  button: {
+    display: 'inline-block'
   }
 };
 
 const mapStateToProps = (state) => ({
   selectingComponent: state.selectingComponent,
-  tabState: state.tabState
+  tabState: state.tabState,
+  firstVisit: state.firstVisit
 });
 
 const mapDispatchToProps = (dispatch) => ({
   handleTabChange: (value) => {
     dispatch(changeTab(value));
+  },
+  onFirstVisit: () => {
+    dispatch(onFirstVisit());
   }
 });
 
-let Serif = ({ selectingComponent, tabState, handleTabChange }) => (
+let Serif = ({ selectingComponent, tabState, handleTabChange, firstVisit, onFirstVisit }) => (
   <div>
+    {/* Welcome Dialog */}
+    <Dialog title="Welcome to the new Serif.nu!" modal open={firstVisit}>
+      <p>
+        Serif.nu is back in 2017 with an all new look goverened by <a href="https://material.io/guidelines/">
+        Material Design</a>. Find out more, or dive right in!
+      </p>
+      <div style={style.buttonBox}>
+        <RaisedButton
+          label="Let's go!"
+          primary
+          style={style.button}
+          onTouchTap={() => onFirstVisit()}
+        />
+        <Link to="/about">
+          <RaisedButton
+            label="Tell me about Serif"
+            primary
+            style={style.button}
+            onTouchTap={() => onFirstVisit()}
+          />
+        </Link>
+      </div>
+    </Dialog>
+
     <Grid fluid>
       <Row>
           {/* The order of the columns is switched:
@@ -109,7 +148,9 @@ let Serif = ({ selectingComponent, tabState, handleTabChange }) => (
 Serif.propTypes = {
   selectingComponent: React.PropTypes.bool,
   tabState: React.PropTypes.string,
-  handleTabChange: React.PropTypes.func
+  handleTabChange: React.PropTypes.func,
+  firstVisit: React.PropTypes.bool,
+  onFirstVisit: React.PropTypes.func
 };
 
 Serif = connect(mapStateToProps, mapDispatchToProps)(Serif);

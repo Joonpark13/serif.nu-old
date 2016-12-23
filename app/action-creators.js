@@ -349,3 +349,9 @@ export function showSearch() {
     type: 'SHOW_SEARCH'
   };
 }
+
+export function onFirstVisit() {
+  return {
+    type: 'ON_FIRST_VISIT'
+  };
+}

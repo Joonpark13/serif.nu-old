@@ -15,7 +15,7 @@ const config = {
                 eventOpen: initialCalendar.eventOpen,
                 selectedEvents: initialCalendar.eventOpen
             },
-            firstVisit: state.calendar.firstVisit
+            firstVisit: state.firstVisit
         })
     )
 };
