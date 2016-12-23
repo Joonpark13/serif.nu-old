@@ -17,6 +17,17 @@ export const initialDataDetails = {
   info: {}
 };
 
+export const initialCalendar = {
+  sections: [],
+  components: [],
+  hover: {
+    section: null,
+    component: null
+  },
+  eventOpen: false,
+  selectedEvents: {}
+};
+
 export function schools(state = {}, action) {
   switch(action.type) {
     case 'REQUEST_SCHOOLS':

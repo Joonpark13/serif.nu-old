@@ -30,13 +30,23 @@ function tabState(state = 'search', action) {
   }
 }
 
+function firstVisit(state = true, action) {
+  switch (action.type) {
+    case 'ON_FIRST_VISIT':
+      return false;
+    default:
+      return state;
+  }
+}
+
 const reducer = combineReducers({
   browse,
   search,
   calendar,
   cart,
   selectingComponent,
-  tabState
+  tabState,
+  firstVisit
 });
 
 export default reducer;

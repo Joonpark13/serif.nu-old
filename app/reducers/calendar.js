@@ -1,15 +1,6 @@
 import $ from 'jquery';
 
-const initialCalendar = {
-  sections: [],
-  components: [],
-  hover: {
-    section: null,
-    component: null
-  },
-  eventOpen: false,
-  selectedEvents: {}
-};
+import { initialCalendar } from './helpers';
 
 const filterComponents = (components, sectionId) => {
   const newComponents = [];
