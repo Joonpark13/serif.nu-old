@@ -23,7 +23,7 @@ module.exports = {
                 loader: 'style-loader!css-loader'
             },
             {
-                test: /\.(woff|woff2|eot|ttf|svg)$/,
+                test: /\.(woff|woff2|eot|ttf|svg|jpe?g|gif)$/,
                 loader: 'url-loader?limit=100000'
             }
         ]
