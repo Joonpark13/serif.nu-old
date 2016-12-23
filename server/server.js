@@ -17,7 +17,7 @@ MongoClient.connect(url4650, (err, database) => {
     });
 });
 
-app.get(['/', '/about'], (req, res) => {
+app.get(['/', '/about', '/faq', '/bug', '/contact', '/tos'], (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'app', 'index.html'));
 });
 

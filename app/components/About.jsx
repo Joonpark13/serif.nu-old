@@ -90,7 +90,7 @@ const About = () => (
     </div>
 
     <div style={style.sectionOdd}>
-      <h1 style={style.purpleHeader}>We get it. It's almost registration.</h1>
+      <h1 style={style.purpleHeader}>We get it. It's almost registration week.</h1>
       <div style={style.divideTwo}>
         <img src={studentImage} alt="Student with a laptop" style={style.studentImage} />
         <div style={style.blurbs}>
