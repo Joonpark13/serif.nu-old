@@ -12,6 +12,7 @@ import colors from '../colors';
 import store from '../store';
 import NavBar from './NavBar.jsx';
 import { fetchSchools, fetchSearchData } from '../action-creators';
+import Footer from './Footer.jsx';
 
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
@@ -47,6 +48,7 @@ export default class App extends React.Component {
           <div> {/* MuiThemeProvider requires stricly one child element */}
             <NavBar />
             {this.props.children}
+            <Footer />
           </div>
         </MuiThemeProvider>
       </Provider>
