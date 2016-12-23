@@ -16,7 +16,7 @@ const routes = (
     <Route path="/faq" component={FAQ} />
     <Route path="/bug" component={ReportBug} />
     <Route path="/contact" component={Contact} />
-    <Route path="/terms" component={Terms} />
+    <Route path="/tos" component={Terms} />
   </Route>
 );
 
