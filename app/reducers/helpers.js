@@ -17,6 +17,8 @@ export const initialDataDetails = {
   info: {}
 };
 
+// When modifying calendar initial state, you must also correspondingly
+// modify the persisted state in store.js
 export const initialCalendar = {
   sections: [],
   components: [],
