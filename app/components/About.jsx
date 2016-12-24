@@ -1,5 +1,6 @@
 import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
+import { Link } from 'react-router';
 
 import heroImage from '../images/Cover1.jpg';
 import { northwesternPurple, northwesternPurple10 } from '../colors';
@@ -162,19 +163,19 @@ const About = () => (
           <h2 style={style.centeredPurpleHeader}>
             Questions?
           </h2>
-          <RaisedButton label="FAQ" primary />
+          <Link to="/faq"><RaisedButton label="FAQ" primary /></Link>
         </div>
         <div style={style.compareItem}>
           <h2 style={style.centeredPurpleHeader}>
             Found a bug?
           </h2>
-          <RaisedButton label="Report a bug" primary />
+          <Link to="/bug"><RaisedButton label="Report a bug" primary /></Link>
         </div>
         <div style={style.compareItem}>
           <h2 style={style.centeredPurpleHeader}>
             Reach out to us.
           </h2>
-          <RaisedButton label="Contact" primary />
+          <Link to="/contact"><RaisedButton label="Contact" primary /></Link>
         </div>
       </div>
     </div>
