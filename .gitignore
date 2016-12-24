@@ -1,6 +1,9 @@
 node_modules
 npm-debug.log
 .env
-dist/bundle.js
-dist/bundle.js.map
+dist/*
 .vscode
+# heroku related files below:
+npm-debug.log
+.DS_Store
+/*.env
