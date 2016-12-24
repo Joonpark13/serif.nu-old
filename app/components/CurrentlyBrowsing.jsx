@@ -9,14 +9,14 @@ const style = {
   },
   currentTermText: {
     fontWeight: 'bold',
-    fontSize: 18
+    fontSize: 18,
+    marginRight: '10px'
   }
 };
 
 const CurrentlyBrowsing = () => (
   <div style={style.box} >
-    <div style={style.currentTermText}>Currently Browsing </div>
-    <FontIcon className="material-icons">chevron_right</FontIcon>
+    <div style={style.currentTermText}>Currently Browsing:</div>
     Winter 2017
   </div>
 );
