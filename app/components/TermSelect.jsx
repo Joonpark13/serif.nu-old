@@ -6,6 +6,8 @@ import Popover from 'material-ui/Popover';
 import { List, ListItem } from 'material-ui/List';
 import CircularProgress from 'material-ui/CircularProgress';
 
+import { matchId } from '../helpers';
+
 const style = {
   box: {
     display: 'flex',
@@ -44,13 +46,20 @@ export default class TermSelect extends React.Component {
     });
   }
 
+  // TODO: Make sure circular progress replaces all of the component when active
   render() {
+    // filteredTerm will be an undefined upon initalizing,
+    // and will be object with matching id when populated
+    const filteredTerm = this.props.terms.filter(matchId(this.props.currentTerm))[0];
     return (
       <div style={style.box} >
         <div style={style.currentTermText}>Term:</div>
         <Chip onTouchTap={this.handleTouchTap}>
           <Avatar icon={<FontIcon className="material-icons">expand_more</FontIcon>} />
-          Winter 2017
+          {
+            // Get most recent term name
+            filteredTerm && filteredTerm.term
+          }
         </Chip>
         {this.props.terms && this.props.currentTerm ?
           <Popover
@@ -61,7 +70,14 @@ export default class TermSelect extends React.Component {
           >
             <List>
               {this.props.terms.map((term) => (
-                <ListItem key={term.id} primaryText={term.term} />
+                <ListItem
+                  key={term.id}
+                  primaryText={term.term}
+                  onTouchTap={() => {
+                    this.props.changeTerm(term.id);
+                    this.handleRequestClose();
+                  }}
+                />
               ))}
             </List>
           </Popover>
