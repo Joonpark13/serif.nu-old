@@ -3,6 +3,7 @@ import browse from './browse';
 import search from './search';
 import calendar from './calendar';
 import cart from './cart';
+import terms from './terms';
 
 function selectingComponent(state = false, action) {
   switch (action.type) {
@@ -46,7 +47,8 @@ const reducer = combineReducers({
   cart,
   selectingComponent,
   tabState,
-  firstVisit
+  firstVisit,
+  terms
 });
 
 export default reducer;

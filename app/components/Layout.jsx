@@ -11,7 +11,7 @@ import { Provider } from 'react-redux';
 import colors from '../colors';
 import store from '../store';
 import NavBar from './NavBar.jsx';
-import { fetchSchools, fetchSearchData } from '../action-creators';
+import { fetchTerms, fetchSchools, fetchSearchData } from '../action-creators';
 import Footer from './Footer.jsx';
 
 // http://stackoverflow.com/a/34015469/988941
@@ -38,6 +38,7 @@ const muiTheme = getMuiTheme({
 
 export default class App extends React.Component {
   componentDidMount() {
+    store.dispatch(fetchTerms());
     store.dispatch(fetchSchools());
     store.dispatch(fetchSearchData());
   }

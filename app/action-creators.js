@@ -246,8 +246,6 @@ export function fetchDetailsCart(schoolId, subjectAbbv, courseAbbv, sectionId) {
   };
 }
 
-
-
 export function requestSearchData() {
   return {
     type: 'REQUEST_SEARCH_DATA'
@@ -353,5 +351,35 @@ export function showSearch() {
 export function onFirstVisit() {
   return {
     type: 'ON_FIRST_VISIT'
+  };
+}
+
+export function changeTerm(termId) {
+  return {
+    type: 'CHANGE_TERM',
+    termId
+  };
+}
+
+export function requestTerms() {
+  return {
+    type: 'REQUEST_TERMS'
+  };
+}
+
+export function receiveTerms(json) {
+  return {
+    type: 'RECEIVE_TERMS',
+    terms: json,
+    receivedAt: Date.now()
+  };
+}
+
+export function fetchTerms() {
+  return function (dispatch) {
+    dispatch(requestTerms());
+    return fetch('/data/terms')
+      .then(response => response.json())
+      .then(json => dispatch(receiveTerms(json)));
   };
 }

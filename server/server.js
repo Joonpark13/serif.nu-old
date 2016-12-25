@@ -17,6 +17,12 @@ app.get(['/', '/about', '/faq', '/bug', '/contact', '/tos'], (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'app', 'index.html'));
 });
 
+app.get('/data/terms', (req, res) => {
+    const result = require(`${dataPath}terms.json`);
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify(result));
+});
+
 app.get('/data/search', (req, res) => {
     const prepared = [];
 
