@@ -1,21 +1,17 @@
 import express from 'express';
 import path from 'path';
-import { MongoClient } from 'mongodb';
 
 const app = express();
 
 app.use(express.static('dist'));
 
-const url4650 = process.env.MLAB_URL;
-let db4650;
-
-MongoClient.connect(url4650, (err, database) => {
-    db4650 = database;
-    const port = process.env.PORT || 3000;
-    app.listen(port, () => {
-        console.log(`Running on port ${port}`);
-    });
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+    console.log(`Running on port ${port}`);
 });
+
+const term = '4650';
+const dataPath = '../app/data/';
 
 app.get(['/', '/about', '/faq', '/bug', '/contact', '/tos'], (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'app', 'index.html'));
@@ -24,8 +20,6 @@ app.get(['/', '/about', '/faq', '/bug', '/contact', '/tos'], (req, res) => {
 app.get('/data/search', (req, res) => {
     const prepared = [];
 
-    const term = '4650';
-    const dataPath = '../app/data/';
     const schoolsData = require(`${dataPath}${term}/schools.json`);
     schoolsData.forEach((school) => {
         const subjectsData = require(`${dataPath}${term}/${school.id}/subjects.json`);
@@ -48,52 +42,31 @@ app.get('/data/search', (req, res) => {
 });
 
 app.get('/data/schools', (req, res) => {
-    db4650.collection('schools').find().toArray((err, result) => {
-        if (err) console.log(err);
-        res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.stringify(result));
-    });
+    const result = require(`${dataPath}${term}/schools.json`);
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify(result));
 });
 
 app.get('/data/subjects/:school', (req, res) => {
-    db4650.collection('subjects')
-        .find({ school: req.params.school }, { sort: 'name' })
-        .toArray((err, result) => {
-            if (err) console.log(err);
-            res.setHeader('Content-Type', 'application/json');
-            res.send(JSON.stringify(result));
-        });
+    const result = require(`${dataPath}${term}/${req.params.school}/subjects.json`);
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify(result));
 });
 
 app.get('/data/courses/:school/:subject', (req, res) => {
-    db4650.collection('courses').find({
-        school: req.params.school,
-        subject: req.params.subject
-    }).toArray((err, result) => {
-        res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.stringify(result));
-    });
+    const result = require(`${dataPath}${term}/${req.params.school}/${req.params.subject}/courses.json`);
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify(result));
 });
 
 app.get('/data/sections/:school/:subject/:course', (req, res) => {
-    db4650.collection('sections').find({
-        school: req.params.school,
-        subject: req.params.subject,
-        course: req.params.course
-    }).toArray((err, result) => {
-        res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.stringify(result));
-    });
+    const result = require(`${dataPath}${term}/${req.params.school}/${req.params.subject}/${req.params.course}/sections.json`);
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify(result));
 });
 
 app.get('/data/details/:school/:subject/:course/:section', (req, res) => {
-    db4650.collection('details').find({
-        school: req.params.school,
-        subject: req.params.subject,
-        course: req.params.course,
-        section: req.params.section
-    }).toArray((err, result) => {
-        res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.stringify(result));
-    });
+    const result = require(`${dataPath}${term}/${req.params.school}/${req.params.subject}/${req.params.course}/${req.params.section}/details.json`);
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify(result));
 });
