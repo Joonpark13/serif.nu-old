@@ -50,47 +50,43 @@ app.get('/data/schools', (req, res) => {
 });
 
 app.get('/data/subjects/:school', (req, res) => {
-    db4650.collection('subjects').find({ school: req.params.school }).toArray((err, result) => {
-        if (err) console.log(err);
-        res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.stringify(result));
-    });
+    db4650.collection('subjects')
+        .find({ school: req.params.school }, { sort: 'name' })
+        .toArray((err, result) => {
+            if (err) console.log(err);
+            res.setHeader('Content-Type', 'application/json');
+            res.send(JSON.stringify(result));
+        });
 });
 
 app.get('/data/courses/:school/:subject', (req, res) => {
-    db4650.collection('courses').find(
-        {
-            school: req.params.school,
-            subject: req.params.subject
-        }
-    ).toArray((err, result) => {
+    db4650.collection('courses').find({
+        school: req.params.school,
+        subject: req.params.subject
+    }).toArray((err, result) => {
         res.setHeader('Content-Type', 'application/json');
         res.send(JSON.stringify(result));
     });
 });
 
 app.get('/data/sections/:school/:subject/:course', (req, res) => {
-    db4650.collection('sections').find(
-        {
-            school: req.params.school,
-            subject: req.params.subject,
-            course: req.params.course
-        }
-    ).toArray((err, result) => {
+    db4650.collection('sections').find({
+        school: req.params.school,
+        subject: req.params.subject,
+        course: req.params.course
+    }).toArray((err, result) => {
         res.setHeader('Content-Type', 'application/json');
         res.send(JSON.stringify(result));
     });
 });
 
 app.get('/data/details/:school/:subject/:course/:section', (req, res) => {
-    db4650.collection('details').find(
-        {
-            school: req.params.school,
-            subject: req.params.subject,
-            course: req.params.course,
-            section: req.params.section
-        }
-    ).toArray((err, result) => {
+    db4650.collection('details').find({
+        school: req.params.school,
+        subject: req.params.subject,
+        course: req.params.course,
+        section: req.params.section
+    }).toArray((err, result) => {
         res.setHeader('Content-Type', 'application/json');
         res.send(JSON.stringify(result));
     });
