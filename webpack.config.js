@@ -19,10 +19,7 @@ module.exports = {
                 exclude: /node_modules/,
                 loader: 'babel-loader'
             },
-            {
-                test: /\.css$/,
-                loader: 'style-loader!css-loader'
-            },
+            { test: /\.css$/, loader: 'style-loader!css-loader' },
             {
                 test: /\.(woff|woff2|eot|ttf|svg|jpe?g|gif|png)$/,
                 loader: 'url-loader?limit=100000'

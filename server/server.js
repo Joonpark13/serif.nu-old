@@ -22,23 +22,29 @@ app.get(['/', '/about', '/faq', '/bug', '/contact', '/tos'], (req, res) => {
 });
 
 app.get('/data/search', (req, res) => {
-    db4650.collection('courses').find().toArray((err, result) => {
-        if (err) console.log(err);
+    const prepared = [];
 
-        const prepared = [];
-        result.forEach((course) => {
-            prepared.push({
-                text: `${course.subject} ${course.abbv} ${course.name}`,
-                value: `${course.subject} ${course.abbv} ${course.name}`,
-                school: course.school,
-                subject: course.subject,
-                course: course.abbv
+    const term = '4650';
+    const dataPath = '../app/data/';
+    const schoolsData = require(`${dataPath}${term}/schools.json`);
+    schoolsData.forEach((school) => {
+        const subjectsData = require(`${dataPath}${term}/${school.id}/subjects.json`);
+        subjectsData.forEach((subject) => {
+            const coursesData = require(`${dataPath}${term}/${school.id}/${subject.abbv}/courses.json`);
+            coursesData.forEach((course) => {
+                prepared.push({
+                    text: `${course.subject} ${course.abbv} ${course.name}`,
+                    value: `${course.subject} ${course.abbv} ${course.name}`,
+                    school: course.school,
+                    subject: course.subject,
+                    course: course.abbv
+                });
             });
         });
-
-        res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.stringify(prepared));
     });
+
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify(prepared));
 });
 
 app.get('/data/schools', (req, res) => {
