@@ -149,7 +149,7 @@ const mapStateToProps = (state) => ({
     eventOpen: state.calendar.eventOpen,
     selectedEvents: state.calendar.selectedEvents,
     sections: findTermObjItems(state.calendar.sections, state.terms.currentTerm),
-    sections: findTermObjItems(state.calendar.sections, state.terms.currentTerm),
+    components: findTermObjItems(state.calendar.components, state.terms.currentTerm),
     hoverSection: addHoverColor(parseSection(state.calendar.hover.section)),
     hoverComponent: addHoverColor(parseComponent(state.calendar.hover.component))
 });
