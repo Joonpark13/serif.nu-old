@@ -10,7 +10,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { Link } from 'react-router';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import CurrentlyBrowsing from './CurrentlyBrowsing.jsx';
+import TermSelect from './TermSelect.jsx';
 import SearchContainer from '../containers/SearchContainer.jsx';
 import CalendarContainer from '../containers/CalendarContainer.jsx';
 import BrowseContainer from '../containers/BrowseContainer.jsx';
@@ -104,7 +104,7 @@ let Serif = ({ selectingComponent, tabState, handleTabChange, firstVisit, onFirs
         <Col style={style.column} md={3} mdPush={9}>
           <Card>
             <CardText>
-              <CurrentlyBrowsing />
+              <TermSelect />
             </CardText>
           </Card>
 
