@@ -11,8 +11,9 @@ export const matchId = (id) => (
 );
 
 export const findTermObjItems = (coursecomps, currentTerm) => {
+  let foundItems = [];
   coursecomps.forEach((term) => {
-    if (term.id === currentTerm) return term.items;
+    if (term.id === currentTerm) foundItems = term.items;
   });
-  return [];
+  return foundItems;
 };
