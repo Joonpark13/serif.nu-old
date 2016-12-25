@@ -7,6 +7,7 @@ import {
     brightGreen, brightCyan, brightBlue, brightYellow, brightOrange, brightRed,
     darkGreen, darkCyan, darkBlue, darkYellow, darkOrange, darkRed
 } from '../colors';
+import { findTermObjItems } from '../helpers';
 
 const colorArray = [brightGreen, brightOrange, brightBlue, brightYellow, brightCyan, brightRed,
     darkGreen, darkOrange, darkBlue, darkYellow, darkCyan, darkRed
@@ -125,10 +126,16 @@ const parseComponents = (components, sections) => {
     return events;
 };
 
-const parseClasses = (calendar) => {
-    const sections = parseSections(calendar.sections);
-    const components = parseComponents(calendar.components, calendar.sections);
-    return sections.concat(components);
+const parseClasses = (calendar, currentTerm) => {
+    let sections = [];
+    calendar.sections.forEach((term) => {
+        if (term.id === currentTerm) sections = term.items;
+    });
+    let components = [];
+    calendar.components.forEach((term) => {
+        if (term.id === currentTerm) components = term.items;
+    });
+    return parseSections(sections).concat(parseComponents(components, sections));
 };
 
 const addHoverColor = (coursecomp) => {
@@ -138,11 +145,11 @@ const addHoverColor = (coursecomp) => {
 }
 
 const mapStateToProps = (state) => ({
-    coursecomps: parseClasses(state.calendar),
+    coursecomps: parseClasses(state.calendar, state.terms.currentTerm),
     eventOpen: state.calendar.eventOpen,
     selectedEvents: state.calendar.selectedEvents,
-    sections: state.calendar.sections,
-    components: state.calendar.components,
+    sections: findTermObjItems(state.calendar.sections, state.terms.currentTerm),
+    sections: findTermObjItems(state.calendar.sections, state.terms.currentTerm),
     hoverSection: addHoverColor(parseSection(state.calendar.hover.section)),
     hoverComponent: addHoverColor(parseComponent(state.calendar.hover.component))
 });

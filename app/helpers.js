@@ -9,3 +9,10 @@ export const getCourseName = (courses, abbv) => (
 export const matchId = (id) => (
   (component) => (id === component.id)
 );
+
+export const findTermObjItems = (coursecomps, currentTerm) => {
+  coursecomps.forEach((term) => {
+    if (term.id === currentTerm) return term.items;
+  });
+  return [];
+};

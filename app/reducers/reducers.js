@@ -1,4 +1,3 @@
-import { combineReducers } from 'redux';
 import browse from './browse';
 import search from './search';
 import calendar from './calendar';
@@ -40,15 +39,18 @@ function firstVisit(state = true, action) {
   }
 }
 
-const reducer = combineReducers({
-  browse,
-  search,
-  calendar,
-  cart,
-  selectingComponent,
-  tabState,
-  firstVisit,
-  terms
-});
+const reducer = (state = {}, action) => {
+  const currentTerm = state.terms ? state.terms.currentTerm : '';
+  return {
+    browse: browse(state.browse, action),
+    search: search(state.search, action),
+    calendar: calendar(state.calendar, action, currentTerm),
+    cart: cart(state.cart, action),
+    selectingComponent: selectingComponent(state.selectingComponent, action),
+    tabState: tabState(state.tabState, action),
+    firstVisit: firstVisit(state.firstVisit, action),
+    terms: terms(state.terms, action)
+  };
+};
 
 export default reducer;
