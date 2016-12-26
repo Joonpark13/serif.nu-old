@@ -39,6 +39,7 @@ const CalendarWrapper = ({
       scheduled.push(coursecomp);
     }
   });
+  // Add hover classes to appropriate lists
   if (hoverSection) {
     if (hoverSection.unscheduled) unscheduled.push(hoverSection);
     else scheduled.push(hoverSection);
@@ -46,6 +47,7 @@ const CalendarWrapper = ({
     if (hoverComponent.unscheduled) unscheduled.push(hoverComponent);
     else scheduled.push(hoverComponent);
   }
+
   const selected = selectedEvents.section;
   const selectedComponent = selectedEvents.component;
   const removeButton = (
@@ -69,11 +71,15 @@ const CalendarWrapper = ({
       onTouchTap={() => swapComponent(selected.school, selected.subject, selected.course, selected.id)}
     />
   );
+  // Prepare action buttons for event click dialog
   const actions = [];
   actions.push(removeButton);
+  // Swap components button only available if clicked class has components
   if (selectedComponent) actions.push(swapButton);
   actions.push(cancelButton);
+
   const component = selected ? components.filter(matchId(selected.id))[0] : null;
+
   return (
     <div>
       <Card style={style.card}>
