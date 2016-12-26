@@ -38,7 +38,7 @@ const Sections = ({
 
     <List>
       {sections.map(section => {
-        const inCal = inCalendar(calendar.sections, section.id);
+        const inCal = inCalendar(calendar.get('sections'), section.id);
         return (
           <ListItem
             key={section.section}

@@ -11,17 +11,23 @@ import {
 import Cart from '../components/Cart.jsx';
 import { findData } from '../helpers';
 
-const mapStateToProps = (state) => {
-  return ({
+const mapStateToProps = (state) => ({
   currentTerm: state.terms.currentTerm,
   isFetching: state.cart.data.details.isFetching,
   selected: state.cart.selected,
-  sections: findData(state.calendar.sections, state.terms.currentTerm, state.calendar.currentCalendar),
-  components: findData(state.calendar.components, state.terms.currentTerm, state.calendar.currentCalendar),
+  sections: findData(
+    state.calendar.get('sections'),
+    state.terms.currentTerm,
+    state.calendar.get('currentCalendar')
+  ),
+  components: findData(
+    state.calendar.get('components'),
+    state.terms.currentTerm,
+    state.calendar.get('currentCalendar')
+  ),
   details: state.cart.data.details.info,
   swapping: state.cart.swapping
 });
-};
 
 const mapDispatchToProps = (dispatch) => ({
   remove: (sectionId) => {

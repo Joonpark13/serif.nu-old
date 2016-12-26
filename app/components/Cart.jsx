@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, CardHeader, CardText, CardActions } from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
+import { List } from 'immutable';
 
 import Components from './Components.jsx';
 import { matchId } from '../helpers';
@@ -37,37 +38,43 @@ const Cart = ({
     />}
     {!swapping && sections.map((section) => {
       // There should at most be one match
-      const component = components.filter(matchId(section.id))[0];
+      const component = components.filter(matchId(section.get('id')))[0];
       return (
-        <div key={section.id}>
+        <div key={section.get('id')}>
           <Card style={style.card}>
             <CardHeader
-              title={section.name}
-              subtitle={`${section.subject} ${section.course}`}
+              title={section.get('name')}
+              subtitle={`${section.get('subject')} ${section.get('course')}`}
               actAsExpander
               showExpandableButton
             />
             <CardText expandable>
-              <p>{section.meeting_time}</p>
-              <p>{section.instructor.join(', ')}</p>
-              {section.topic && <p>{section.topic}</p>}
-              <p>{section.overview_of_class}</p>
-              <p>ID: {section.id}</p>
+              <p>{section.get('meeting_time')}</p>
+              <p>{section.get('instructor').toJS().join(', ')}</p>
+              {section.get('topic') && <p>{section.get('topic')}</p>}
+              <p>{section.get('overview_of_class')}</p>
+              <p>ID: {section.get('id')}</p>
               {component && (
                 <div>
-                  <h4>{component.component}</h4>
-                  <p>{component.meeting_time}</p>
-                  <p>{component.room}</p>
+                  <h4>{component.get('component')}</h4>
+                  <p>{component.get('meeting_time')}</p>
+                  <p>{component.get('room')}</p>
                 </div>
               )}
             </CardText>
             <CardActions>
-              <FlatButton label="Remove" primary onTouchTap={() => remove(section.id)} />
+              <FlatButton label="Remove" primary onTouchTap={() => remove(section.get('id'))} />
               {component && (
                 <FlatButton
                   label="Swap Component"
                   primary
-                  onTouchTap={() => swapComponent(currentTerm, section.school, section.subject, section.course, section.id)}
+                  onTouchTap={() => swapComponent(
+                    currentTerm,
+                    section.get('school'),
+                    section.get('subject'),
+                    section.get('course'),
+                    section.get('id')
+                  )}
                 />
               )}
             </CardActions>
@@ -81,8 +88,8 @@ const Cart = ({
 export default Cart;
 
 Cart.propTypes = {
-  sections: React.PropTypes.arrayOf(React.PropTypes.object),
-  components: React.PropTypes.arrayOf(React.PropTypes.object),
+  sections: React.PropTypes.instanceOf(List),
+  components: React.PropTypes.instanceOf(List),
   swapping: React.PropTypes.bool,
   remove: React.PropTypes.func,
   swapComponent: React.PropTypes.func

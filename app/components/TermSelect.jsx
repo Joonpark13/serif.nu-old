@@ -1,5 +1,6 @@
 import React from 'react';
 import CircularProgress from 'material-ui/CircularProgress';
+import { List } from 'immutable';
 
 import { matchId } from '../helpers';
 import DropDown from './DropDown.jsx';
@@ -42,7 +43,7 @@ TermSelect.propTypes = {
   terms: React.PropTypes.arrayOf(React.PropTypes.object),
   currentTerm: React.PropTypes.string,
   changeTerm: React.PropTypes.func,
-  calendars: React.PropTypes.arrayOf(React.PropTypes.object),
+  calendars: React.PropTypes.instanceOf(List),
   currentCalendar: React.PropTypes.number,
   changeCalendar: React.PropTypes.func
 };

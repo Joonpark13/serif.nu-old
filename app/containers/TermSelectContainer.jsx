@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { List } from 'immutable';
 
 import { changeTerm, firstCalendar } from '../action-creators';
 import TermSelect from '../components/TermSelect.jsx';
@@ -9,9 +10,9 @@ const compareTermId = (termA, termB) => (
 );
 
 const findCalendar = (sections, currentTerm) => {
-  let items = [];
-  sections.forEach((term) => {
-    if (term.id === currentTerm) items = term.items;
+  let items = List([]);
+  sections.map(term => {
+    if (term.get('id') === currentTerm) items = term.get('items');
   });
   return items;
 };
@@ -19,8 +20,8 @@ const findCalendar = (sections, currentTerm) => {
 const mapStateToProps = (state) => ({
   terms: state.terms.terms.items.sort(compareTermId),
   currentTerm: state.terms.currentTerm,
-  calendars: findCalendar(state.calendar.sections, state.terms.currentTerm),
-  currentCalendar: state.calendar.currentCalendar
+  calendars: findCalendar(state.calendar.get('sections'), state.terms.currentTerm),
+  currentCalendar: state.calendar.get('currentCalendar')
 });
 
 const mapDispatchToProps = (dispatch) => ({

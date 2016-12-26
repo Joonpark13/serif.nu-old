@@ -2,6 +2,7 @@ import React from 'react';
 import { Card, CardText, CardTitle } from 'material-ui/Card';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
+import { List } from 'immutable';
 
 import Calendar from './Calendar.jsx';
 import Unscheduled from './Unscheduled.jsx';
@@ -144,6 +145,6 @@ CalendarWrapper.propTypes = {
   remove: React.PropTypes.func,
   closeDialog: React.PropTypes.func,
   swapComponent: React.PropTypes.func,
-  sections: React.PropTypes.arrayOf(React.PropTypes.object),
-  components: React.PropTypes.arrayOf(React.PropTypes.object)
+  sections: React.PropTypes.instanceOf(List),
+  components: React.PropTypes.instanceOf(List)
 };
