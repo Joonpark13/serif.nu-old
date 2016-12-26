@@ -31,19 +31,14 @@ const populateNew = (classes, currentTerm, currentCalendar, classData) => {
   return newClasses;
 };
 
-const filterComponents = (components, sectionId, currentTerm, currentCalendar) => {
-  const newComponentItems = [];
-  const calObj = findCalObj(components, currentTerm, currentCalendar);
-  calObj.items.forEach((component) => {
-    if (component.id !== sectionId) newComponentItems.push(component);
+const filterClasses = (classes, classId, currentTerm, currentCalendar) => {
+  const newClassData = [];
+  const calObj = findCalObj(classes, currentTerm, currentCalendar);
+  calObj.data.forEach((coursecomp) => {
+    if (coursecomp.id !== classId) newClassData.push(coursecomp);
   });
-  const newCal = {
-    id: calObj.id,
-    name: calObj.name,
-    data: newComponentItems
-  };
-  const newComponents = populateNew(components, currentTerm, currentCalendar, newCal);
-  return newComponents;
+  const newClasses = populateNew(classes, currentTerm, currentCalendar, newClassData);
+  return newClasses;
 };
 
 function calendar(state = initialCalendar, action, currentTerm) {
@@ -98,19 +93,10 @@ function calendar(state = initialCalendar, action, currentTerm) {
       };
     }
     case 'REMOVE': {
-      // Take out any matching ids to sectionId in both sections and components
-      const newSectionItems = [];
-      const calObj = findCalObj(state.sections, currentTerm, state.currentCalendar);
-      calObj.items.forEach((section) => {
-        if (section.id !== action.sectionId) newSectionItems.push(section);
-      });
-      const newCal = {
-        id: calObj.id,
-        name: calObj.name,
-        data: newSectionItems
-      };
-      const newSections = populateNew(state.sections, currentTerm, state.currentCalendar, newCal);
-      const newComponents = filterComponents(state.components, action.sectionId, currentTerm, state.currentCalendar);
+      // Take out any matching ids to sectionId in sections
+      const newSections = filterClasses(state.sections, action.sectionId, currentTerm, state.currentCalendar);
+      // Take out any matching ids to sectionId in components
+      const newComponents = filterClasses(state.components, action.sectionId, currentTerm, state.currentCalendar);
       return {
         currentCalendar: state.currentCalendar,
         sections: newSections,

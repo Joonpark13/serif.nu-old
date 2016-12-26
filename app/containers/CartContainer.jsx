@@ -11,7 +11,8 @@ import {
 import Cart from '../components/Cart.jsx';
 import { findData } from '../helpers';
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state) => {
+  return ({
   currentTerm: state.terms.currentTerm,
   isFetching: state.cart.data.details.isFetching,
   selected: state.cart.selected,
@@ -20,6 +21,7 @@ const mapStateToProps = (state) => ({
   details: state.cart.data.details.info,
   swapping: state.cart.swapping
 });
+};
 
 const mapDispatchToProps = (dispatch) => ({
   remove: (sectionId) => {
