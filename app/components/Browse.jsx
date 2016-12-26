@@ -56,6 +56,7 @@ const style = {
 
 const Browse = (
   {
+    currentTerm,
     currentView,
     selected,
     isFetching,
@@ -79,9 +80,9 @@ const Browse = (
 ) => {
   const homeChip = <Chip onTouchTap={() => showSchools()}>All</Chip>;
   const arrow = <FontIcon className="material-icons">chevron_right</FontIcon>;
-  const schoolNav = <Chip onTouchTap={() => showSubjects(selected.school)}>{selected.school}</Chip>;
+  const schoolNav = <Chip onTouchTap={() => showSubjects(currentTerm, selected.school)}>{selected.school}</Chip>;
   const subjectNav = (
-    <Chip onTouchTap={() => showCourses(selected.school, selected.subject)}>
+    <Chip onTouchTap={() => showCourses(currentTerm, selected.school, selected.subject)}>
       {selected.subject}
     </Chip>
   );
@@ -146,7 +147,7 @@ const Browse = (
               <RaisedButton
                 key={school.id}
                 label={school.id}
-                onClick={() => showSubjects(school.id)}
+                onClick={() => showSubjects(currentTerm, school.id)}
                 primary
                 style={style.schools}
               />
@@ -165,7 +166,7 @@ const Browse = (
               <RaisedButton
                 key={subject.abbv}
                 label={subject.name}
-                onClick={() => showCourses(selected.school, subject.abbv)}
+                onClick={() => showCourses(currentTerm, selected.school, subject.abbv)}
                 fullWidth
                 primary
                 style={style.subjects}
@@ -186,7 +187,7 @@ const Browse = (
                 <RaisedButton
                   key={course.abbv}
                   label={`${course.abbv} ${course.name}`}
-                  onClick={() => showSections(selected.school, selected.subject, course.abbv)}
+                  onClick={() => showSections(currentTerm, selected.school, selected.subject, course.abbv)}
                   primary
                   fullWidth
                   style={style.courses}
@@ -200,7 +201,7 @@ const Browse = (
               <div style={style.nav}>
                 {homeChip}
                 {arrow}
-                <Chip onTouchTap={() => showSubjects(selected.school)}>{selected.school}</Chip>
+                <Chip onTouchTap={() => showSubjects(currentTerm, selected.school)}>{selected.school}</Chip>
                 {arrow}
                 <h4>{selected.subject}</h4>
               </div>
@@ -220,11 +221,11 @@ const Browse = (
           <div>
             {nav}
             <Sections
+              currentTerm={currentTerm}
               selected={selected}
               courses={courses}
               sections={sections}
               calendar={calendar}
-              showCourses={showCourses}
               checkComponents={checkComponents}
               addCourse={addCourse}
               addCourseHover={addCourseHover}

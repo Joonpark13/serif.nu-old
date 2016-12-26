@@ -12,6 +12,7 @@ const style = {
 };
 
 const Cart = ({
+  currentTerm,
   isFetching,
   selected,
   sections,
@@ -66,7 +67,7 @@ const Cart = ({
                 <FlatButton
                   label="Swap Component"
                   primary
-                  onTouchTap={() => swapComponent(section.school, section.subject, section.course, section.id)}
+                  onTouchTap={() => swapComponent(currentTerm, section.school, section.subject, section.course, section.id)}
                 />
               )}
             </CardActions>

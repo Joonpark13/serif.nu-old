@@ -18,6 +18,7 @@ import {
 import Browse from '../components/Browse.jsx';
 
 const mapStateToProps = (state) => ({
+  currentTerm: state.terms.currentTerm,
   currentView: state.browse.currentView,
   selected: state.browse.selected,
   isFetching: state.browse.data.schools.isFetching ||
@@ -37,20 +38,20 @@ const mapDispatchToProps = (dispatch) => ({
   showSchools: () => {
     dispatch(showSchools());
   },
-  showSubjects: (schoolId) => {
-    dispatch(fetchSubjects(schoolId));
+  showSubjects: (currentTerm, schoolId) => {
+    dispatch(fetchSubjects(currentTerm, schoolId));
     dispatch(showSubjects(schoolId));
   },
-  showCourses: (schoolId, subjectAbbv) => {
-    dispatch(fetchCourses(schoolId, subjectAbbv));
+  showCourses: (currentTerm, schoolId, subjectAbbv) => {
+    dispatch(fetchCourses(currentTerm, schoolId, subjectAbbv));
     dispatch(showCourses(subjectAbbv));
   },
-  showSections: (schoolId, subjectAbbv, courseAbbv) => {
-    dispatch(fetchSections(schoolId, subjectAbbv, courseAbbv));
+  showSections: (currentTerm, schoolId, subjectAbbv, courseAbbv) => {
+    dispatch(fetchSections(currentTerm, schoolId, subjectAbbv, courseAbbv));
     dispatch(showSections(courseAbbv));
   },
-  checkComponents: (schoolId, subjectAbbv, courseAbbv, sectionId) => {
-    dispatch(fetchDetails(schoolId, subjectAbbv, courseAbbv, sectionId));
+  checkComponents: (currentTerm, schoolId, subjectAbbv, courseAbbv, sectionId) => {
+    dispatch(fetchDetails(currentTerm, schoolId, subjectAbbv, courseAbbv, sectionId));
   },
   addCourse: (section) => {
     dispatch(addCourse(section));

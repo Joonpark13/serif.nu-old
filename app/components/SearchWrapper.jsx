@@ -31,6 +31,7 @@ const style = {
 };
 
 const SearchWrapper = ({
+  currentTerm,
   searchData,
   isFetching,
   currentView,
@@ -60,12 +61,13 @@ const SearchWrapper = ({
     </div>
   );
   if (currentView === 'search') {
-    view = <Search searchData={searchData} onSelect={onSelect} />;
+    view = <Search currentTerm={currentTerm} searchData={searchData} onSelect={onSelect} />;
   } else if (currentView === 'sections') {
     view = (
       <div>
         {header}
         <Sections
+          currentTerm={currentTerm}
           selected={selected}
           sections={sections}
           calendar={calendar}

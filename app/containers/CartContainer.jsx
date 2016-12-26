@@ -12,6 +12,7 @@ import Cart from '../components/Cart.jsx';
 import { findTermObjItems } from '../helpers';
 
 const mapStateToProps = (state) => ({
+  currentTerm: state.terms.currentTerm,
   isFetching: state.cart.data.details.isFetching,
   selected: state.cart.selected,
   sections: findTermObjItems(state.calendar.sections, state.terms.currentTerm),
@@ -24,8 +25,8 @@ const mapDispatchToProps = (dispatch) => ({
   remove: (sectionId) => {
     dispatch(remove(sectionId));
   },
-  swapComponent: (schoolId, subjectAbbv, courseAbbv, sectionId) => {
-    dispatch(fetchDetailsCart(schoolId, subjectAbbv, courseAbbv, sectionId));
+  swapComponent: (currentTerm, schoolId, subjectAbbv, courseAbbv, sectionId) => {
+    dispatch(fetchDetailsCart(currentTerm, schoolId, subjectAbbv, courseAbbv, sectionId));
     dispatch(swapComponent(schoolId, subjectAbbv, courseAbbv, sectionId));
   },
   addComponent: (detail) => {

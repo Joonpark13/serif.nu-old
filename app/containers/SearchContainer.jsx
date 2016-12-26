@@ -14,6 +14,7 @@ import {
 } from '../action-creators';
 
 const mapStateToProps = state => ({
+  currentTerm: state.terms.currentTerm,
   searchData: state.search.data.autocomplete.items,
   isFetching: state.search.data.isFetching,
   currentView: state.search.currentView,
@@ -24,12 +25,12 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onSelect: (schoolId, subjectAbbv, courseAbbv) => {
+  onSelect: (currentTerm, schoolId, subjectAbbv, courseAbbv) => {
     dispatch(populateSelected(schoolId, subjectAbbv, courseAbbv));
-    dispatch(fetchSectionsSearch(schoolId, subjectAbbv, courseAbbv));
+    dispatch(fetchSectionsSearch(currentTerm, schoolId, subjectAbbv, courseAbbv));
   },
-  checkComponents: (schoolId, subjectAbbv, courseAbbv, sectionId) => {
-    dispatch(fetchDetailsSearch(schoolId, subjectAbbv, courseAbbv, sectionId));
+  checkComponents: (currentTerm, schoolId, subjectAbbv, courseAbbv, sectionId) => {
+    dispatch(fetchDetailsSearch(currentTerm, schoolId, subjectAbbv, courseAbbv, sectionId));
   },
   addCourse: (section) => {
     dispatch(addCourseSearch(section));

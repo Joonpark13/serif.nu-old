@@ -10,7 +10,6 @@ app.listen(port, () => {
     console.log(`Running on port ${port}`);
 });
 
-const term = '4650';
 const dataPath = '../app/data/';
 
 app.get(['/', '/about', '/faq', '/bug', '/contact', '/tos'], (req, res) => {
@@ -23,14 +22,14 @@ app.get('/data/terms', (req, res) => {
     res.send(JSON.stringify(result));
 });
 
-app.get('/data/search', (req, res) => {
+app.get('/data/:term/search', (req, res) => {
     const prepared = [];
 
-    const schoolsData = require(`${dataPath}${term}/schools.json`);
+    const schoolsData = require(`${dataPath}${req.params.term}/schools.json`);
     schoolsData.forEach((school) => {
-        const subjectsData = require(`${dataPath}${term}/${school.id}/subjects.json`);
+        const subjectsData = require(`${dataPath}${req.params.term}/${school.id}/subjects.json`);
         subjectsData.forEach((subject) => {
-            const coursesData = require(`${dataPath}${term}/${school.id}/${subject.abbv}/courses.json`);
+            const coursesData = require(`${dataPath}${req.params.term}/${school.id}/${subject.abbv}/courses.json`);
             coursesData.forEach((course) => {
                 prepared.push({
                     text: `${course.subject} ${course.abbv} ${course.name}`,
@@ -47,32 +46,32 @@ app.get('/data/search', (req, res) => {
     res.send(JSON.stringify(prepared));
 });
 
-app.get('/data/schools', (req, res) => {
-    const result = require(`${dataPath}${term}/schools.json`);
+app.get('/data/:term/schools', (req, res) => {
+    const result = require(`${dataPath}${req.params.term}/schools.json`);
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify(result));
 });
 
-app.get('/data/subjects/:school', (req, res) => {
-    const result = require(`${dataPath}${term}/${req.params.school}/subjects.json`);
+app.get('/data/:term/subjects/:school', (req, res) => {
+    const result = require(`${dataPath}${req.params.term}/${req.params.school}/subjects.json`);
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify(result));
 });
 
-app.get('/data/courses/:school/:subject', (req, res) => {
-    const result = require(`${dataPath}${term}/${req.params.school}/${req.params.subject}/courses.json`);
+app.get('/data/:term/courses/:school/:subject', (req, res) => {
+    const result = require(`${dataPath}${req.params.term}/${req.params.school}/${req.params.subject}/courses.json`);
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify(result));
 });
 
-app.get('/data/sections/:school/:subject/:course', (req, res) => {
-    const result = require(`${dataPath}${term}/${req.params.school}/${req.params.subject}/${req.params.course}/sections.json`);
+app.get('/data/:term/sections/:school/:subject/:course', (req, res) => {
+    const result = require(`${dataPath}${req.params.term}/${req.params.school}/${req.params.subject}/${req.params.course}/sections.json`);
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify(result));
 });
 
-app.get('/data/details/:school/:subject/:course/:section', (req, res) => {
-    const result = require(`${dataPath}${term}/${req.params.school}/${req.params.subject}/${req.params.course}/${req.params.section}/details.json`);
+app.get('/data/:term/details/:school/:subject/:course/:section', (req, res) => {
+    const result = require(`${dataPath}${req.params.term}/${req.params.school}/${req.params.subject}/${req.params.course}/${req.params.section}/details.json`);
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify(result));
 });

@@ -76,10 +76,10 @@ export function receiveSchools(json) {
   };
 }
 
-export function fetchSchools() {
+export function fetchSchools(currentTerm) {
   return function (dispatch) {
     dispatch(requestSchools());
-    return fetch('/data/schools')
+    return fetch(`/data/${currentTerm}/schools`)
       .then(response => response.json())
       .then(json => dispatch(receiveSchools(json)));
   };
@@ -99,10 +99,10 @@ export function receiveSubjects(json) {
   };
 }
 
-export function fetchSubjects(schoolId) {
+export function fetchSubjects(currentTerm, schoolId) {
   return function (dispatch) {
     dispatch(requestSubjects());
-    return fetch(`/data/subjects/${schoolId}`)
+    return fetch(`/data/${currentTerm}/subjects/${schoolId}`)
       .then(response => response.json())
       .then(json => dispatch(receiveSubjects(json)));
   };
@@ -122,10 +122,10 @@ export function receiveCourses(json) {
   };
 }
 
-export function fetchCourses(schoolId, subjectAbbv) {
+export function fetchCourses(currentTerm, schoolId, subjectAbbv) {
   return function (dispatch) {
     dispatch(requestCourses());
-    return fetch(`/data/courses/${schoolId}/${subjectAbbv}`)
+    return fetch(`/data/${currentTerm}/courses/${schoolId}/${subjectAbbv}`)
       .then(response => response.json())
       .then(json => dispatch(receiveCourses(json)));
   };
@@ -145,10 +145,10 @@ export function receiveSections(json) {
   };
 }
 
-export function fetchSections(schoolId, subjectAbbv, courseAbbv) {
+export function fetchSections(currentTerm, schoolId, subjectAbbv, courseAbbv) {
   return function (dispatch) {
     dispatch(requestSections());
-    return fetch(`/data/sections/${schoolId}/${subjectAbbv}/${courseAbbv}`)
+    return fetch(`/data/${currentTerm}/sections/${schoolId}/${subjectAbbv}/${courseAbbv}`)
       .then(response => response.json())
       .then(json => dispatch(receiveSections(json)));
   };
@@ -168,10 +168,10 @@ export function receiveSectionsSearch(json) {
   };
 }
 
-export function fetchSectionsSearch(schoolId, subjectAbbv, courseAbbv) {
+export function fetchSectionsSearch(currentTerm, schoolId, subjectAbbv, courseAbbv) {
   return function (dispatch) {
     dispatch(requestSectionsSearch());
-    return fetch(`/data/sections/${schoolId}/${subjectAbbv}/${courseAbbv}`)
+    return fetch(`/data/${currentTerm}/sections/${schoolId}/${subjectAbbv}/${courseAbbv}`)
       .then(response => response.json())
       .then(json => dispatch(receiveSectionsSearch(json)));
   };
@@ -191,10 +191,10 @@ export function receiveDetails(json) {
   };
 }
 
-export function fetchDetails(schoolId, subjectAbbv, courseAbbv, sectionId) {
+export function fetchDetails(currentTerm, schoolId, subjectAbbv, courseAbbv, sectionId) {
   return function (dispatch) {
     dispatch(requestDetails());
-    return fetch(`/data/details/${schoolId}/${subjectAbbv}/${courseAbbv}/${sectionId}`)
+    return fetch(`/data/${currentTerm}/details/${schoolId}/${subjectAbbv}/${courseAbbv}/${sectionId}`)
       .then(response => response.json())
       .then(json => dispatch(receiveDetails(json)));
   };
@@ -214,10 +214,10 @@ export function receiveDetailsSearch(json) {
   };
 }
 
-export function fetchDetailsSearch(schoolId, subjectAbbv, courseAbbv, sectionId) {
+export function fetchDetailsSearch(currentTerm, schoolId, subjectAbbv, courseAbbv, sectionId) {
   return function (dispatch) {
     dispatch(requestDetailsSearch());
-    return fetch(`/data/details/${schoolId}/${subjectAbbv}/${courseAbbv}/${sectionId}`)
+    return fetch(`/data/${currentTerm}/details/${schoolId}/${subjectAbbv}/${courseAbbv}/${sectionId}`)
       .then(response => response.json())
       .then(json => dispatch(receiveDetailsSearch(json)));
   };
@@ -237,10 +237,10 @@ export function receiveDetailsCart(json) {
   };
 }
 
-export function fetchDetailsCart(schoolId, subjectAbbv, courseAbbv, sectionId) {
+export function fetchDetailsCart(currentTerm, schoolId, subjectAbbv, courseAbbv, sectionId) {
   return function (dispatch) {
     dispatch(requestDetailsCart());
-    return fetch(`/data/details/${schoolId}/${subjectAbbv}/${courseAbbv}/${sectionId}`)
+    return fetch(`/data/${currentTerm}/details/${schoolId}/${subjectAbbv}/${courseAbbv}/${sectionId}`)
       .then(response => response.json())
       .then(json => dispatch(receiveDetailsCart(json)));
   };
@@ -260,10 +260,10 @@ export function receiveSearchData(json) {
   };
 }
 
-export function fetchSearchData() {
+export function fetchSearchData(currentTerm) {
   return function (dispatch) {
     dispatch(requestSearchData());
-    return fetch('/data/search')
+    return fetch(`/data/${currentTerm}/search`)
       .then(response => response.json())
       .then(json => dispatch(receiveSearchData(json)));
   };

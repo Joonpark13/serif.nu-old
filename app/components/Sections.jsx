@@ -24,6 +24,7 @@ const style = {
 };
 
 const Sections = ({
+  currentTerm,
   selected,
   sections,
   calendar,
@@ -65,7 +66,7 @@ const Sections = ({
               }
             }}
             onTouchTap={() => {
-              checkComponents(selected.school, selected.subject, selected.course, section.id);
+              checkComponents(currentTerm, selected.school, selected.subject, selected.course, section.id);
               addCourse(section);
               removeHover(section.id);
             }}
@@ -77,6 +78,7 @@ const Sections = ({
 );
 
 Sections.propTypes = {
+  currentTerm: React.PropTypes.string,
   selected: React.PropTypes.shape({
     school: React.PropTypes.string,
     subject: React.PropTypes.string,

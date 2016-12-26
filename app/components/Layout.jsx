@@ -11,7 +11,6 @@ import { Provider } from 'react-redux';
 import colors from '../colors';
 import store from '../store';
 import NavBar from './NavBar.jsx';
-import { fetchTerms, fetchSchools, fetchSearchData } from '../action-creators';
 import Footer from './Footer.jsx';
 
 // http://stackoverflow.com/a/34015469/988941
@@ -36,23 +35,20 @@ const muiTheme = getMuiTheme({
   }
 });
 
-export default class App extends React.Component {
-  componentDidMount() {
-    store.dispatch(fetchTerms());
-    store.dispatch(fetchSchools());
-    store.dispatch(fetchSearchData());
-  }
-  render() {
-    return (
-      <Provider store={store}>
-        <MuiThemeProvider muiTheme={muiTheme}>
-          <div> {/* MuiThemeProvider requires stricly one child element */}
-            <NavBar />
-            {this.props.children}
-            <Footer />
-          </div>
-        </MuiThemeProvider>
-      </Provider>
-    );
-  }
-}
+const App = ({ children }) => (
+  <Provider store={store}>
+    <MuiThemeProvider muiTheme={muiTheme}>
+      <div> {/* MuiThemeProvider requires stricly one child element */}
+        <NavBar />
+        {children}
+        <Footer />
+      </div>
+    </MuiThemeProvider>
+  </Provider>
+);
+
+App.propTypes = {
+  children: React.PropTypes.element
+};
+
+export default App;

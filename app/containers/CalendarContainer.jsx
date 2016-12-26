@@ -164,13 +164,7 @@ const mapDispatchToProps = (dispatch) => ({
     },
     closeDialog: () => {
         dispatch(closeEventDialog());
-    },
-    swapComponent: (schoolId, subjectAbbv, courseAbbv, sectionId) => {
-        dispatch(fetchDetailsCart(schoolId, subjectAbbv, courseAbbv, sectionId));
-        dispatch(showCart());
-        dispatch(closeEventDialog());
-        dispatch(swapComponent(schoolId, subjectAbbv, courseAbbv, sectionId));
-    },
+    }
 });
 
 const CalendarContainer = connect(mapStateToProps, mapDispatchToProps)(CalendarWrapper);
