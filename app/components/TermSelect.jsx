@@ -11,6 +11,8 @@ export default class TermSelect extends React.Component {
     const filteredTerm = this.props.terms.filter(matchId(this.props.currentTerm))[0];
 
     const filteredName = this.props.calendars.filter(matchId(this.props.currentCalendar))[0];
+    console.log(this.props.calendars);
+    console.log(this.props.currentCalendar);
     return (
       <div>
         {this.props.terms && this.props.currentTerm ?
@@ -24,13 +26,15 @@ export default class TermSelect extends React.Component {
           :
           <CircularProgress />
         }
-        <DropDown
-          promptText="Calendar"
-          displayValue={filteredName}
-          items={this.props.calendars}
-          primaryTextValue="name"
-          onSelect={(calendar) => this.props.changeCalendar(calendar.id)}
-        />
+        {filteredName &&
+          <DropDown
+            promptText="Calendar"
+            displayValue={filteredName}
+            items={this.props.calendars}
+            primaryTextValue="name"
+            onSelect={(calendar) => this.props.changeCalendar(calendar.id)}
+          />
+        }
       </div>
     );
   }
@@ -39,5 +43,8 @@ export default class TermSelect extends React.Component {
 TermSelect.propTypes = {
   terms: React.PropTypes.arrayOf(React.PropTypes.object),
   currentTerm: React.PropTypes.string,
-  changeTerm: React.PropTypes.func
+  changeTerm: React.PropTypes.func,
+  calendars: React.PropTypes.arrayOf(React.PropTypes.object),
+  currentCalendar: React.PropTypes.number,
+  changeCalendar: React.PropTypes.func
 };

@@ -9,6 +9,7 @@ const config = {
     slicer: (paths) => (
         (state) => ({
             calendar: {
+                currentCalendar: initialCalendar.currentCalendar,
                 sections: state.calendar.sections,
                 components: state.calendar.components,
                 hover: initialCalendar.hover,

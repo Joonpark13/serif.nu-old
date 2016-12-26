@@ -8,11 +8,19 @@ const compareTermId = (termA, termB) => (
   parseInt(termB.id, 10) - parseInt(termA.id, 10)
 );
 
+const findCalendar = (sections, currentTerm) => {
+  let items = [];
+  sections.forEach((term) => {
+    if (term.id === currentTerm) items = term.items;
+  });
+  return items;
+};
+
 const mapStateToProps = (state) => ({
   terms: state.terms.terms.items.sort(compareTermId),
   currentTerm: state.terms.currentTerm,
-  calendars: [{ id: 1, name: 'Cal 1' }, { id: 2, name: 'cal 2' }],
-  currentCalendar: 1
+  calendars: findCalendar(state.calendar.sections, state.terms.currentTerm),
+  currentCalendar: state.calendar.currentCalendar
 });
 
 const mapDispatchToProps = (dispatch) => ({
