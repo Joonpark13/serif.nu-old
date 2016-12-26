@@ -10,12 +10,16 @@ const compareTermId = (termA, termB) => (
 
 const mapStateToProps = (state) => ({
   terms: state.terms.terms.items.sort(compareTermId),
-  currentTerm: state.terms.currentTerm
+  currentTerm: state.terms.currentTerm,
+  calendars: [{ id: 1, name: 'Cal 1' }, { id: 2, name: 'cal 2' }],
+  currentCal: 1
 });
 
 const mapDispatchToProps = (dispatch) => ({
   changeTerm: (termId) => {
     dispatch(changeTerm(termId));
+  },
+  changeCalendar: (calId) => {
   }
 });
 

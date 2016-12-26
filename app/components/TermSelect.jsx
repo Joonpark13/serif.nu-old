@@ -5,11 +5,12 @@ import { matchId } from '../helpers';
 import DropDown from './DropDown.jsx';
 
 export default class TermSelect extends React.Component {
-  // TODO: Make sure circular progress replaces all of the component when active
   render() {
     // filteredTerm will be an undefined upon initalizing,
     // and will be object with matching id when populated
     const filteredTerm = this.props.terms.filter(matchId(this.props.currentTerm))[0];
+
+    const filteredName = this.props.calendars.filter(matchId(this.props.currentCal))[0];
     return (
       <div>
         {this.props.terms && this.props.currentTerm ?
@@ -23,6 +24,13 @@ export default class TermSelect extends React.Component {
           :
           <CircularProgress />
         }
+        <DropDown
+          promptText="Calendar"
+          displayValue={filteredName}
+          items={this.props.calendars}
+          primaryTextValue="name"
+          onSelect={(calendar) => this.props.changeCalendar(calendar.id)}
+        />
       </div>
     );
   }
