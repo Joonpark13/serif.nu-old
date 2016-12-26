@@ -20,6 +20,7 @@ export const initialDataDetails = {
 // When modifying calendar initial state, you must also correspondingly
 // modify the persisted state in store.js
 export const initialCalendar = {
+  currentCalendar: 1,
   sections: [],
   components: [],
   hover: {

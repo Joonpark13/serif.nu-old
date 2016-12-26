@@ -20,7 +20,8 @@ import {
   onFirstVisit,
   fetchTerms,
   fetchSchools,
-  fetchSearchData
+  fetchSearchData,
+  firstCalendar
 } from '../action-creators';
 
 const style = {
@@ -83,6 +84,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   fetchSearchData: (currentTerm) => {
     dispatch(fetchSearchData(currentTerm));
+  },
+  firstCalendar: () => {
+    dispatch(firstCalendar());
   }
 });
 
@@ -95,6 +99,7 @@ class Serif extends React.Component {
     if (currentTerm !== this.props.currentTerm && currentTerm) {
       this.props.fetchSchools(currentTerm);
       this.props.fetchSearchData(currentTerm);
+      this.props.firstCalendar();
     }
   }
   render() {
@@ -191,7 +196,8 @@ Serif.propTypes = {
   onFirstVisitProp: React.PropTypes.func,
   fetchTerms: React.PropTypes.func,
   fetchSchools: React.PropTypes.func,
-  fetchSearchData: React.PropTypes.func
+  fetchSearchData: React.PropTypes.func,
+  firstCalendar: React.PropTypes.func
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Serif);

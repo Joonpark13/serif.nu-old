@@ -10,10 +10,21 @@ export const matchId = (id) => (
   (component) => (id === component.id)
 );
 
-export const findTermObjItems = (coursecomps, currentTerm) => {
-  let foundItems = [];
-  coursecomps.forEach((term) => {
-    if (term.id === currentTerm) foundItems = term.items;
+export const findCalObj = (classes, currentTerm, currentCalendar) => {
+  let foundCalObj = null;
+  classes.forEach((term) => {
+    if (term.id === currentTerm) { // Find the corresponding term object
+      term.items.forEach((cal) => {
+        // Find the corresponding calendar object
+        if (cal.id === currentCalendar) foundCalObj = cal;
+      });
+    }
   });
-  return foundItems;
+  return foundCalObj;
+};
+
+export const findData = (classes, currentTerm, currentCalendar) => {
+  const calObj = findCalObj(classes, currentTerm, currentCalendar);
+  if (calObj) return calObj.data;
+  return [];
 };

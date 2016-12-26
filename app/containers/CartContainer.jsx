@@ -9,14 +9,14 @@ import {
   removeHover
 } from '../action-creators';
 import Cart from '../components/Cart.jsx';
-import { findTermObjItems } from '../helpers';
+import { findData } from '../helpers';
 
 const mapStateToProps = (state) => ({
   currentTerm: state.terms.currentTerm,
   isFetching: state.cart.data.details.isFetching,
   selected: state.cart.selected,
-  sections: findTermObjItems(state.calendar.sections, state.terms.currentTerm),
-  components: findTermObjItems(state.calendar.components, state.terms.currentTerm),
+  sections: findData(state.calendar.sections, state.terms.currentTerm, state.calendar.currentCalendar),
+  components: findData(state.calendar.components, state.terms.currentTerm, state.calendar.currentCalendar),
   details: state.cart.data.details.info,
   swapping: state.cart.swapping
 });

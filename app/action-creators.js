@@ -383,3 +383,9 @@ export function fetchTerms() {
       .then(json => dispatch(receiveTerms(json)));
   };
 }
+
+export function firstCalendar() {
+  return {
+    type: 'FIRST_CALENDAR'
+  };
+}

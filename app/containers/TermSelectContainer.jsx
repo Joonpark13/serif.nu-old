@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { changeTerm } from '../action-creators';
+import { changeTerm, firstCalendar } from '../action-creators';
 import TermSelect from '../components/TermSelect.jsx';
 
 const compareTermId = (termA, termB) => (
@@ -12,12 +12,13 @@ const mapStateToProps = (state) => ({
   terms: state.terms.terms.items.sort(compareTermId),
   currentTerm: state.terms.currentTerm,
   calendars: [{ id: 1, name: 'Cal 1' }, { id: 2, name: 'cal 2' }],
-  currentCal: 1
+  currentCalendar: 1
 });
 
 const mapDispatchToProps = (dispatch) => ({
   changeTerm: (termId) => {
     dispatch(changeTerm(termId));
+    dispatch(firstCalendar());
   },
   changeCalendar: (calId) => {
   }

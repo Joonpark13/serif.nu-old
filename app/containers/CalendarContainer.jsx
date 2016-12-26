@@ -7,7 +7,7 @@ import {
     brightGreen, brightCyan, brightBlue, brightYellow, brightOrange, brightRed,
     darkGreen, darkCyan, darkBlue, darkYellow, darkOrange, darkRed
 } from '../colors';
-import { findTermObjItems } from '../helpers';
+import { findData } from '../helpers';
 
 const colorArray = [brightGreen, brightOrange, brightBlue, brightYellow, brightCyan, brightRed,
     darkGreen, darkOrange, darkBlue, darkYellow, darkCyan, darkRed
@@ -126,15 +126,9 @@ const parseComponents = (components, sections) => {
     return events;
 };
 
-const parseClasses = (calendar, currentTerm) => {
-    let sections = [];
-    calendar.sections.forEach((term) => {
-        if (term.id === currentTerm) sections = term.items;
-    });
-    let components = [];
-    calendar.components.forEach((term) => {
-        if (term.id === currentTerm) components = term.items;
-    });
+const parseClasses = (calendar, currentTerm, currentCalendar) => {
+    let sections = findData(calendar.sections, currentTerm, currentCalendar);
+    let components = findData(calendar.components, currentTerm, currentCalendar);
     return parseSections(sections).concat(parseComponents(components, sections));
 };
 
@@ -145,11 +139,11 @@ const addHoverColor = (coursecomp) => {
 }
 
 const mapStateToProps = (state) => ({
-    coursecomps: parseClasses(state.calendar, state.terms.currentTerm),
+    coursecomps: parseClasses(state.calendar, state.terms.currentTerm, state.calendar.currentCalendar),
     eventOpen: state.calendar.eventOpen,
     selectedEvents: state.calendar.selectedEvents,
-    sections: findTermObjItems(state.calendar.sections, state.terms.currentTerm),
-    components: findTermObjItems(state.calendar.components, state.terms.currentTerm),
+    sections: findData(state.calendar.sections, state.terms.currentTerm, state.calendar.currentCalendar),
+    components: findData(state.calendar.components, state.terms.currentTerm, state.calendar.currentCalendar),
     hoverSection: addHoverColor(parseSection(state.calendar.hover.section)),
     hoverComponent: addHoverColor(parseComponent(state.calendar.hover.component))
 });
