@@ -108,6 +108,8 @@ function search(state = initialSearch, action) {
           details: initialDataDetails
         }
       };
+    case 'CHANGE_TERM':
+      return initialSearch;
     default:
       return state;
   }

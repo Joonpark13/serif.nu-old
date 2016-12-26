@@ -164,6 +164,8 @@ function browse(state = initialBrowse, action) {
         }
       };
       break;
+    case 'CHANGE_TERM':
+      return initialBrowse;
     default:
       return state;
   }
