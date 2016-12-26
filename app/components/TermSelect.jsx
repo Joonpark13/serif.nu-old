@@ -11,8 +11,6 @@ export default class TermSelect extends React.Component {
     const filteredTerm = this.props.terms.filter(matchId(this.props.currentTerm))[0];
 
     const filteredName = this.props.calendars.filter(matchId(this.props.currentCalendar))[0];
-    console.log(this.props.calendars);
-    console.log(this.props.currentCalendar);
     return (
       <div>
         {this.props.terms && this.props.currentTerm ?

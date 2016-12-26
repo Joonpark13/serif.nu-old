@@ -9,12 +9,23 @@ const populateNew = (classes, currentTerm, currentCalendar, classData) => {
   classes.forEach((term) => {
     if (term.id === currentTerm) {
       // Populate new data array
-      const newData = [];
+      const newTerm = {
+        id: term.id,
+        items: []
+      };
       term.items.forEach((cal) => {
-        if (cal.id === currentCalendar) newData.push(classData);
-        else newData.push(cal);
+        if (cal.id === currentCalendar) {
+          const newCal = {
+            id: cal.id,
+            name: cal.name,
+            data: classData
+          };
+          newTerm.items.push(newCal);
+        } else {
+          newTerm.items.push(cal);
+        }
       });
-      newClasses.push(newData);
+      newClasses.push(newTerm);
     } else newClasses.push(term);
   });
   return newClasses;
@@ -40,30 +51,13 @@ function calendar(state = initialCalendar, action, currentTerm) {
   switch (action.type) {
     case 'ADD_COURSE':
     case 'ADD_COURSE_SEARCH': {
-      // Find corresponding term object
+      // Find corresponding calendar object data
       const sectionData = findData(state.sections, currentTerm, state.currentCalendar);
-      if (sectionData) {
-        sectionData.push(action.section);
-        const newSections = populateNew(state.sections, currentTerm, state.currentCalendar, sectionData);
-        return {
-          currentCalendar: state.currentCalendar,
-          sections: newSections,
-          components: state.components,
-          hover: state.hover,
-          eventOpen: state.eventOpen,
-          selectedEvents: state.selectedEvents
-        };
-      } // If no term object is found
+      sectionData.push(action.section);
+      const newSections = populateNew(state.sections, currentTerm, state.currentCalendar, sectionData);
       return {
         currentCalendar: state.currentCalendar,
-        sections: state.sections.concat({
-          id: currentTerm,
-          items: [{
-            id: 1,
-            name: 'Calendar 1',
-            data: [action.section]
-          }]
-        }),
+        sections: newSections,
         components: state.components,
         hover: state.hover,
         eventOpen: state.eventOpen,
