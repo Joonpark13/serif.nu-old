@@ -27,9 +27,9 @@ const Cart = ({
   removeHover
 }) => (
   <div>
-    {sections.length === 0 && <h3>Cart is empty</h3>}
+    {sections.toJS().length === 0 && <h3>Cart is empty</h3>}
     {!isFetching && swapping && <Components
-      sections={sections}
+      sections={sections.toJS()}
       selected={selected}
       details={details}
       addComponent={addComponent}
