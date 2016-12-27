@@ -2,6 +2,7 @@ import React from 'react';
 import $ from 'jquery';
 import 'fullcalendar';
 import 'fullcalendar/dist/fullcalendar.css';
+import { List } from 'immutable';
 
 import '../stylesheets/materialFullCalendar.css';
 
@@ -35,11 +36,11 @@ export default class Calendar extends React.Component {
       eventClick: (event) => {
         const selected = {};
         // Find the corresponding event from the state arrays
-        this.props.sections.forEach((section) => {
-          if (section.id === event.id) selected.section = section;
+        this.props.sections.map(section => {
+          if (section.get('id') === event.id) selected.section = section.toJS();
         });
-        this.props.components.forEach((component) => {
-          if (component.id === event.id) selected.component = component;
+        this.props.components.map(component => {
+          if (component.get('id') === event.id) selected.component = component.toJS();
         });
         this.props.selectEvent(selected);
       }
@@ -53,6 +54,6 @@ export default class Calendar extends React.Component {
 Calendar.propTypes = {
   coursecomps: React.PropTypes.arrayOf(React.PropTypes.object),
   selectEvent: React.PropTypes.func,
-  sections: React.PropTypes.arrayOf(React.PropTypes.object),
-  components: React.PropTypes.arrayOf(React.PropTypes.object)
+  sections: React.PropTypes.instanceOf(List),
+  components: React.PropTypes.instanceOf(List)
 };

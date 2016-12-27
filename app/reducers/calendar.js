@@ -1,184 +1,144 @@
-import $ from 'jquery';
+import { Map, fromJS } from 'immutable';
 
-import { initialCalendar } from './helpers';
+import { initialCalendar } from './helpers'; // Reducer related helper file
+import { findCalObj, findData } from '../helpers'; // General helper functions
 
-const findTermObj = (coursecomps, currentTerm) => {
-  let foundTermObj = null;
-  coursecomps.forEach((term) => {
-    if (term.id === currentTerm) foundTermObj = term;
-  });
-  return foundTermObj;
-};
+const populateNew = (classes, currentTerm, currentCalendar, classData) => (
+  // Populate new sections array
+  // Implicit return
+  classes.map(term => {
+    if (term.get('id') === currentTerm) {
+      // Populate new data array
+      const newItems = term.get('items').map(cal => {
+        if (cal.get('id') === currentCalendar) return cal.set('data', fromJS(classData));
+        return cal;
+      });
+      return term.set('items', newItems);
+    }
+    return term;
+  })
+);
 
-const filterComponents = (components, sectionId, currentTerm) => {
-  const newComponentItems = [];
-  const termObj = findTermObj(components, currentTerm);
-  termObj.items.forEach((section) => {
-    if (section.id !== sectionId) newComponentItems.push(section);
+const filterClasses = (classes, classId, currentTerm, currentCalendar) => {
+  const newClassData = [];
+  const calData = findData(classes, currentTerm, currentCalendar);
+  calData.forEach((coursecomp) => {
+    if (coursecomp.get('id') !== classId) newClassData.push(coursecomp);
   });
-  const newTerm = {
-    id: currentTerm,
-    items: newComponentItems
-  };
-  // Populate new components array
-  const newComponents = [];
-  components.forEach((term) => {
-    if (term.id === currentTerm) newComponents.push(newTerm);
-    else newComponents.push(term);
-  });
-  return newComponents;
+  const newClasses = populateNew(classes, currentTerm, currentCalendar, newClassData);
+  return newClasses;
 };
 
 function calendar(state = initialCalendar, action, currentTerm) {
-  let newState = {};
   switch (action.type) {
     case 'ADD_COURSE':
     case 'ADD_COURSE_SEARCH': {
-      // Find corresponding term object
-      const selectedTerm = findTermObj(state.sections, currentTerm);
-      if (selectedTerm) {
-        selectedTerm.items.push(action.section);
-        const newSections = [];
-        // Create new sections array
-        state.sections.forEach((term) => {
-          if (term.id === currentTerm) newSections.push(selectedTerm);
-          else newSections.push(term);
-        });
-        return {
-          sections: newSections,
-          components: state.components,
-          hover: state.hover,
-          eventOpen: state.eventOpen,
-          selectedEvents: state.selectedEvents
-        };
-      } // If no term object is found
-      return {
-        sections: state.sections.concat({
-          id: currentTerm,
-          items: [action.section]
-        }),
-        components: state.components,
-        hover: state.hover,
-        eventOpen: state.eventOpen,
-        selectedEvents: state.selectedEvents
-      };
+      // Find corresponding calendar object data
+      const sectionData = findData(
+        state.get('sections'),
+        currentTerm,
+        state.get('currentCalendar')
+      );
+      const newSections = populateNew(
+        state.get('sections'),
+        currentTerm,
+        state.get('currentCalendar'),
+        sectionData.push(fromJS(action.section)) // Do the actual adding
+      );
+      return state.set('sections', newSections);
     }
     case 'ADD_COMPONENT':
     case 'ADD_COMPONENT_SEARCH':
     case 'ADD_COMPONENT_CART': {
-      // Find corresponding term object
-      const selectedTerm = findTermObj(state.components, currentTerm);
-      if (selectedTerm) {
-        selectedTerm.items.push(action.detail);
-        const newComponents = [];
-        // Create new components array
-        state.components.forEach((term) => {
-          if (term.id === currentTerm) newComponents.push(selectedTerm);
-          else newComponents.push(term);
-        });
-        return {
-          sections: state.sections,
-          components: newComponents,
-          hover: state.hover,
-          eventOpen: state.eventOpen,
-          selectedEvents: state.selectedEvents
-        };
-      } // If no term object is found
-      return {
-        sections: state.sections,
-        components: state.components.concat({
-          id: currentTerm,
-          items: [action.detail]
-        }),
-        hover: state.hover,
-        eventOpen: state.eventOpen,
-        selectedEvents: state.selectedEvents
-      };
+      // Find corresponding calendar object data
+      const componentData = findData(
+        state.get('components'),
+        currentTerm,
+        state.get('currentCalendar')
+      );
+      const newComponents = populateNew(
+        state.get('components'),
+        currentTerm,
+        state.get('currentCalendar'),
+        componentData.push(fromJS(action.detail)) // Do the actual adding
+      );
+      return state.set('components', newComponents);
     }
     case 'REMOVE': {
-      // Take out any matching ids to sectionId in both sections and components
-      const newSectionItems = [];
-      const termObj = findTermObj(state.sections, currentTerm);
-      termObj.items.forEach((section) => {
-        if (section.id !== action.sectionId) newSectionItems.push(section);
-      });
-      const newTerm = {
-        id: currentTerm,
-        items: newSectionItems
-      };
-      // Populate new sections array
-      const newSections = [];
-      state.sections.forEach((term) => {
-        if (term.id === currentTerm) newSections.push(newTerm);
-        else newSections.push(term);
-      });
-      const newComponents = filterComponents(state.components, action.sectionId, currentTerm);
-      return {
-        sections: newSections,
-        components: newComponents,
-        hover: state.hover,
-        eventOpen: state.eventOpen,
-        selectedEvents: state.selectedEvents
-      };
+      // Take out any matching ids to sectionId in sections
+      const newSections = filterClasses(
+        state.get('sections'),
+        action.sectionId,
+        currentTerm,
+        state.get('currentCalendar')
+      );
+      // Take out any matching ids to sectionId in components
+      const newComponents = filterClasses(
+        state.get('components'),
+        action.sectionId,
+        currentTerm,
+        state.get('currentCalendar')
+      );
+      return state.set('sections', newSections).set('components', newComponents);
     }
     case 'SWAP_COMPONENT': {
       // Remove currently selection component
-      const newComponents = filterComponents(state.components, action.sectionId, currentTerm);
-      return {
-        sections: state.sections,
-        components: newComponents,
-        hover: state.hover,
-        eventOpen: state.eventOpen,
-        selectedEvents: state.selectedEvents
-      };
+      const newComponents = filterClasses(
+        state.get('components'),
+        action.sectionId,
+        currentTerm,
+        state.get('currentCalendar')
+      );
+      return state.set('components', newComponents);
     }
     case 'SELECT_EVENT':
-      return {
-        sections: state.sections,
-        components: state.components,
-        hover: state.hover,
-        eventOpen: true,
-        selectedEvents: action.coursecomps
-      };
+      return state.set('eventOpen', true).set('selectedEvents', fromJS(action.coursecomps));
     case 'CLOSE_EVENT_DIALOG':
-      return {
-        sections: state.sections,
-        components: state.components,
-        hover: state.hover,
-        eventOpen: false,
-        selectedEvents: state.selectedEvents
-      };
+      return state.set('eventOpen', false);
     case 'ADD_COURSE_HOVER':
-      newState = {
-        hover: {
-          section: action.section,
-          component: null
-        }
-      };
-      break;
+      return state.set('hover', Map({
+        section: fromJS(action.section),
+        component: null
+      }));
     case 'ADD_COMPONENT_HOVER':
-      newState = {
-        hover: {
-          section: null,
-          component: action.detail
-        }
-      };
-      break;
+      return state.set('hover', Map({
+        section: null,
+        component: fromJS(action.detail)
+      }));
     case 'REMOVE_HOVER':
-      return {
-        sections: state.sections,
-        components: state.components,
-        hover: {
-          section: null,
-          component: null
-        },
-        eventOpen: state.eventOpen,
-        selectedEvents: state.selectedEvents
-      };
+      return state.set('hover', Map({
+        section: null,
+        component: null
+      }));
+    case 'FIRST_CALENDAR': {
+      // Do nothing if already populated
+      let populated = false;
+      state.get('sections').map(term => {
+        if (term.get('id') === currentTerm) populated = true;
+      });
+      if (populated) return state;
+      // Otherwise initialize a new calendar for the new term
+      return state
+        .set('sections', state.get('sections').push(fromJS({
+          id: currentTerm,
+          items: [{
+            id: 1,
+            name: 'Calendar 1',
+            data: []
+          }]
+        })))
+      .set('components', state.get('components').push(fromJS({
+        id: currentTerm,
+        items: [{
+          id: 1,
+          name: 'Calendar 1',
+          data: []
+        }]
+      })));
+    }
     default:
       return state;
   }
-  return $.extend(true, {}, state, newState);
 }
 
 export default calendar;

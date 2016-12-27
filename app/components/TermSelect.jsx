@@ -1,15 +1,17 @@
 import React from 'react';
 import CircularProgress from 'material-ui/CircularProgress';
+import { List } from 'immutable';
 
 import { matchId } from '../helpers';
 import DropDown from './DropDown.jsx';
 
 export default class TermSelect extends React.Component {
-  // TODO: Make sure circular progress replaces all of the component when active
   render() {
     // filteredTerm will be an undefined upon initalizing,
     // and will be object with matching id when populated
     const filteredTerm = this.props.terms.filter(matchId(this.props.currentTerm))[0];
+
+    const filteredName = this.props.calendars.filter(matchId(this.props.currentCalendar))[0];
     return (
       <div>
         {this.props.terms && this.props.currentTerm ?
@@ -23,6 +25,15 @@ export default class TermSelect extends React.Component {
           :
           <CircularProgress />
         }
+        {filteredName &&
+          <DropDown
+            promptText="Calendar"
+            displayValue={filteredName}
+            items={this.props.calendars}
+            primaryTextValue="name"
+            onSelect={(calendar) => this.props.changeCalendar(calendar.id)}
+          />
+        }
       </div>
     );
   }
@@ -31,5 +42,8 @@ export default class TermSelect extends React.Component {
 TermSelect.propTypes = {
   terms: React.PropTypes.arrayOf(React.PropTypes.object),
   currentTerm: React.PropTypes.string,
-  changeTerm: React.PropTypes.func
+  changeTerm: React.PropTypes.func,
+  calendars: React.PropTypes.arrayOf(React.PropTypes.object),
+  currentCalendar: React.PropTypes.number,
+  changeCalendar: React.PropTypes.func
 };

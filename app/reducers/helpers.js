@@ -1,3 +1,5 @@
+import { fromJS } from 'immutable';
+
 export const initialSelected = {
   school: '',
   subject: '',
@@ -19,7 +21,8 @@ export const initialDataDetails = {
 
 // When modifying calendar initial state, you must also correspondingly
 // modify the persisted state in store.js
-export const initialCalendar = {
+export const initialCalendar = fromJS({
+  currentCalendar: 1,
   sections: [],
   components: [],
   hover: {
@@ -28,7 +31,7 @@ export const initialCalendar = {
   },
   eventOpen: false,
   selectedEvents: {}
-};
+});
 
 export function schools(state = {}, action) {
   switch(action.type) {

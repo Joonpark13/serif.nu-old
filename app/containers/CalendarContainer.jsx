@@ -7,7 +7,7 @@ import {
     brightGreen, brightCyan, brightBlue, brightYellow, brightOrange, brightRed,
     darkGreen, darkCyan, darkBlue, darkYellow, darkOrange, darkRed
 } from '../colors';
-import { findTermObjItems } from '../helpers';
+import { findData } from '../helpers';
 
 const colorArray = [brightGreen, brightOrange, brightBlue, brightYellow, brightCyan, brightRed,
     darkGreen, darkOrange, darkBlue, darkYellow, darkCyan, darkRed
@@ -84,17 +84,17 @@ const parseMeetingTime = (meetingTime) => {
 const parseSection = (section) => {
     if (!section) return null;
     return {
-        id: section.id,
-        title: section.name,
-        ...parseMeetingTime(section.meeting_time[0])
+        id: section.get('id'),
+        title: section.get('name'),
+        ...parseMeetingTime(section.get('meeting_time').get(0))
     };
 };
 
 const parseSections = (sections) => {
-    let events = [];
-    sections.forEach((section, index) => {
-        events = events.concat({
-            color: colorArray[index % colorArray.length],
+    const events = [];
+    sections.map(section => {
+        events.push({
+            color: colorArray[sections.indexOf(section) % colorArray.length],
             ...parseSection(section)
         });
     });
@@ -104,21 +104,21 @@ const parseSections = (sections) => {
 const parseComponent = (comp) => {
     if (!comp) return null;
     return {
-        id: comp.id,
-        title: comp.title,
-        ...parseMeetingTime(comp.meeting_time)
+        id: comp.get('id'),
+        title: comp.get('title'),
+        ...parseMeetingTime(comp.get('meeting_time'))
     };
 };
 
 const parseComponents = (components, sections) => {
     let events = [];
-    components.forEach((comp) => {
+    components.map(comp => {
         // Make sure the component has the same color as the corresponding section
         let sectionIndex = '';
-        sections.forEach((section, index) => {
-            if (section.id === comp.id) sectionIndex = index;
+        sections.map(section => {
+            if (section.get('id') === comp.get('id')) sectionIndex = sections.indexOf(section);
         });
-        events = events.concat({
+        events.push({
             color: colorArray[sectionIndex % colorArray.length],
             ...parseComponent(comp)
         });
@@ -126,15 +126,9 @@ const parseComponents = (components, sections) => {
     return events;
 };
 
-const parseClasses = (calendar, currentTerm) => {
-    let sections = [];
-    calendar.sections.forEach((term) => {
-        if (term.id === currentTerm) sections = term.items;
-    });
-    let components = [];
-    calendar.components.forEach((term) => {
-        if (term.id === currentTerm) components = term.items;
-    });
+const parseClasses = (calendar, currentTerm, currentCalendar) => {
+    let sections = findData(calendar.get('sections'), currentTerm, currentCalendar);
+    let components = findData(calendar.get('components'), currentTerm, currentCalendar);
     return parseSections(sections).concat(parseComponents(components, sections));
 };
 
@@ -145,13 +139,13 @@ const addHoverColor = (coursecomp) => {
 }
 
 const mapStateToProps = (state) => ({
-    coursecomps: parseClasses(state.calendar, state.terms.currentTerm),
-    eventOpen: state.calendar.eventOpen,
-    selectedEvents: state.calendar.selectedEvents,
-    sections: findTermObjItems(state.calendar.sections, state.terms.currentTerm),
-    components: findTermObjItems(state.calendar.components, state.terms.currentTerm),
-    hoverSection: addHoverColor(parseSection(state.calendar.hover.section)),
-    hoverComponent: addHoverColor(parseComponent(state.calendar.hover.component))
+    coursecomps: parseClasses(state.calendar, state.terms.currentTerm, state.calendar.get('currentCalendar')),
+    eventOpen: state.calendar.get('eventOpen'),
+    selectedEvents: state.calendar.get('selectedEvents').toJS(),
+    sections: findData(state.calendar.get('sections'), state.terms.currentTerm, state.calendar.get('currentCalendar')),
+    components: findData(state.calendar.get('components'), state.terms.currentTerm, state.calendar.get('currentCalendar')),
+    hoverSection: addHoverColor(parseSection(state.calendar.getIn(['hover', 'section']))),
+    hoverComponent: addHoverColor(parseComponent(state.calendar.getIn(['hover', 'component'])))
 });
 
 const mapDispatchToProps = (dispatch) => ({

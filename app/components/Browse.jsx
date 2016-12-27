@@ -57,6 +57,7 @@ const style = {
 const Browse = (
   {
     currentTerm,
+    currentCalendar,
     currentView,
     selected,
     isFetching,
@@ -222,6 +223,7 @@ const Browse = (
             {nav}
             <Sections
               currentTerm={currentTerm}
+              currentCalendar={currentCalendar}
               selected={selected}
               courses={courses}
               sections={sections}

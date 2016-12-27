@@ -19,6 +19,7 @@ import Browse from '../components/Browse.jsx';
 
 const mapStateToProps = (state) => ({
   currentTerm: state.terms.currentTerm,
+  currentCalendar: state.calendar.get('currentCalendar'),
   currentView: state.browse.currentView,
   selected: state.browse.selected,
   isFetching: state.browse.data.schools.isFetching ||
