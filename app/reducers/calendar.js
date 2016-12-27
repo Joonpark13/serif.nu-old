@@ -10,7 +10,7 @@ const populateNew = (classes, currentTerm, currentCalendar, classData) => (
     if (term.get('id') === currentTerm) {
       // Populate new data array
       const newItems = term.get('items').map(cal => {
-        if (cal.get('id') === currentCalendar) return cal.set('data', classData);
+        if (cal.get('id') === currentCalendar) return cal.set('data', fromJS(classData));
         return cal;
       });
       return term.set('items', newItems);
@@ -21,9 +21,9 @@ const populateNew = (classes, currentTerm, currentCalendar, classData) => (
 
 const filterClasses = (classes, classId, currentTerm, currentCalendar) => {
   const newClassData = [];
-  const calObj = findCalObj(classes, currentTerm, currentCalendar);
-  calObj.data.forEach((coursecomp) => {
-    if (coursecomp.id !== classId) newClassData.push(coursecomp);
+  const calData = findData(classes, currentTerm, currentCalendar);
+  calData.forEach((coursecomp) => {
+    if (coursecomp.get('id') !== classId) newClassData.push(coursecomp);
   });
   const newClasses = populateNew(classes, currentTerm, currentCalendar, newClassData);
   return newClasses;

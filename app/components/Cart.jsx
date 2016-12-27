@@ -36,11 +36,11 @@ const Cart = ({
       addComponentHover={addComponentHover}
       removeHover={removeHover}
     />}
-    {!swapping && sections.map((section) => {
-      // There should at most be one match
-      const component = components.filter(matchId(section.get('id')))[0];
+    {!swapping && sections.map(section => {
+      const sectionId = section.get('id');
+      const component = components.find(comp => comp.get('id') === sectionId);
       return (
-        <div key={section.get('id')}>
+        <div key={sectionId}>
           <Card style={style.card}>
             <CardHeader
               title={section.get('name')}
@@ -53,7 +53,7 @@ const Cart = ({
               <p>{section.get('instructor').toJS().join(', ')}</p>
               {section.get('topic') && <p>{section.get('topic')}</p>}
               <p>{section.get('overview_of_class')}</p>
-              <p>ID: {section.get('id')}</p>
+              <p>ID: {sectionId}</p>
               {component && (
                 <div>
                   <h4>{component.get('component')}</h4>
@@ -63,7 +63,7 @@ const Cart = ({
               )}
             </CardText>
             <CardActions>
-              <FlatButton label="Remove" primary onTouchTap={() => remove(section.get('id'))} />
+              <FlatButton label="Remove" primary onTouchTap={() => remove(sectionId)} />
               {component && (
                 <FlatButton
                   label="Swap Component"
@@ -73,7 +73,7 @@ const Cart = ({
                     section.get('school'),
                     section.get('subject'),
                     section.get('course'),
-                    section.get('id')
+                    sectionId
                   )}
                 />
               )}
