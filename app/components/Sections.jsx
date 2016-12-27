@@ -25,6 +25,7 @@ const style = {
 
 const Sections = ({
   currentTerm,
+  currentCalendar,
   selected,
   sections,
   calendar,
@@ -38,7 +39,7 @@ const Sections = ({
 
     <List>
       {sections.map(section => {
-        const inCal = inCalendar(calendar.get('sections'), section.id);
+        const inCal = inCalendar(calendar.get('sections'), section.id, currentTerm, currentCalendar);
         return (
           <ListItem
             key={section.section}

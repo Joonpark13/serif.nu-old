@@ -32,6 +32,7 @@ const style = {
 
 const SearchWrapper = ({
   currentTerm,
+  currentCalendar,
   searchData,
   isFetching,
   currentView,
@@ -68,6 +69,7 @@ const SearchWrapper = ({
         {header}
         <Sections
           currentTerm={currentTerm}
+          currentCalendar={currentCalendar}
           selected={selected}
           sections={sections}
           calendar={calendar}

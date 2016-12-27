@@ -15,6 +15,7 @@ import {
 
 const mapStateToProps = state => ({
   currentTerm: state.terms.currentTerm,
+  currentCalendar: state.calendar.get('currentCalendar'),
   searchData: state.search.data.autocomplete.items,
   isFetching: state.search.data.isFetching,
   currentView: state.search.currentView,

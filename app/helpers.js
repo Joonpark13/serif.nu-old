@@ -1,9 +1,5 @@
 import { List } from 'immutable';
 
-export const inCalendar = (sections, id) => (
-  sections.some(section => section.id === id)
-);
-
 export const getCourseName = (courses, abbv) => (
   courses.find(course => course.abbv === abbv).name
 );
@@ -26,4 +22,9 @@ export const findData = (classes, currentTerm, currentCalendar) => {
   const calObj = findCalObj(classes, currentTerm, currentCalendar);
   if (calObj) return calObj.get('data');
   return List([]);
+};
+
+export const inCalendar = (classes, id, currentTerm, currentCalendar) => {
+  const data = findData(classes, currentTerm, currentCalendar);
+  return data.toJS().some(coursecomp => coursecomp.id === id);
 };
