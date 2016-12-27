@@ -43,7 +43,7 @@ TermSelect.propTypes = {
   terms: React.PropTypes.arrayOf(React.PropTypes.object),
   currentTerm: React.PropTypes.string,
   changeTerm: React.PropTypes.func,
-  calendars: React.PropTypes.instanceOf(List),
+  calendars: React.PropTypes.arrayOf(React.PropTypes.object),
   currentCalendar: React.PropTypes.number,
   changeCalendar: React.PropTypes.func
 };

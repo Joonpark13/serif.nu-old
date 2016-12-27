@@ -20,7 +20,7 @@ const findCalendar = (sections, currentTerm) => {
 const mapStateToProps = (state) => ({
   terms: state.terms.terms.items.sort(compareTermId),
   currentTerm: state.terms.currentTerm,
-  calendars: findCalendar(state.calendar.get('sections'), state.terms.currentTerm),
+  calendars: findCalendar(state.calendar.get('sections'), state.terms.currentTerm).toJS(),
   currentCalendar: state.calendar.get('currentCalendar')
 });
 
