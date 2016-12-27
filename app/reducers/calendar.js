@@ -92,9 +92,9 @@ function calendar(state = initialCalendar, action, currentTerm) {
       return state.set('components', newComponents);
     }
     case 'SELECT_EVENT':
-      return state.set('eventOpen', true).set('selectedEvents', action.coursecomps);
+      return state.set('eventOpen', true).set('selectedEvents', fromJS(action.coursecomps));
     case 'CLOSE_EVENT_DIALOG':
-      return state.set('eventOpen', false).set('selectedEvents', state.get('selectedEvents'));
+      return state.set('eventOpen', false);
     case 'ADD_COURSE_HOVER':
       return state.set('hover', Map({
         section: fromJS(action.section),

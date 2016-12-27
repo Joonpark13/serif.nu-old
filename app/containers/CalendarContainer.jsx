@@ -141,7 +141,7 @@ const addHoverColor = (coursecomp) => {
 const mapStateToProps = (state) => ({
     coursecomps: parseClasses(state.calendar, state.terms.currentTerm, state.calendar.get('currentCalendar')),
     eventOpen: state.calendar.get('eventOpen'),
-    selectedEvents: state.calendar.get('selectedEvents'),
+    selectedEvents: state.calendar.get('selectedEvents').toJS(),
     sections: findData(state.calendar.get('sections'), state.terms.currentTerm, state.calendar.get('currentCalendar')),
     components: findData(state.calendar.get('components'), state.terms.currentTerm, state.calendar.get('currentCalendar')),
     hoverSection: addHoverColor(parseSection(state.calendar.getIn(['hover', 'section']))),
