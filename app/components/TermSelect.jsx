@@ -1,9 +1,25 @@
 import React from 'react';
 import CircularProgress from 'material-ui/CircularProgress';
-import { List } from 'immutable';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
 
 import { matchId } from '../helpers';
 import DropDown from './DropDown.jsx';
+
+const style = {
+  add: {
+    display: 'inline',
+    marginLeft: '10px'
+  },
+  calendarDropdown: {
+    display: 'inline-flex'
+  },
+  calendar: {
+    display: 'flex',
+    alignItems: 'center',
+    marginTop: '5px'
+  }
+};
 
 export default class TermSelect extends React.Component {
   render() {
@@ -26,13 +42,19 @@ export default class TermSelect extends React.Component {
           <CircularProgress />
         }
         {filteredName &&
-          <DropDown
-            promptText="Calendar"
-            displayValue={filteredName}
-            items={this.props.calendars}
-            primaryTextValue="name"
-            onSelect={(calendar) => this.props.changeCalendar(calendar.id)}
-          />
+          <div style={style.calendar}>
+            <DropDown
+              promptText="Calendar"
+              displayValue={filteredName}
+              items={this.props.calendars}
+              primaryTextValue="name"
+              onSelect={(calendar) => this.props.changeCalendar(calendar.id)}
+              style={style.calendarDropdown}
+            />
+            <FloatingActionButton mini secondary style={style.add}>
+              <ContentAdd />
+            </FloatingActionButton>
+          </div>
         }
       </div>
     );

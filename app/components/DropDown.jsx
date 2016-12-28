@@ -8,8 +8,7 @@ import { List, ListItem } from 'material-ui/List';
 const style = {
   box: {
     display: 'flex',
-    alignItems: 'center',
-    paddingTop: 8
+    alignItems: 'center'
   },
   currentTermText: {
     fontWeight: 'bold',
@@ -44,7 +43,7 @@ export default class DropDown extends React.Component {
   }
   render() {
     return (
-      <div style={style.box}>
+      <div style={Object.assign({}, style.box, this.props.style)}>
         <div style={style.currentTermText}>{this.props.promptText}:</div>
         <Chip onTouchTap={this.handleTouchTap}>
           <Avatar icon={<FontIcon className="material-icons">expand_more</FontIcon>} />
