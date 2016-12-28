@@ -1,6 +1,8 @@
 import React from 'react';
 import Paper from 'material-ui/Paper';
 
+import { findSelected } from '../helpers';
+
 const style = {
   paper: {
     height: '40px',
@@ -16,14 +18,8 @@ const style = {
 };
 
 const Unscheduled = ({ id, title, color, sections, components, selectEvent }) => {
-  const selected = {};
   // Find the corresponding event from the state arrays
-  sections.forEach((section) => {
-    if (section.id === id) selected.section = section;
-  });
-  components.forEach((component) => {
-    if (component.id === id) selected.component = component;
-  });
+  const selected = findSelected(sections, components, id);
   return (
     <Paper
       style={{ backgroundColor: color, ...style.paper }}

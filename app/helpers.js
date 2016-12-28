@@ -28,3 +28,15 @@ export const inCalendar = (classes, id, currentTerm, currentCalendar) => {
   const data = findData(classes, currentTerm, currentCalendar);
   return data.toJS().some(coursecomp => coursecomp.id === id);
 };
+
+export const findSelected = (sections, components, id) => {
+  // sections and components should be an Immutable List
+  const selected = {};
+  sections.map(section => {
+    if (section.get('id') === id) selected.section = section.toJS();
+  });
+  components.map(component => {
+    if (component.get('id') === id) selected.component = component.toJS();
+  });
+  return selected;
+};

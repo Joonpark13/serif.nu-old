@@ -5,6 +5,7 @@ import 'fullcalendar/dist/fullcalendar.css';
 import { List } from 'immutable';
 
 import '../stylesheets/materialFullCalendar.css';
+import { findSelected } from '../helpers';
 
 export default class Calendar extends React.Component {
   constructor(props) {
@@ -34,15 +35,8 @@ export default class Calendar extends React.Component {
         $(element).css('cursor', 'pointer'); // Make events look clickable
       },
       eventClick: (event) => {
-        const selected = {};
         // Find the corresponding event from the state arrays
-        this.props.sections.map(section => {
-          if (section.get('id') === event.id) selected.section = section.toJS();
-        });
-        this.props.components.map(component => {
-          if (component.get('id') === event.id) selected.component = component.toJS();
-        });
-        this.props.selectEvent(selected);
+        this.props.selectEvent(findSelected(this.props.sections, this.props.components, event.id));
       }
     });
   }
