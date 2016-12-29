@@ -6,6 +6,23 @@ import { fromJS } from 'immutable';
 
 import { initialCalendar } from './reducers/helpers';
 
+const localStorageVersion = '0';
+const setVersion = (state, version) => {
+    const subState = {};
+    subState[version] = {
+        calendar: {
+            sections: state.calendar.get('sections'),
+            components: state.calendar.get('components'),
+            currentCalendar: state.calendar.get('currentCalendar'),
+            hover: initialCalendar.get('hover'),
+            eventOpen: initialCalendar.get('eventOpen'),
+            selectedEvents: initialCalendar.get('selectedEvents')
+        },
+        firstVisit: state.firstVisit
+    };
+    return subState;
+};
+
 const config = {
     // Only keep
     // state.calendar.sections,
@@ -13,31 +30,26 @@ const config = {
     // state.calendar.currentCalendar,
     // and state.firstVisit
     slicer: (paths) => (
-        (state) => ({
-            calendar: {
-                sections: state.calendar.get('sections'),
-                components: state.calendar.get('components'),
-                currentCalendar: state.calendar.get('currentCalendar'),
-                hover: initialCalendar.get('hover'),
-                eventOpen: initialCalendar.get('eventOpen'),
-                selectedEvents: initialCalendar.get('selectedEvents')
-            },
-            firstVisit: state.firstVisit
-        })
+        (state) => (setVersion(state, localStorageVersion))
     ),
     deserialize: (data) => {
-        const parsed = JSON.parse(data);
+        const parsed = JSON.parse(data)[localStorageVersion];
         if (parsed) parsed.calendar = fromJS(parsed.calendar);
         return parsed;
     }
 };
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+let composeEnhancers;
+if (process.env.NODE_ENV === 'production') {
+    composeEnhancers = compose;
+} else {
+    composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+}
 const store = createStore(
     reducer,
     composeEnhancers(
         applyMiddleware(thunkMiddleware),
-        persistState(['firstVisit'], config)
+        persistState(['calendar', 'firstVisit'], config)
     )
 );
 
