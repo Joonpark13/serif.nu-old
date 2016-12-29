@@ -3,6 +3,7 @@ import { Card, CardText, CardTitle } from 'material-ui/Card';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import { List } from 'immutable';
+import TextField from 'material-ui/TextField';
 
 import Calendar from './Calendar.jsx';
 import Unscheduled from './Unscheduled.jsx';
@@ -14,6 +15,11 @@ const style = {
   },
   dialogContent: {
     marginTop: '24px'
+  },
+  header: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between'
   }
 };
 
@@ -85,6 +91,10 @@ const CalendarWrapper = ({
     <div>
       <Card style={style.card}>
         <CardText>
+          <div style={style.header}>
+            <TextField defaultValue="Calendar 1" />
+            <FlatButton label="Remove Calendar" />
+          </div>
           <Calendar
             coursecomps={scheduled}
             selectEvent={selectEvent}
