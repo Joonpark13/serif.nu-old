@@ -165,6 +165,22 @@ function calendar(state = initialCalendar, action, currentTerm) {
       return state.set('currentCalendar', action.calId);
     case 'CHANGE_TERM':
       return state.set('currentCalendar', 1);
+    case 'SET_CALENDAR_NAME':
+      return state
+        .set('sections', state.get('sections').update(
+          state.get('sections').findIndex(term => term.get('id') === currentTerm),
+          term => term.set('items', term.get('items').update(
+            term.get('items').findIndex(cal => cal.get('id') === state.get('currentCalendar')),
+            cal => cal.set('name', action.name)
+          ))
+        ))
+        .set('components', state.get('components').update(
+          state.get('components').findIndex(term => term.get('id') === currentTerm),
+          term => term.set('items', term.get('items').update(
+            term.get('items').findIndex(cal => cal.get('id') === state.get('currentCalendar')),
+            cal => cal.set('name', action.name)
+          ))
+        ));
     default:
       return state;
   }

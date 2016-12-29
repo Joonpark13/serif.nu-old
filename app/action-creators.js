@@ -398,3 +398,8 @@ export const changeCalendar = (calId) => ({
   type: 'CHANGE_CALENDAR',
   calId
 });
+
+export const setCalendarName = (name) => ({
+  type: 'SET_CALENDAR_NAME',
+  name
+});

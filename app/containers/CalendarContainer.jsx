@@ -1,13 +1,21 @@
 import { connect } from 'react-redux';
 
 import CalendarWrapper from '../components/CalendarWrapper.jsx';
-import { selectEvent, remove, closeEventDialog, fetchDetailsCart, swapComponent, showCart } from '../action-creators';
+import {
+    selectEvent,
+    remove,
+    closeEventDialog,
+    fetchDetailsCart,
+    swapComponent,
+    showCart,
+    setCalendarName
+} from '../action-creators';
 import {
     northwesternPurple30,
     brightGreen, brightCyan, brightBlue, brightYellow, brightOrange, brightRed,
     darkGreen, darkCyan, darkBlue, darkYellow, darkOrange, darkRed
 } from '../colors';
-import { findData } from '../helpers';
+import { findCalObj, findData } from '../helpers';
 
 const colorArray = [brightGreen, brightOrange, brightBlue, brightYellow, brightCyan, brightRed,
     darkGreen, darkOrange, darkBlue, darkYellow, darkCyan, darkRed
@@ -138,15 +146,27 @@ const addHoverColor = (coursecomp) => {
     return coursecomp;
 }
 
-const mapStateToProps = (state) => ({
-    coursecomps: parseClasses(state.calendar, state.terms.currentTerm, state.calendar.get('currentCalendar')),
-    eventOpen: state.calendar.get('eventOpen'),
-    selectedEvents: state.calendar.get('selectedEvents').toJS(),
-    sections: findData(state.calendar.get('sections'), state.terms.currentTerm, state.calendar.get('currentCalendar')),
-    components: findData(state.calendar.get('components'), state.terms.currentTerm, state.calendar.get('currentCalendar')),
-    hoverSection: addHoverColor(parseSection(state.calendar.getIn(['hover', 'section']))),
-    hoverComponent: addHoverColor(parseComponent(state.calendar.getIn(['hover', 'component'])))
-});
+const getCurrentCalendarName = (sections, currentTerm, currentCalendar) => {
+    const cal = findCalObj(sections, currentTerm, currentCalendar);
+    if (cal) return cal.get('name');
+    return '';
+}
+
+const mapStateToProps = (state) => {
+    const sections = state.calendar.get('sections');
+    const currentTerm = state.terms.currentTerm;
+    const currentCalendar = state.calendar.get('currentCalendar');
+    return {
+        coursecomps: parseClasses(state.calendar, currentTerm, currentCalendar),
+        eventOpen: state.calendar.get('eventOpen'),
+        selectedEvents: state.calendar.get('selectedEvents').toJS(),
+        sections: findData(sections, currentTerm, currentCalendar),
+        components: findData(state.calendar.get('components'), currentTerm, currentCalendar),
+        hoverSection: addHoverColor(parseSection(state.calendar.getIn(['hover', 'section']))),
+        hoverComponent: addHoverColor(parseComponent(state.calendar.getIn(['hover', 'component']))),
+        currentCalendarName: getCurrentCalendarName(sections, currentTerm, currentCalendar)
+    };
+};
 
 const mapDispatchToProps = (dispatch) => ({
     selectEvent: (coursecomps) => {
@@ -158,6 +178,9 @@ const mapDispatchToProps = (dispatch) => ({
     },
     closeDialog: () => {
         dispatch(closeEventDialog());
+    },
+    setCalendarName: (name) => {
+        dispatch(setCalendarName(name));
     }
 });
 

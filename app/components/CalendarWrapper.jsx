@@ -3,11 +3,11 @@ import { Card, CardText, CardTitle } from 'material-ui/Card';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import { List } from 'immutable';
-import TextField from 'material-ui/TextField';
 
 import Calendar from './Calendar.jsx';
 import Unscheduled from './Unscheduled.jsx';
 import { matchId } from '../helpers';
+import CalendarHeader from './CalendarHeader.jsx';
 
 const style = {
   card: {
@@ -15,11 +15,6 @@ const style = {
   },
   dialogContent: {
     marginTop: '24px'
-  },
-  header: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between'
   }
 };
 
@@ -28,13 +23,15 @@ const CalendarWrapper = ({
   selectEvent,
   eventOpen,
   selectedEvents,
+  currentCalendarName,
   remove,
   closeDialog,
   swapComponent,
   sections,
   components,
   hoverSection,
-  hoverComponent
+  hoverComponent,
+  setCalendarName
 }) => {
   // Separate unschedule courses from scheduled ones
   const unscheduled = [];
@@ -91,10 +88,10 @@ const CalendarWrapper = ({
     <div>
       <Card style={style.card}>
         <CardText>
-          <div style={style.header}>
-            <TextField defaultValue="Calendar 1" />
-            <FlatButton label="Remove Calendar" />
-          </div>
+          <CalendarHeader
+            currentCalendarName={currentCalendarName}
+            setCalendarName={setCalendarName}
+          />
           <Calendar
             coursecomps={scheduled}
             selectEvent={selectEvent}
@@ -156,5 +153,7 @@ CalendarWrapper.propTypes = {
   closeDialog: React.PropTypes.func,
   swapComponent: React.PropTypes.func,
   sections: React.PropTypes.instanceOf(List),
-  components: React.PropTypes.instanceOf(List)
+  components: React.PropTypes.instanceOf(List),
+  currentCalendarName: React.PropTypes.string,
+  setCalendarName: React.PropTypes.func
 };
