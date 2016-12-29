@@ -2,6 +2,7 @@ import React from 'react';
 import CircularProgress from 'material-ui/CircularProgress';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
+import FontIcon from 'material-ui/FontIcon';
 
 import { matchId } from '../helpers';
 import DropDown from './DropDown.jsx';
@@ -11,13 +12,9 @@ const style = {
     display: 'inline',
     marginLeft: '10px'
   },
-  calendarDropdown: {
-    display: 'inline-flex'
-  },
-  calendar: {
+  wrapper: {
     display: 'flex',
-    alignItems: 'center',
-    marginTop: '5px'
+    alignItems: 'center'
   }
 };
 
@@ -29,8 +26,9 @@ export default class TermSelect extends React.Component {
 
     const filteredName = this.props.calendars.filter(matchId(this.props.currentCalendar))[0];
     return (
-      <div>
-        {this.props.terms && this.props.currentTerm ?
+      <div style={style.wrapper}>
+        {/* TODO: Implement CircularProgress */}
+        {this.props.terms && this.props.currentTerm &&
           <DropDown
             promptText="Term"
             displayValue={filteredTerm}
@@ -38,29 +36,25 @@ export default class TermSelect extends React.Component {
             primaryTextValue="term"
             onSelect={(term) => this.props.changeTerm(term.id)}
           />
-          :
-          <CircularProgress />
         }
+        <FontIcon className="material-icons">chevron_right</FontIcon>
         {filteredName &&
-          <div style={style.calendar}>
-            <DropDown
-              promptText="Calendar"
-              displayValue={filteredName}
-              items={this.props.calendars}
-              primaryTextValue="name"
-              onSelect={(calendar) => this.props.changeCalendar(calendar.id)}
-              style={style.calendarDropdown}
-            />
-            <FloatingActionButton
-              mini
-              secondary
-              onTouchTap={() => this.props.addCalendar()}
-              style={style.add}
-            >
-              <ContentAdd />
-            </FloatingActionButton>
-          </div>
+          <DropDown
+            promptText="Calendar"
+            displayValue={filteredName}
+            items={this.props.calendars}
+            primaryTextValue="name"
+            onSelect={(calendar) => this.props.changeCalendar(calendar.id)}
+          />
         }
+        <FloatingActionButton
+          mini
+          secondary
+          onTouchTap={() => this.props.addCalendar()}
+          style={style.add}
+        >
+          <ContentAdd />
+        </FloatingActionButton>
       </div>
     );
   }

@@ -7,13 +7,8 @@ import { List, ListItem } from 'material-ui/List';
 
 const style = {
   box: {
-    display: 'flex',
+    display: 'inline-flex',
     alignItems: 'center'
-  },
-  currentTermText: {
-    fontWeight: 'bold',
-    fontSize: 18,
-    marginRight: '10px'
   }
 };
 
@@ -44,7 +39,6 @@ export default class DropDown extends React.Component {
   render() {
     return (
       <div style={Object.assign({}, style.box, this.props.style)}>
-        <div style={style.currentTermText}>{this.props.promptText}:</div>
         <Chip onTouchTap={this.handleTouchTap}>
           <Avatar icon={<FontIcon className="material-icons">expand_more</FontIcon>} />
           {this.props.displayValue[this.props.primaryTextValue]}
