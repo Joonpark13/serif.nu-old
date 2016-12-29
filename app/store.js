@@ -7,13 +7,17 @@ import { fromJS } from 'immutable';
 import { initialCalendar } from './reducers/helpers';
 
 const config = {
-    // Only keep state.calendar.sections, state.calendar.components, and state.firstVisit
+    // Only keep
+    // state.calendar.sections,
+    // state.calendar.components,
+    // state.calendar.currentCalendar,
+    // and state.firstVisit
     slicer: (paths) => (
         (state) => ({
             calendar: {
                 sections: state.calendar.get('sections'),
                 components: state.calendar.get('components'),
-                currentCalendar: initialCalendar.get('currentCalendar'),
+                currentCalendar: state.calendar.get('currentCalendar'),
                 hover: initialCalendar.get('hover'),
                 eventOpen: initialCalendar.get('eventOpen'),
                 selectedEvents: initialCalendar.get('selectedEvents')
