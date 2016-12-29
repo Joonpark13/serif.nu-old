@@ -8,7 +8,8 @@ import {
     fetchDetailsCart,
     swapComponent,
     showCart,
-    setCalendarName
+    setCalendarName,
+    removeCalendar
 } from '../action-creators';
 import {
     northwesternPurple30,
@@ -152,6 +153,12 @@ const getCurrentCalendarName = (sections, currentTerm, currentCalendar) => {
     return '';
 }
 
+const checkIfOnlyCalendar = (sections, currentTerm) => {
+    const term = sections.find(term => term.get('id') === currentTerm);
+    if (term) return term.get('items').toJS().length === 1;
+    return true;
+}
+
 const mapStateToProps = (state) => {
     const sections = state.calendar.get('sections');
     const currentTerm = state.terms.currentTerm;
@@ -164,7 +171,8 @@ const mapStateToProps = (state) => {
         components: findData(state.calendar.get('components'), currentTerm, currentCalendar),
         hoverSection: addHoverColor(parseSection(state.calendar.getIn(['hover', 'section']))),
         hoverComponent: addHoverColor(parseComponent(state.calendar.getIn(['hover', 'component']))),
-        currentCalendarName: getCurrentCalendarName(sections, currentTerm, currentCalendar)
+        currentCalendarName: getCurrentCalendarName(sections, currentTerm, currentCalendar),
+        onlyCalendar: checkIfOnlyCalendar(sections, currentTerm)
     };
 };
 
@@ -181,6 +189,9 @@ const mapDispatchToProps = (dispatch) => ({
     },
     setCalendarName: (name) => {
         dispatch(setCalendarName(name));
+    },
+    removeCalendar: () => {
+        dispatch(removeCalendar());
     }
 });
 

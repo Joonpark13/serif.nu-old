@@ -34,7 +34,12 @@ class CalendarHeader extends React.Component {
           value={this.state.value}
           onChange={this.handleChange}
         />
-        <FlatButton label="Remove Calendar" />
+        <FlatButton
+          label="Remove Calendar"
+          primary
+          onTouchTap={() => this.props.removeCalendar()}
+          disabled={this.props.onlyCalendar}
+        />
       </div>
     );
   }
@@ -42,7 +47,9 @@ class CalendarHeader extends React.Component {
 
 CalendarHeader.propTypes = {
   currentCalendarName: React.PropTypes.string,
-  setCalendarName: React.PropTypes.func
+  setCalendarName: React.PropTypes.func,
+  removeCalendar: React.PropTypes.func,
+  onlyCalendar: React.PropTypes.bool
 };
 
 export default CalendarHeader;

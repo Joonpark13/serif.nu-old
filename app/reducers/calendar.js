@@ -163,8 +163,21 @@ function calendar(state = initialCalendar, action, currentTerm) {
     }
     case 'CHANGE_CALENDAR':
       return state.set('currentCalendar', action.calId);
-    case 'CHANGE_TERM':
+    case 'CHANGE_TERM': {
+      const termObj = state.get('sections').find(term => term.get('id') === action.termId);
+      if (termObj) {
+        return state.set(
+          'currentCalendar',
+          state
+            .get('sections')
+            .find(term => term.get('id') === action.termId)
+            .get('items')
+            .first()
+            .get('id')
+        );
+      }
       return state.set('currentCalendar', 1);
+    }
     case 'SET_CALENDAR_NAME':
       return state
         .set('sections', state.get('sections').update(
@@ -181,6 +194,32 @@ function calendar(state = initialCalendar, action, currentTerm) {
             cal => cal.set('name', action.name)
           ))
         ));
+    case 'REMOVE_CALENDAR': {
+      const deletedIndex = state
+        .get('sections')
+        .find(term => term.get('id') === currentTerm)
+        .get('items')
+        .findIndex(cal => cal.get('id') === state.get('currentCalendar'));
+      const deleted = state
+        .set('sections', state.get('sections').update(
+          state.get('sections').findIndex(term => term.get('id') === currentTerm),
+          term => term.set('items', term.get('items').delete(deletedIndex))
+        ))
+        .set('components', state.get('components').update(
+          state.get('components').findIndex(term => term.get('id') === currentTerm),
+          term => term.set('items', term.get('items').delete(deletedIndex))
+        ));
+      return deleted
+        .set(
+          'currentCalendar',
+          deleted
+            .get('sections')
+            .find(term => term.get('id') === currentTerm)
+            .get('items')
+            .first()
+            .get('id')
+        );
+    }
     default:
       return state;
   }
