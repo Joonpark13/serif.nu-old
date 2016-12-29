@@ -139,10 +139,10 @@ function calendar(state = initialCalendar, action, currentTerm) {
     case 'ADD_CALENDAR': {
       const sections = state.get('sections');
       const sectionTermObj = sections.find(term => term.get('id') === currentTerm);
-      const lastId = sectionTermObj.get('items').last().get('id');
+      const newId = sectionTermObj.get('items').last().get('id') + 1;
       const newCal = fromJS({
-        id: lastId + 1,
-        name: `Calendar ${lastId + 1}`,
+        id: newId,
+        name: `Calendar ${newId}`,
         data: []
       });
       const newSections = sections.update(
@@ -156,7 +156,10 @@ function calendar(state = initialCalendar, action, currentTerm) {
         term => term.set('items', term.get('items').push(newCal))
       );
 
-      return state.set('sections', newSections).set('components', newComponents);
+      return state
+        .set('sections', newSections)
+        .set('components', newComponents)
+        .set('currentCalendar', newId);
     }
     case 'CHANGE_CALENDAR':
       return state.set('currentCalendar', action.calId);
