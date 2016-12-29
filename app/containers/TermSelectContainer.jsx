@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { List } from 'immutable';
 
-import { changeTerm, firstCalendar } from '../action-creators';
+import { changeTerm, firstCalendar, addCalendar } from '../action-creators';
 import TermSelect from '../components/TermSelect.jsx';
 
 const compareTermId = (termA, termB) => (
@@ -28,6 +28,9 @@ const mapDispatchToProps = (dispatch) => ({
   changeTerm: (termId) => {
     dispatch(changeTerm(termId));
     dispatch(firstCalendar());
+  },
+  addCalendar: () => {
+    dispatch(addCalendar());
   },
   changeCalendar: (calId) => {
   }

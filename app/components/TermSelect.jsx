@@ -51,7 +51,12 @@ export default class TermSelect extends React.Component {
               onSelect={(calendar) => this.props.changeCalendar(calendar.id)}
               style={style.calendarDropdown}
             />
-            <FloatingActionButton mini secondary style={style.add}>
+            <FloatingActionButton
+              mini
+              secondary
+              onTouchTap={() => this.props.addCalendar()}
+              style={style.add}
+            >
               <ContentAdd />
             </FloatingActionButton>
           </div>
@@ -67,5 +72,6 @@ TermSelect.propTypes = {
   changeTerm: React.PropTypes.func,
   calendars: React.PropTypes.arrayOf(React.PropTypes.object),
   currentCalendar: React.PropTypes.number,
-  changeCalendar: React.PropTypes.func
+  changeCalendar: React.PropTypes.func,
+  addCalendar: React.PropTypes.func
 };

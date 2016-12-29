@@ -1,7 +1,7 @@
 import { Map, fromJS } from 'immutable';
 
 import { initialCalendar } from './helpers'; // Reducer related helper file
-import { findCalObj, findData } from '../helpers'; // General helper functions
+import { findData } from '../helpers'; // General helper functions
 
 const populateNew = (classes, currentTerm, currentCalendar, classData) => (
   // Populate new sections array
@@ -135,6 +135,28 @@ function calendar(state = initialCalendar, action, currentTerm) {
           data: []
         }]
       })));
+    }
+    case 'ADD_CALENDAR': {
+      const sections = state.get('sections');
+      const sectionTermObj = sections.find(term => term.get('id') === currentTerm);
+      const lastId = sectionTermObj.get('items').last().get('id');
+      const newCal = fromJS({
+        id: lastId + 1,
+        name: `Calendar ${lastId + 1}`,
+        data: []
+      });
+      const newSections = sections.update(
+        sections.findIndex(term => term.get('id') === currentTerm),
+        term => term.set('items', term.get('items').push(newCal))
+      );
+
+      const components = state.get('components');
+      const newComponents = components.update(
+        components.findIndex(term => term.get('id)') === currentTerm),
+        term => term.set('items', term.get('items').push(newCal))
+      );
+
+      return state.set('sections', newSections).set('components', newComponents);
     }
     default:
       return state;

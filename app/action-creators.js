@@ -389,3 +389,7 @@ export function firstCalendar() {
     type: 'FIRST_CALENDAR'
   };
 }
+
+export const addCalendar = () => ({
+  type: 'ADD_CALENDAR'
+});
