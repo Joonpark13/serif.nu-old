@@ -158,6 +158,10 @@ function calendar(state = initialCalendar, action, currentTerm) {
 
       return state.set('sections', newSections).set('components', newComponents);
     }
+    case 'CHANGE_CALENDAR':
+      return state.set('currentCalendar', action.calId);
+    case 'CHANGE_TERM':
+      return state.set('currentCalendar', 1);
     default:
       return state;
   }

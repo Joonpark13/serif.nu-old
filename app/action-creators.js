@@ -393,3 +393,8 @@ export function firstCalendar() {
 export const addCalendar = () => ({
   type: 'ADD_CALENDAR'
 });
+
+export const changeCalendar = (calId) => ({
+  type: 'CHANGE_CALENDAR',
+  calId
+});
