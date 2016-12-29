@@ -14,6 +14,11 @@ const style = {
   },
   wrapper: {
     display: 'flex',
+    flexWrap: 'wrap',
+    alignItems: 'center'
+  },
+  calendar: {
+    display: 'inline-flex',
     alignItems: 'center'
   }
 };
@@ -38,23 +43,25 @@ export default class TermSelect extends React.Component {
           />
         }
         <FontIcon className="material-icons">chevron_right</FontIcon>
-        {filteredName &&
-          <DropDown
-            promptText="Calendar"
-            displayValue={filteredName}
-            items={this.props.calendars}
-            primaryTextValue="name"
-            onSelect={(calendar) => this.props.changeCalendar(calendar.id)}
-          />
-        }
-        <FloatingActionButton
-          mini
-          secondary
-          onTouchTap={() => this.props.addCalendar()}
-          style={style.add}
-        >
-          <ContentAdd />
-        </FloatingActionButton>
+        <div style={style.calendar}>
+          {filteredName &&
+            <DropDown
+              promptText="Calendar"
+              displayValue={filteredName}
+              items={this.props.calendars}
+              primaryTextValue="name"
+              onSelect={(calendar) => this.props.changeCalendar(calendar.id)}
+            />
+          }
+          <FloatingActionButton
+            mini
+            secondary
+            onTouchTap={() => this.props.addCalendar()}
+            style={style.add}
+          >
+            <ContentAdd />
+          </FloatingActionButton>
+        </div>
       </div>
     );
   }
