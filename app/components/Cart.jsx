@@ -31,6 +31,7 @@ const Cart = ({
   components,
   details,
   swapping,
+  hours,
   remove,
   swapComponent,
   addComponent,
@@ -52,7 +53,7 @@ const Cart = ({
     {!swapping &&
       <div>
         <div style={style.header}>
-          <h3 style={style.heading}>5 classes, 10 hrs</h3>
+          <h3 style={style.heading}>{sections.size} classes, {hours} hrs</h3>
           <FlatButton primary label="Remove All" />
         </div>
 
@@ -113,6 +114,7 @@ Cart.propTypes = {
   sections: React.PropTypes.instanceOf(List),
   components: React.PropTypes.instanceOf(List),
   swapping: React.PropTypes.bool,
+  hours: React.PropTypes.number,
   remove: React.PropTypes.func,
   swapComponent: React.PropTypes.func
 };

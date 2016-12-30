@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import $ from 'jquery';
 
 import {
   remove,
@@ -11,23 +12,42 @@ import {
 import Cart from '../components/Cart.jsx';
 import { findData } from '../helpers';
 
-const mapStateToProps = (state) => ({
-  currentTerm: state.terms.currentTerm,
-  isFetching: state.cart.data.details.isFetching,
-  selected: state.cart.selected,
-  sections: findData(
+const calculateHours = () => {
+  const events = $('#calendar').fullCalendar('clientEvents');
+  let sum = 0;
+  if (Array.isArray(events)) { // events can be a jQuery object on load
+    events.forEach(event => {
+      let diff = event.end.diff(event.start, 'minutes');
+      // If difference in minutes is not a multiple of 30, add 10
+      if (diff % 30 !== 0) diff += 10;
+      sum += diff;
+    });
+  }
+  return sum / 60;
+};
+
+const mapStateToProps = (state) => {
+  const sections = findData(
     state.calendar.get('sections'),
     state.terms.currentTerm,
     state.calendar.get('currentCalendar')
-  ),
-  components: findData(
+  );
+  const components = findData(
     state.calendar.get('components'),
     state.terms.currentTerm,
     state.calendar.get('currentCalendar')
-  ),
-  details: state.cart.data.details.info,
-  swapping: state.cart.swapping
-});
+  );
+  return ({
+    currentTerm: state.terms.currentTerm,
+    isFetching: state.cart.data.details.isFetching,
+    selected: state.cart.selected,
+    sections,
+    components,
+    details: state.cart.data.details.info,
+    swapping: state.cart.swapping,
+    hours: calculateHours()
+  });
+};
 
 const mapDispatchToProps = (dispatch) => ({
   remove: (sectionId) => {
