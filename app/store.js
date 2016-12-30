@@ -6,7 +6,7 @@ import { fromJS } from 'immutable';
 
 import { initialCalendar } from './reducers/helpers';
 
-const localStorageVersion = '0';
+const localStorageVersion = '1';
 const setVersion = (state, version) => {
     const subState = {};
     subState[version] = {
