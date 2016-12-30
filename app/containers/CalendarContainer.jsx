@@ -168,6 +168,13 @@ const everyTwoInsert = (target, char) => {
 };
 
 const addEvents = (type, section, term) => {
+    // Don't add unschedule classes
+    if (type === 'section') {
+        if (startTimeStr = section.getIn(['meeting_time', 0]) === 'TBA') return;
+    } else if (type === 'component') {
+        if (startTimeStr = section.get('meeting_time') === 'TBA') return;
+    }
+
     let startTimeStr = '';
     let endTimeStr = '';
     let summary = '';
@@ -194,11 +201,11 @@ const addEvents = (type, section, term) => {
 
         days = everyTwoInsert(section.get('meeting_time').split(' ')[0].toUpperCase(), ',');
     }
-    const startTime = startTimeStr.substring(0, startTimeStr.length - 2);
+    const startTime = parseTime(startTimeStr);
     // startTime format example: 10:00
     const startTimeFormatted = `${term.start}T${startTime}:00-06:00` // -06:00 indicates UTC-6
 
-    const endTime = endTimeStr.substring(0, endTimeStr.length - 2);
+    const endTime = parseTime(endTimeStr);
     // endTime format example: 10:50
     const endTimeFormatted = `${term.start}T${endTime}:00-06:00`
 
