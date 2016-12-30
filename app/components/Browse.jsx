@@ -196,23 +196,22 @@ const Browse = (
               ))}
             </div>
           );
-        } else {
-          return (
-            <div>
-              <div style={style.nav}>
-                {homeChip}
-                {arrow}
-                <Chip onTouchTap={() => showSubjects(currentTerm, selected.school)}>{selected.school}</Chip>
-                {arrow}
-                <h4>{selected.subject}</h4>
-              </div>
-
-              <Divider style={style.divider} />
-
-              <h4>No Courses</h4>
-            </div>
-          );
         }
+        return (
+          <div>
+            <div style={style.nav}>
+              {homeChip}
+              {arrow}
+              <Chip onTouchTap={() => showSubjects(currentTerm, selected.school)}>{selected.school}</Chip>
+              {arrow}
+              <h4>{selected.subject}</h4>
+            </div>
+
+            <Divider style={style.divider} />
+
+            <h4>No Courses</h4>
+          </div>
+        );
       } // In case data did not load
       return <CircularProgress style={style.loading} />;
 
