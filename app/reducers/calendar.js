@@ -82,7 +82,7 @@ function calendar(state = initialCalendar, action, currentTerm) {
       return state.set('sections', newSections).set('components', newComponents);
     }
     case 'SWAP_COMPONENT': {
-      // Remove currently selection component
+      // Remove currently selected component
       const newComponents = filterClasses(
         state.get('components'),
         action.sectionId,

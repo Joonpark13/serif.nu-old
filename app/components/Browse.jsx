@@ -261,6 +261,8 @@ const Browse = (
 };
 
 Browse.propTypes = {
+  currentTerm: React.PropTypes.string,
+  currentCalendar: React.PropTypes.number,
   currentView: React.PropTypes.string.isRequired,
   selected: React.PropTypes.object.isRequired,
   isFetching: React.PropTypes.bool.isRequired,
@@ -281,6 +283,7 @@ Browse.propTypes = {
     components: React.PropTypes.array
   }),
   addCourseHover: React.PropTypes.func,
+  addComponentHover: React.PropTypes.func,
   removeHover: React.PropTypes.func
 };
 

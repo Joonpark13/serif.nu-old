@@ -35,7 +35,7 @@ export default class Calendar extends React.Component {
       eventRender: (event, element) => {
         $(element).css('cursor', 'pointer'); // Make events look clickable
         $(element).hover(() => {
-          $(element).css('opacity', 0.75);
+          $(element).css('opacity', 0.7);
         }, () => {
           $(element).css('opacity', 1);
         });

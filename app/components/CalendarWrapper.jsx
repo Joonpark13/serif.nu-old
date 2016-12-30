@@ -19,6 +19,7 @@ const style = {
 };
 
 const CalendarWrapper = ({
+  currentTerm,
   coursecomps,
   selectEvent,
   eventOpen,
@@ -75,7 +76,7 @@ const CalendarWrapper = ({
     <FlatButton
       label="Swap Component"
       primary
-      onTouchTap={() => swapComponent(selected.school, selected.subject, selected.course, selected.id)}
+      onTouchTap={() => swapComponent(currentTerm, selected.school, selected.subject, selected.course, selected.id)}
     />
   );
   // Prepare action buttons for event click dialog
@@ -153,6 +154,7 @@ const CalendarWrapper = ({
 export default CalendarWrapper;
 
 CalendarWrapper.propTypes = {
+  currentTerm: React.PropTypes.string,
   coursecomps: React.PropTypes.arrayOf(React.PropTypes.object),
   eventOpen: React.PropTypes.bool,
   remove: React.PropTypes.func,

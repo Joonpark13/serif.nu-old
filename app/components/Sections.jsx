@@ -20,6 +20,9 @@ const style = {
   loading: {
     display: 'block',
     margin: 'auto'
+  },
+  title: {
+    marginTop: 0
   }
 };
 
@@ -43,7 +46,7 @@ const Sections = ({
         return (
           <ListItem
             key={section.section}
-            primaryText={`Section ${section.section}`}
+            primaryText={<h4 style={style.title}>{`Section ${section.section}`}</h4>}
             secondaryText={
               <div>
                 <p>

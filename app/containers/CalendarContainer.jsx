@@ -236,6 +236,7 @@ const mapStateToProps = (state) => {
     const currentTerm = state.terms.currentTerm;
     const currentCalendar = state.calendar.get('currentCalendar');
     return {
+        currentTerm,
         coursecomps: parseClasses(state.calendar, currentTerm, currentCalendar),
         eventOpen: state.calendar.get('eventOpen'),
         selectedEvents: state.calendar.get('selectedEvents').toJS(),
@@ -245,7 +246,7 @@ const mapStateToProps = (state) => {
         hoverComponent: addHoverColor(parseComponent(state.calendar.getIn(['hover', 'component']))),
         currentCalendarName: getCurrentCalendarName(sections, currentTerm, currentCalendar),
         onlyCalendar: checkIfOnlyCalendar(sections, currentTerm),
-        currentTermObj: findTermObj(state.terms.terms.items, currentTerm)
+        currentTermObj: findTermObj(state.terms.terms.items, currentTerm) // Only for mergeProps
     };
 };
 
@@ -265,6 +266,12 @@ const mapDispatchToProps = (dispatch) => ({
     },
     removeCalendar: () => {
         dispatch(removeCalendar());
+    },
+    swapComponent: (termId, schoolId, subjectAbbv, courseAbbv, sectionId) => {
+        dispatch(fetchDetailsCart(termId, schoolId, subjectAbbv, courseAbbv, sectionId));
+        dispatch(showCart());
+        dispatch(closeEventDialog());
+        dispatch(swapComponent(schoolId, subjectAbbv, courseAbbv, sectionId));
     }
 });
 

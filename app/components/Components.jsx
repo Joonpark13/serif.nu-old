@@ -19,6 +19,9 @@ const style = {
   loading: {
     display: 'block',
     margin: 'auto'
+  },
+  title: {
+    marginTop: 0
   }
 };
 
@@ -50,7 +53,7 @@ const Components = ({
           return (
             <ListItem
               key={index}
-              primaryText={comp.component}
+              primaryText={<h4 style={style.title}>{comp.component}</h4>}
               secondaryText={comp.meeting_time}
               onMouseEnter={() => addComponentHover(formattedComp)}
               onMouseLeave={() => removeHover(comp.id)}
