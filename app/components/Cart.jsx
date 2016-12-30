@@ -34,7 +34,8 @@ const Cart = ({
   swapComponent,
   addComponent,
   addComponentHover,
-  removeHover
+  removeHover,
+  removeAll
 }) => (
   <div>
     {!isFetching && swapping && <Components
@@ -50,7 +51,12 @@ const Cart = ({
       <div>
         <div style={style.header}>
           <h3 style={style.heading}>{sections.size} classes, {hours} hrs</h3>
-          <FlatButton primary disabled={sections.size === 0} label="Remove All" />
+          <FlatButton
+            primary
+            disabled={sections.size === 0}
+            label="Remove All"
+            onTouchTap={() => removeAll()}
+          />
         </div>
 
         {sections.map(section => {
@@ -112,5 +118,9 @@ Cart.propTypes = {
   swapping: React.PropTypes.bool,
   hours: React.PropTypes.number,
   remove: React.PropTypes.func,
-  swapComponent: React.PropTypes.func
+  swapComponent: React.PropTypes.func,
+  addComponent: React.PropTypes.func,
+  addComponentHover: React.PropTypes.func,
+  removeHover: React.PropTypes.func,
+  removeAll: React.PropTypes.func
 };

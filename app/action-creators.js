@@ -407,3 +407,7 @@ export const setCalendarName = (name) => ({
 export const removeCalendar = () => ({
   type: 'REMOVE_CALENDAR'
 });
+
+export const removeAll = () => ({
+  type: 'REMOVE_ALL'
+});

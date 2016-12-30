@@ -7,7 +7,8 @@ import {
   addComponentCart,
   fetchDetailsCart,
   addComponentHover,
-  removeHover
+  removeHover,
+  removeAll
 } from '../action-creators';
 import Cart from '../components/Cart.jsx';
 import { findData } from '../helpers';
@@ -72,6 +73,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   removeHover: (sectionId) => {
     dispatch(removeHover(sectionId));
+  },
+  removeAll: () => {
+    dispatch(removeAll());
   }
 });
 

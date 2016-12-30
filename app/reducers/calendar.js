@@ -220,6 +220,31 @@ function calendar(state = initialCalendar, action, currentTerm) {
             .get('id')
         );
     }
+    case 'REMOVE_ALL': {
+      const sections = state.get('sections');
+      const components = state.get('components');
+      return state
+        .set(
+          'sections',
+          sections.update(
+            sections.findIndex(term => term.get('id') === currentTerm),
+            term => term.set('items', term.get('items').update(
+              term.get('items').findIndex(cal => cal.get('id') === state.get('currentCalendar')),
+              cal => cal.set('data', cal.get('data').clear())
+            ))
+          )
+        )
+        .set(
+          'components',
+          components.update(
+            components.findIndex(term => term.get('id') === currentTerm),
+            term => term.set('items', term.get('items').update(
+              term.get('items').findIndex(cal => cal.get('id') === state.get('currentCalendar')),
+              cal => cal.set('data', cal.get('data').clear())
+            ))
+          )
+        );
+    }
     default:
       return state;
   }
