@@ -56,7 +56,7 @@ Colors: Use the following - https://www.google.com/design/spec/style/color.html#
 
 /* Bolds the name of the event and inherits the font size */
 .fc-event {
-  font-size: inherit !important;
+  /*font-size: inherit !important;*/
   font-weight: bold !important;
 }
 
