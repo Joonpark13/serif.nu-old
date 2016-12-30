@@ -176,7 +176,7 @@ const Browse = (
           </div>
         );
       } // In case data did not load
-      return <CircularProgress style={style.loading}/>;
+      return <CircularProgress style={style.loading} />;
 
     case 'courses':
       if (!isFetching) { // Make sure data has loaded
