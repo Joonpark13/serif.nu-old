@@ -39,8 +39,6 @@ const Cart = ({
   removeHover
 }) => (
   <div>
-    {sections.toJS().length === 0 && <h3>Cart is empty</h3>}
-
     {!isFetching && swapping && <Components
       sections={sections.toJS()}
       selected={selected}
@@ -54,7 +52,7 @@ const Cart = ({
       <div>
         <div style={style.header}>
           <h3 style={style.heading}>{sections.size} classes, {hours} hrs</h3>
-          <FlatButton primary label="Remove All" />
+          <FlatButton primary disabled={sections.size === 0} label="Remove All" />
         </div>
 
         {sections.map(section => {

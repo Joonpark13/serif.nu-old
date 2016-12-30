@@ -12,18 +12,25 @@ import {
 import Cart from '../components/Cart.jsx';
 import { findData } from '../helpers';
 
-const calculateHours = () => {
-  const events = $('#calendar').fullCalendar('clientEvents');
-  let sum = 0;
+const calculateHours = (sections) => {
+  let events = $('#calendar').fullCalendar('clientEvents');
   if (Array.isArray(events)) { // events can be a jQuery object on load
+    const idList = sections.map(section => section.get('id'));
+    events = events.filter(event => idList.includes(event.id));
+    // events updates too slowly for values to be updated on prop change.
+    // thus we must be sure we are only adding times for courses that are
+    // still in the calendar.
+
+    let sum = 0;
     events.forEach(event => {
       let diff = event.end.diff(event.start, 'minutes');
       // If difference in minutes is not a multiple of 30, add 10
       if (diff % 30 !== 0) diff += 10;
       sum += diff;
     });
+    return sum / 60; // Hours
   }
-  return sum / 60;
+  return 0;
 };
 
 const mapStateToProps = (state) => {
@@ -45,7 +52,7 @@ const mapStateToProps = (state) => {
     components,
     details: state.cart.data.details.info,
     swapping: state.cart.swapping,
-    hours: calculateHours()
+    hours: calculateHours(sections)
   });
 };
 
