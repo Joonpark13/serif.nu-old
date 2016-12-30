@@ -33,7 +33,8 @@ const CalendarWrapper = ({
   hoverSection,
   hoverComponent,
   setCalendarName,
-  removeCalendar
+  removeCalendar,
+  handleAuth
 }) => {
   // Separate unschedule courses from scheduled ones
   const unscheduled = [];
@@ -95,6 +96,7 @@ const CalendarWrapper = ({
             setCalendarName={setCalendarName}
             removeCalendar={removeCalendar}
             onlyCalendar={onlyCalendar}
+            handleAuth={handleAuth}
           />
           <Calendar
             coursecomps={scheduled}
@@ -160,5 +162,6 @@ CalendarWrapper.propTypes = {
   components: React.PropTypes.instanceOf(List),
   currentCalendarName: React.PropTypes.string,
   setCalendarName: React.PropTypes.func,
-  removeCalendar: React.PropTypes.func
+  removeCalendar: React.PropTypes.func,
+  handleAuth: React.PropTypes.func
 };

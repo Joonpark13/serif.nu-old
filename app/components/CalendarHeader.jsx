@@ -1,12 +1,18 @@
 import React from 'react';
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
+import IconButton from 'material-ui/IconButton';
+import FontIcon from 'material-ui/FontIcon';
 
 const style = {
   header: {
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'space-between'
+  },
+  buttons: {
+    display: 'flex',
+    alignItems: 'center'
   }
 };
 
@@ -34,12 +40,21 @@ class CalendarHeader extends React.Component {
           value={this.state.value}
           onChange={this.handleChange}
         />
-        <FlatButton
-          label="Remove Calendar"
-          primary
-          onTouchTap={() => this.props.removeCalendar()}
-          disabled={this.props.onlyCalendar}
-        />
+        <div style={style.buttons}>
+          <IconButton
+            tooltip="Save to Google Calendar"
+            tooltipPosition="top-center"
+            onTouchTap={() => this.props.handleAuth()}
+          >
+            <FontIcon className="material-icons">event_note</FontIcon>
+          </IconButton>
+          <FlatButton
+            label="Remove Calendar"
+            primary
+            onTouchTap={() => this.props.removeCalendar()}
+            disabled={this.props.onlyCalendar}
+          />
+        </div>
       </div>
     );
   }
@@ -49,7 +64,8 @@ CalendarHeader.propTypes = {
   currentCalendarName: React.PropTypes.string,
   setCalendarName: React.PropTypes.func,
   removeCalendar: React.PropTypes.func,
-  onlyCalendar: React.PropTypes.bool
+  onlyCalendar: React.PropTypes.bool,
+  handleAuth: React.PropTypes.func
 };
 
 export default CalendarHeader;

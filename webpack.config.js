@@ -29,6 +29,7 @@ module.exports = {
     plugins: [
         new webpack.DefinePlugin({
             'process.env': {
+                GOOGLE_API_CLIENT_ID: JSON.stringify(process.env.GOOGLE_API_CLIENT_ID),
                 NODE_ENV: JSON.stringify('production')
             }
         }),

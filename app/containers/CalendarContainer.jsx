@@ -159,6 +159,71 @@ const checkIfOnlyCalendar = (sections, currentTerm) => {
     return true;
 }
 
+const findTermObj = (items, currentTerm) => {
+    return items.find(term => term.id === currentTerm);
+};
+
+const everyTwoInsert = (target, char) => {
+    return target.match(/.{1,2}/g).join(',');
+};
+
+const addEvents = (type, section, term) => {
+    let startTimeStr = '';
+    let endTimeStr = '';
+    let summary = '';
+    let days = '';
+    let description = '';
+    if (type === 'section') {
+        // meeting_time[0] format example: MoWeFr 10:00AM - 10:50AM
+        startTimeStr = section.getIn(['meeting_time', 0]).split(' ')[1];
+        // startTimeStr format example: 10:00AM
+        endTimeStr = section.getIn(['meeting_time', 0]).split(' ')[3];
+        // endTimeStr format example: 10:50AM
+        summary = section.get('name');
+
+        days = everyTwoInsert(section.getIn(['meeting_time', 0]).split(' ')[0].toUpperCase(), ',');
+
+        description = section.get('overview_of_class');
+    } else if (type === 'component') {
+        // meeting_time format example: MoWeFr 10:00AM - 10:50AM
+        startTimeStr = section.get('meeting_time').split(' ')[1];
+        // startTimeStr format example: 10:00AM
+        endTimeStr = section.get('meeting_time').split(' ')[3];
+        // endTimeStr format example: 10:50AM
+        summary = section.get('title');
+
+        days = everyTwoInsert(section.get('meeting_time').split(' ')[0].toUpperCase(), ',');
+    }
+    const startTime = startTimeStr.substring(0, startTimeStr.length - 2);
+    // startTime format example: 10:00
+    const startTimeFormatted = `${term.start}T${startTime}:00-06:00` // -06:00 indicates UTC-6
+
+    const endTime = endTimeStr.substring(0, endTimeStr.length - 2);
+    // endTime format example: 10:50
+    const endTimeFormatted = `${term.start}T${endTime}:00-06:00`
+
+    const endDate = term.end.split('-').join('');
+
+    gapi.client.calendar.events.insert({
+        calendarId: 'primary',
+        resource: {
+            summary,
+            description,
+            start: {
+                dateTime: startTimeFormatted,
+                timeZone: 'America/Chicago'
+            },
+            end: {
+                dateTime: endTimeFormatted,
+                timeZone: 'America/Chicago'
+            },
+            recurrence: [`RRULE:FREQ=WEEKLY;UNTIL=${endDate};BYDAY=${days}`]
+        }
+    }).execute(event => {
+        // TODO: Implement snackbar confirmation.
+    });
+};
+
 const mapStateToProps = (state) => {
     const sections = state.calendar.get('sections');
     const currentTerm = state.terms.currentTerm;
@@ -172,7 +237,8 @@ const mapStateToProps = (state) => {
         hoverSection: addHoverColor(parseSection(state.calendar.getIn(['hover', 'section']))),
         hoverComponent: addHoverColor(parseComponent(state.calendar.getIn(['hover', 'component']))),
         currentCalendarName: getCurrentCalendarName(sections, currentTerm, currentCalendar),
-        onlyCalendar: checkIfOnlyCalendar(sections, currentTerm)
+        onlyCalendar: checkIfOnlyCalendar(sections, currentTerm),
+        currentTermObj: findTermObj(state.terms.terms.items, currentTerm)
     };
 };
 
@@ -195,6 +261,34 @@ const mapDispatchToProps = (dispatch) => ({
     }
 });
 
-const CalendarContainer = connect(mapStateToProps, mapDispatchToProps)(CalendarWrapper);
+const mergeProps = (stateProps, dispatchProps) => {
+    return Object.assign({
+        handleAuth: () => {
+            gapi.auth.authorize({
+                client_id: process.env.GOOGLE_API_CLIENT_ID,
+                scope: ['https://www.googleapis.com/auth/calendar']
+            }, (authResult) => {
+                if (authResult && !authResult.error) {
+                    gapi.client
+                        .load('https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest')
+                        .then(() => {
+                            stateProps.sections.forEach(section => {
+                                addEvents('section', section, stateProps.currentTermObj);
+                            });
+                            stateProps.components.forEach(component => {
+                                addEvents('component', component, stateProps.currentTermObj);
+                            });
+                        });
+                } else if (authResult) {
+                    console.log(authResult.error);
+                } else {
+                    console.log('Google API Auth Error');
+                }
+            });
+        }
+    }, stateProps, dispatchProps);
+};
+
+const CalendarContainer = connect(mapStateToProps, mapDispatchToProps, mergeProps)(CalendarWrapper);
 
 export default CalendarContainer;
