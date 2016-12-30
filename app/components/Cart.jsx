@@ -2,10 +2,8 @@ import React from 'react';
 import { Card, CardHeader, CardText, CardActions } from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 import { List } from 'immutable';
-import Divider from 'material-ui/Divider';
 
 import Components from './Components.jsx';
-import { matchId } from '../helpers';
 
 const style = {
   card: {
