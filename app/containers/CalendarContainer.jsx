@@ -145,19 +145,19 @@ const addHoverColor = (coursecomp) => {
     if (!coursecomp) return null;
     coursecomp.color = northwesternPurple30;
     return coursecomp;
-}
+};
 
 const getCurrentCalendarName = (sections, currentTerm, currentCalendar) => {
     const cal = findCalObj(sections, currentTerm, currentCalendar);
     if (cal) return cal.get('name');
     return '';
-}
+};
 
 const checkIfOnlyCalendar = (sections, currentTerm) => {
     const term = sections.find(term => term.get('id') === currentTerm);
     if (term) return term.get('items').toJS().length === 1;
     return true;
-}
+};
 
 const findTermObj = (items, currentTerm) => {
     return items.find(term => term.id === currentTerm);

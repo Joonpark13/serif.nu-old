@@ -6,6 +6,7 @@ import { List } from 'immutable';
 
 import '../stylesheets/materialFullCalendar.css';
 import { findSelected } from '../helpers';
+import { northwesternPurple } from '../colors';
 
 export default class Calendar extends React.Component {
   constructor(props) {
@@ -33,6 +34,11 @@ export default class Calendar extends React.Component {
       events,
       eventRender: (event, element) => {
         $(element).css('cursor', 'pointer'); // Make events look clickable
+        $(element).hover(() => {
+          $(element).css('opacity', 0.75);
+        }, () => {
+          $(element).css('opacity', 1);
+        });
       },
       eventClick: (event) => {
         // Find the corresponding event from the state arrays
