@@ -8,6 +8,7 @@ import { Tabs, Tab } from 'material-ui/Tabs';
 import Dialog from 'material-ui/Dialog';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Link } from 'react-router';
+import Snackbar from 'material-ui/Snackbar';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import TermSelectContainer from '../containers/TermSelectContainer.jsx';
@@ -21,7 +22,8 @@ import {
   fetchTerms,
   fetchSchools,
   fetchSearchData,
-  firstCalendar
+  firstCalendar,
+  closeSnackbar
 } from '../action-creators';
 
 const style = {
@@ -66,7 +68,9 @@ const mapStateToProps = (state) => ({
   currentTerm: state.terms.currentTerm,
   selectingComponent: state.selectingComponent,
   tabState: state.tabState,
-  firstVisit: state.firstVisit
+  firstVisit: state.firstVisit,
+  snackbarOpen: state.snackbar.get('open'),
+  snackbarMessage: state.snackbar.get('message')
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -87,6 +91,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   firstCalendar: () => {
     dispatch(firstCalendar());
+  },
+  closeSnackbar: () => {
+    dispatch(closeSnackbar());
   }
 });
 
@@ -108,7 +115,10 @@ class Serif extends React.Component {
       tabState,
       handleTabChange,
       firstVisit,
-      onFirstVisitProp
+      onFirstVisitProp,
+      closeSnackbar,
+      snackbarOpen,
+      snackbarMessage
     } = this.props;
     return (
       <div>
@@ -181,6 +191,12 @@ class Serif extends React.Component {
         </Grid>
         {/* Gray out rest of screen when selecting components */}
         {selectingComponent && <div style={style.overlay}></div>}
+
+        <Snackbar
+          open={snackbarOpen}
+          message={snackbarMessage}
+          onRequestClose={() => closeSnackbar()}
+        />
       </div>
     );
   }
@@ -192,11 +208,14 @@ Serif.propTypes = {
   tabState: React.PropTypes.string,
   handleTabChange: React.PropTypes.func,
   firstVisit: React.PropTypes.bool,
+  snackbarOpen: React.PropTypes.bool,
+  snackbarMessage: React.PropTypes.string,
   onFirstVisitProp: React.PropTypes.func,
   fetchTerms: React.PropTypes.func,
   fetchSchools: React.PropTypes.func,
   fetchSearchData: React.PropTypes.func,
-  firstCalendar: React.PropTypes.func
+  firstCalendar: React.PropTypes.func,
+  closeSnackbar: React.PropTypes.func
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Serif);

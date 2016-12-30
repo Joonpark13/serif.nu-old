@@ -3,6 +3,7 @@ import search from './search';
 import calendar from './calendar';
 import cart from './cart';
 import terms from './terms';
+import snackbar from './snackbar';
 
 function selectingComponent(state = false, action) {
   switch (action.type) {
@@ -49,7 +50,8 @@ const reducer = (state = {}, action) => {
     selectingComponent: selectingComponent(state.selectingComponent, action),
     tabState: tabState(state.tabState, action),
     firstVisit: firstVisit(state.firstVisit, action),
-    terms: terms(state.terms, action)
+    terms: terms(state.terms, action),
+    snackbar: snackbar(state.snackbar, action)
   };
 };
 
