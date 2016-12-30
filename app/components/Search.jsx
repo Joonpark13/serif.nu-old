@@ -1,12 +1,16 @@
 import React from 'react';
 import AutoComplete from 'material-ui/AutoComplete';
 
+const combineFilters = (searchText, key) => {
+  return AutoComplete.caseInsensitiveFilter(searchText, key) || AutoComplete.fuzzyFilter(searchText, key);
+};
+
 const Search = ({ currentTerm, searchData, onSelect }) => (
   <AutoComplete
     hintText="Search for classes"
     dataSource={searchData}
     maxSearchResults={12}
-    filter={AutoComplete.caseInsensitiveFilter}
+    filter={combineFilters}
     fullWidth
     onNewRequest={(chosenRequest, index) => {
       if (index !== -1) { // Make sure not triggered by hitting enter.
