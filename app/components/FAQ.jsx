@@ -38,13 +38,6 @@ const FAQ = () => (
     </div>
 
     <div style={style.question}>
-      <h3>Can I export my schedule to Google Calendar?</h3>
-      <p>
-        This feature is currently under development.
-      </p>
-    </div>
-
-    <div style={style.question}>
       <h3>I'm a developer. I'd like to contribute.</h3>
       <p>
         Wonderful! <Link to="/contact">Send us a message</Link> and

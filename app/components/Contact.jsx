@@ -28,7 +28,7 @@ const Contact = () => (
     <h3>
       To report a bug, please use <Link to="/bug">the bug report form</Link>.
       For all other inquiries, please email <span style={style.italic}>serifnorthwestern </span>
-      at <span style={style.italic}>gmail.com</span>. Thanks!
+      at <span style={style.italic}>gmail.com</span>. Don't forget to <a href="https://www.facebook.com/nuserif/">like us on Facebook!</a>
     </h3>
   </div>
 );

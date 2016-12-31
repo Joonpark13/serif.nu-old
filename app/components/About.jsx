@@ -1,6 +1,7 @@
 import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Link } from 'react-router';
+import FontIcon from 'material-ui/FontIcon';
 
 import heroImage from '../images/Cover1.jpg';
 import { northwesternPurple, northwesternPurple10 } from '../colors';
@@ -10,6 +11,8 @@ import screenshot2 from '../images/Screenshot2.gif';
 import screenshot3 from '../images/Screenshot3.gif';
 import browse from '../images/Browse.png';
 import search from '../images/Search.png';
+import calendarLogo from '../images/logo_calendar_128px.png';
+import screenshot4 from '../images/MultipleCalendars.gif';
 
 const style = {
   hero: {
@@ -74,7 +77,8 @@ const style = {
   },
   compareItem: {
     textAlign: 'center',
-    marginTop: '30px'
+    marginTop: '30px',
+    marginBottom: '50px'
   },
   compareTitle: {
     marginTop: '20px',
@@ -93,12 +97,12 @@ const About = () => (
     <div style={style.sectionOdd}>
       <h1 style={style.purpleHeader}>We get it. It's almost registration week.</h1>
       <div style={style.divideTwo}>
-        <img src={studentImage} alt="Student with a laptop" style={style.studentImage} />
         <div style={style.blurbs}>
           <h3>No more drawing out your schedules on paper.</h3>
           <h3>No more clunky excel spreadsheets.</h3>
           <h3>Plan out next quarter's schedule the way it always should have been.</h3>
         </div>
+        <img src={studentImage} alt="Student with a laptop" style={style.studentImage} />
       </div>
     </div>
 
@@ -107,23 +111,49 @@ const About = () => (
         Serif.nu is <span style={{ fontStyle: 'italic' }}>Simple</span>.
       </h1>
       <div style={style.divideTwo}>
+        <img src={screenshot1} alt="Serif screenshot" style={style.screenshot} />
         <div style={style.blurbs}>
           <h3>Everything you need to visualize your schedule,</h3>
           <h3>on one page.</h3>
         </div>
-        <img src={screenshot1} alt="Serif screenshot" style={style.screenshot} />
       </div>
     </div>
 
-    <div style={style.sectionOdd}>
+    <div>
+      <div style={style.divideTwo}>
+        <div style={style.compareItem}>
+          <h2 style={style.compareTitle}>Search</h2>
+          <img src={search} alt="Serif search" style={style.compare} />
+        </div>
+        <div style={style.compareItem}>
+          <h2 style={style.purpleHeader}>Have it your way.</h2>
+        </div>
+        <div style={style.compareItem}>
+          <h2 style={style.compareTitle}>Browse</h2>
+          <img src={browse} alt="Serif browse" style={style.compare} />
+        </div>
+      </div>
+    </div>
+
+    <div style={style.sectionEven}>
       <h1 style={style.centeredPurpleHeader}>
         Serif.nu is <span style={{ fontStyle: 'italic' }}>Fast</span>.
       </h1>
       <div style={style.divideTwo}>
-        <img src={screenshot2} alt="Serif screenshot" style={style.screenshot2} />
         <div style={style.blurbs}>
           <h3>Browse? Search? Edit?</h3>
           <h3>All of it only a click away.</h3>
+        </div>
+        <img src={screenshot2} alt="Serif screenshot" style={style.screenshot2} />
+      </div>
+    </div>
+
+    <div style={style.sectionOdd}>
+      <div style={style.divideTwo}>
+        <img src={screenshot4} alt="Serif screenshot" style={style.screenshot2} />
+        <div style={style.blurbs}>
+          <h3>Can't decide between two schedules?</h3>
+          <h3>Make both.</h3>
         </div>
       </div>
     </div>
@@ -141,19 +171,13 @@ const About = () => (
       </div>
     </div>
 
-    <div>
+    <div style={style.sectionOdd}>
       <div style={style.divideTwo}>
-        <div style={style.compareItem}>
-          <h2 style={style.compareTitle}>Search</h2>
-          <img src={search} alt="Serif search" style={style.compare} />
+        <div style={style.blurbs}>
+          <h3>When you're done,</h3>
+          <h3>just click to add your schedule to your Google Calendar.</h3>
         </div>
-        <div style={style.compareItem}>
-          <h2 style={style.compareTitle}>Browse</h2>
-          <img src={browse} alt="Serif browse" style={style.compare} />
-        </div>
-      </div>
-      <div style={style.compareItem}>
-        <h2 style={style.purpleHeader}>Have it your way.</h2>
+        <img src={calendarLogo} alt="Google Calendar Logo" />
       </div>
     </div>
 
@@ -176,6 +200,14 @@ const About = () => (
             Reach out to us.
           </h2>
           <Link to="/contact"><RaisedButton label="Contact" primary /></Link>
+        </div>
+        <div style={style.compareItem}>
+          <h2 style={style.centeredPurpleHeader}>
+            Like us on Facebook!
+          </h2>
+          <a href="https://www.facebook.com/nuserif/">
+            <RaisedButton icon={<FontIcon className="fa fa-facebook-official" />} primary />
+          </a>
         </div>
       </div>
     </div>
