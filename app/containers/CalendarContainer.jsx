@@ -181,6 +181,7 @@ const addEvents = (type, section, term) => {
     let summary = '';
     let days = '';
     let description = '';
+    let location = '';
     if (type === 'section') {
         // meeting_time[0] format example: MoWeFr 10:00AM - 10:50AM
         startTimeStr = section.getIn(['meeting_time', 0]).split(' ')[1];
@@ -188,10 +189,9 @@ const addEvents = (type, section, term) => {
         endTimeStr = section.getIn(['meeting_time', 0]).split(' ')[3];
         // endTimeStr format example: 10:50AM
         summary = section.get('name');
-
         days = everyTwoInsert(section.getIn(['meeting_time', 0]).split(' ')[0].toUpperCase(), ',');
-
         description = section.get('overview_of_class');
+        location = section.get('location');
     } else if (type === 'component') {
         // meeting_time format example: MoWeFr 10:00AM - 10:50AM
         startTimeStr = section.get('meeting_time').split(' ')[1];
@@ -199,8 +199,9 @@ const addEvents = (type, section, term) => {
         endTimeStr = section.get('meeting_time').split(' ')[3];
         // endTimeStr format example: 10:50AM
         summary = section.get('title');
-
         days = everyTwoInsert(section.get('meeting_time').split(' ')[0].toUpperCase(), ',');
+        // description intentionally missing - not provided from API
+        location = section.get('room');
     }
     const startTime = parseTime(startTimeStr);
     // startTime format example: 10:00
@@ -216,6 +217,7 @@ const addEvents = (type, section, term) => {
         calendarId: 'primary',
         resource: {
             summary,
+            location,
             description,
             start: {
                 dateTime: startTimeFormatted,
