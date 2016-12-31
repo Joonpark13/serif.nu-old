@@ -166,6 +166,12 @@ function browse(state = initialBrowse, action) {
       break;
     case 'CHANGE_TERM':
       return initialBrowse;
+    case 'CHANGE_CALENDAR':
+      return {
+        currentView: initialBrowse.currentView,
+        selected: initialSelected,
+        data: state.data
+      };
     default:
       return state;
   }
