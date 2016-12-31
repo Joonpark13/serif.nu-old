@@ -98,6 +98,7 @@ const CalendarWrapper = ({
             removeCalendar={removeCalendar}
             onlyCalendar={onlyCalendar}
             handleAuth={handleAuth}
+            hasClasses={sections.size !== 0}
           />
           <Calendar
             coursecomps={scheduled}

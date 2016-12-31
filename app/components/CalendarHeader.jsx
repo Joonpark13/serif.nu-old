@@ -45,6 +45,7 @@ class CalendarHeader extends React.Component {
             tooltip="Save to Google Calendar"
             tooltipPosition="top-center"
             onTouchTap={() => this.props.handleAuth()}
+            disabled={!this.props.hasClasses}
           >
             <FontIcon className="material-icons">event_note</FontIcon>
           </IconButton>
@@ -65,7 +66,8 @@ CalendarHeader.propTypes = {
   setCalendarName: React.PropTypes.func,
   removeCalendar: React.PropTypes.func,
   onlyCalendar: React.PropTypes.bool,
-  handleAuth: React.PropTypes.func
+  handleAuth: React.PropTypes.func,
+  hasClasses: React.PropTypes.bool
 };
 
 export default CalendarHeader;
