@@ -110,6 +110,7 @@ function search(state = initialSearch, action) {
       };
     case 'CHANGE_TERM':
       return initialSearch;
+    case 'ADD_CALENDAR':
     case 'CHANGE_CALENDAR':
       return {
         currentView: initialSearch.currentView,

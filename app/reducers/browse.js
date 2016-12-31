@@ -166,6 +166,7 @@ function browse(state = initialBrowse, action) {
       break;
     case 'CHANGE_TERM':
       return initialBrowse;
+    case 'ADD_CALENDAR':
     case 'CHANGE_CALENDAR':
       return {
         currentView: initialBrowse.currentView,
