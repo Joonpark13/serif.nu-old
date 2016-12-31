@@ -134,6 +134,7 @@ const CalendarWrapper = ({
           autoScrollBodyContent
         >
           <p style={style.dialogContent}>{selected.meeting_time}</p>
+          <p>{selected.location}</p>
           <p>{selected.instructor.join(', ')}</p>
           {selected.topic && <p>{selected.topic}</p>}
           <p>{selected.overview_of_class}</p>
