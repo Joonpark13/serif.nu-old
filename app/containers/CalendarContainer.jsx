@@ -278,6 +278,9 @@ const mapDispatchToProps = (dispatch) => ({
     },
     googleCalendar: () => { // Only for mergeProps
         dispatch(googleCalendar()); // For confirmation snackbar
+    },
+    handleFacebook: () => {
+
     }
 });
 

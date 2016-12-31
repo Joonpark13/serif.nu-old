@@ -41,6 +41,14 @@ class CalendarHeader extends React.Component {
         />
         <div style={style.buttons}>
           <IconButton
+            tooltip="Share on Facebook"
+            tooltipPosition="top-center"
+            onTouchTap={() => this.props.handleFacebook()}
+            disabled={!this.props.hasClasses}
+          >
+            <FontIcon className="fa fa-facebook-official" />
+          </IconButton>
+          <IconButton
             tooltip="Save to Google Calendar"
             tooltipPosition="top-center"
             onTouchTap={() => this.props.handleAuth()}
@@ -68,7 +76,8 @@ CalendarHeader.propTypes = {
   removeCalendar: React.PropTypes.func,
   onlyCalendar: React.PropTypes.bool,
   handleAuth: React.PropTypes.func,
-  hasClasses: React.PropTypes.bool
+  hasClasses: React.PropTypes.bool,
+  handleFacebook: React.PropTypes.func
 };
 
 export default CalendarHeader;
