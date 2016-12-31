@@ -74,7 +74,7 @@ const parseTime = (time) => {
 };
 
 const parseMeetingTime = (meetingTime) => {
-    if (meetingTime === 'TBA') return { unscheduled: true };
+    if (!meetingTime || meetingTime === 'TBA') return { unscheduled: true };
     // Take API's formatted meeting_time and output the
     // start time, end time, and days of the week for
     // fullcalendar to accept as event objects.
