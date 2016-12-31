@@ -415,3 +415,7 @@ export const removeAll = () => ({
 export const closeSnackbar = () => ({
   type: 'CLOSE_SNACKBAR'
 });
+
+export const googleCalendar = () => ({
+  type: 'GOOGLE_CALENDAR'
+});

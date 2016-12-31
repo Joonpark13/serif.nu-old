@@ -9,7 +9,8 @@ import {
     swapComponent,
     showCart,
     setCalendarName,
-    removeCalendar
+    removeCalendar,
+    googleCalendar
 } from '../action-creators';
 import {
     northwesternPurple30,
@@ -272,6 +273,9 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch(showCart());
         dispatch(closeEventDialog());
         dispatch(swapComponent(schoolId, subjectAbbv, courseAbbv, sectionId));
+    },
+    googleCalendar: () => { // Only for mergeProps
+        dispatch(googleCalendar()); // For confirmation snackbar
     }
 });
 
@@ -292,6 +296,7 @@ const mergeProps = (stateProps, dispatchProps) => {
                             stateProps.components.forEach(component => {
                                 addEvents('component', component, stateProps.currentTermObj);
                             });
+                            dispatchProps.googleCalendar(); // For confirmation snackbar
                         });
                 } else if (authResult) {
                     console.log(authResult.error);

@@ -73,6 +73,7 @@ const Cart = ({
                 />
                 <CardText expandable>
                   <p>{section.get('meeting_time')}</p>
+                  <p>{section.get('location')}</p>
                   <p>{section.get('instructor').toJS().join(', ')}</p>
                   {section.get('topic') && <p>{section.get('topic')}</p>}
                   <p>{section.get('overview_of_class')}</p>

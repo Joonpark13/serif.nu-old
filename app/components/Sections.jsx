@@ -23,6 +23,9 @@ const style = {
   },
   title: {
     marginTop: 0
+  },
+  bodyText: {
+    fontSize: 'small'
   }
 };
 
@@ -46,17 +49,6 @@ const Sections = ({
         return (
           <ListItem
             key={section.section}
-            primaryText={<h4 style={style.title}>{`Section ${section.section}`}</h4>}
-            secondaryText={
-              <div>
-                <p>
-                  {section.meeting_time}
-                  <br />
-                  {section.instructor.join(', ')}
-                </p>
-              </div>
-            }
-            secondaryTextLines={2}
             // Make sure the section is not already in calendar
             disabled={inCal}
             onMouseEnter={() => {
@@ -74,7 +66,12 @@ const Sections = ({
               addCourse(section);
               removeHover(section.id);
             }}
-          />
+          >
+            <h4 style={style.title}>{`Section ${section.section}`}</h4>
+            <p style={style.bodyText}>{section.meeting_time}</p>
+            <p style={style.bodyText}>{section.location}</p>
+            <p style={style.bodyText}>{section.instructor.join(', ')}</p>
+          </ListItem>
          );
       })}
     </List>
