@@ -1,6 +1,5 @@
 import React from 'react';
 import TextField from 'material-ui/TextField';
-import FlatButton from 'material-ui/FlatButton';
 import IconButton from 'material-ui/IconButton';
 import FontIcon from 'material-ui/FontIcon';
 
@@ -49,12 +48,14 @@ class CalendarHeader extends React.Component {
           >
             <FontIcon className="material-icons">event_note</FontIcon>
           </IconButton>
-          <FlatButton
-            label="Remove Calendar"
-            primary
+          <IconButton
+            tooltip="Remove Calendar"
+            tooltipPosition="top-center"
             onTouchTap={() => this.props.removeCalendar()}
             disabled={this.props.onlyCalendar}
-          />
+          >
+            <FontIcon className="material-icons">delete</FontIcon>
+          </IconButton>
         </div>
       </div>
     );
