@@ -23,7 +23,7 @@ const style = {
     maxWidth: 'none'
   },
   dialogBody: {
-    minHeight: '500px' // actual height of fullcalendar element
+    minHeight: '500px' // Needs to be set in order for dialog to be displayed correctly.
   },
   message: {
     display: 'flex',
@@ -39,27 +39,74 @@ const style = {
   }
 };
 
+// http://stackoverflow.com/questions/4998908/convert-data-uri-to-file-then-append-to-formdata
+function dataURItoBlob(dataURI) {
+  // convert base64/URLEncoded data component to raw binary data held in a string
+  let byteString;
+  if (dataURI.split(',')[0].indexOf('base64') >= 0)
+      byteString = atob(dataURI.split(',')[1]);
+  else
+      byteString = unescape(dataURI.split(',')[1]);
+
+  // separate out the mime component
+  const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+
+  // write the bytes of the string to a typed array
+  const ia = new Uint8Array(byteString.length);
+  for (let i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+  }
+
+  return new Blob([ia], { type: mimeString });
+}
+
+const postPhoto = (blob, authToken, message) => {
+  const fd = new FormData();
+  fd.append('access_token', authToken);
+  fd.append('source', blob);
+  fd.append('message', message);
+  $.ajax({
+    url: `https://graph.facebook.com/me/photos?access_token=${authToken}`,
+    type: 'POST',
+    data: fd,
+    processData: false,
+    contentType: false,
+    cache: false,
+    success: (data) => {
+      // TODO: add snackbar
+      console.log('done'); //TEMP
+    },
+    error: (shr, status, data) => {
+      console.log(`Error: ${data}, status ${shr.status}`);
+    }
+  });
+};
+
+
 class CalendarHeader extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       value: this.props.currentCalendarName,
-      open: false
+      open: false,
+      message: ''
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.handleMessageChange = this.handleMessageChange.bind(this);
+    this.handleFacebook = this.handleFacebook.bind(this);
   }
   componentWillReceiveProps(nextProps) {
     this.setState({ value: nextProps.currentCalendarName });
   }
   handleOpen() {
-    this.setState({ open: true });
     html2canvas(document.getElementById('calendar')).then(canvas => {
       $(canvas).css('width', '700px');
       $(canvas).css('margin', 'auto');
       $(canvas).css('display', 'block');
+      this.setState({ open: true, canvas });
       document.getElementById('screenshot').appendChild(canvas);
     });
   }
@@ -69,6 +116,34 @@ class CalendarHeader extends React.Component {
   handleChange(event) {
     this.setState({ value: event.target.value });
     this.props.setCalendarName(event.target.value);
+  }
+  handleMessageChange(event) {
+    this.setState({ message: event.target.value });
+  }
+  handleFacebook() {
+    // http://stackoverflow.com/questions/16214300/upload-base64-image-facebook-graph-api
+    const dataUrl = this.state.canvas.toDataURL();
+    const blob = dataURItoBlob(dataUrl);
+
+    FB.getLoginStatus(response => {
+      if (response.status === 'connected') {
+        // the user is logged in and has authenticated your
+        // app, and response.authResponse supplies
+        // the user's ID, a valid access token, a signed
+        // request, and the time the access token 
+        // and signed request each expire
+        postPhoto(blob, response.authResponse.accessToken, this.state.message);
+      } else {
+        // the user is logged in to Facebook, 
+        // but has not authenticated your app, or
+        // the user isn't logged in to Facebook.
+        FB.login(newResponse => {
+          if (newResponse.authResponse) {
+            postPhoto(blob, newResponse.authResponse.accessToken, this.state.message);
+          }
+        });
+      }
+    });
   }
   render() {
     const actions = [
@@ -82,7 +157,7 @@ class CalendarHeader extends React.Component {
         primary
         onTouchTap={() => {
           this.handleClose();
-          this.props.handleFacebook();
+          this.handleFacebook();
         }}
       />
     ];
@@ -139,6 +214,8 @@ class CalendarHeader extends React.Component {
                 hintText="Say something about your schedule."
                 multiLine
                 style={style.messageBox}
+                value={this.state.message}
+                onChange={this.handleMessageChange}
               />
             </div>
           </div>
@@ -154,8 +231,7 @@ CalendarHeader.propTypes = {
   removeCalendar: React.PropTypes.func,
   onlyCalendar: React.PropTypes.bool,
   handleAuth: React.PropTypes.func,
-  hasClasses: React.PropTypes.bool,
-  handleFacebook: React.PropTypes.func
+  hasClasses: React.PropTypes.bool
 };
 
 export default CalendarHeader;
