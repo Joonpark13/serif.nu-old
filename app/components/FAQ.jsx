@@ -38,6 +38,23 @@ const FAQ = () => (
     </div>
 
     <div style={style.question}>
+      <h3>I clicked the Facebook share button and nothing happened. (or) I logged into Facebook but nothing happened.</h3>
+      <p>
+        In some cases, your browser will block a popup window from appearing.
+        Either configure your browser to disable popup blocking, or be on the lookout
+        for a "popup blocked" notification when you click the Facebook share button.
+      </p>
+      <p>
+        If you were able to see the login popup window, but nothing happened after logging in
+        and/or approving the app permissions, try closing the popup window and clicking
+        Facebook share again. Unless you have already seen a confirmation at the bottom
+        of your window saying "Photo posted to Facebook", you will not be making duplicate
+        posts. However, once you do see this notification, you can rest assured the photo
+        has been posted to Facebook!
+      </p>
+    </div>
+
+    <div style={style.question}>
       <h3>I'm a developer. I'd like to contribute.</h3>
       <p>
         Wonderful! <Link to="/contact">Send us a message</Link> and
