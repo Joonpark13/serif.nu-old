@@ -10,7 +10,8 @@ import {
     showCart,
     setCalendarName,
     removeCalendar,
-    googleCalendar
+    googleCalendar,
+    facebookPosted
 } from '../action-creators';
 import {
     northwesternPurple30,
@@ -280,6 +281,9 @@ const mapDispatchToProps = (dispatch) => ({
     },
     googleCalendar: () => { // Only for mergeProps
         dispatch(googleCalendar()); // For confirmation snackbar
+    },
+    facebookPosted: () => {
+        dispatch(facebookPosted());
     }
 });
 

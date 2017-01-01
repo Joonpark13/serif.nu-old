@@ -419,3 +419,7 @@ export const closeSnackbar = () => ({
 export const googleCalendar = () => ({
   type: 'GOOGLE_CALENDAR'
 });
+
+export const facebookPosted = () => ({
+  type: 'FACEBOOK_POSTED'
+});

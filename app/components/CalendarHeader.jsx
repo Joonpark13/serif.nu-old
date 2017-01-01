@@ -61,7 +61,7 @@ function dataURItoBlob(dataURI) {
   return new Blob([ia], { type: mimeString });
 }
 
-const postPhoto = (blob, authToken, message) => {
+const postPhoto = (blob, authToken, message, callback) => {
   const fd = new FormData();
   fd.append('access_token', authToken);
   fd.append('source', blob);
@@ -74,8 +74,7 @@ const postPhoto = (blob, authToken, message) => {
     contentType: false,
     cache: false,
     success: (data) => {
-      // TODO: add snackbar
-      console.log('done'); //TEMP
+      callback();
     },
     error: (shr, status, data) => {
       console.log(`Error: ${data}, status ${shr.status}`);
@@ -142,14 +141,24 @@ class CalendarHeader extends React.Component {
         // the user's ID, a valid access token, a signed
         // request, and the time the access token
         // and signed request each expire
-        postPhoto(blob, response.authResponse.accessToken, this.state.message);
+        postPhoto(
+          blob,
+          response.authResponse.accessToken,
+          this.state.message,
+          () => this.props.facebookPosted()
+        );
       } else {
         // the user is logged in to Facebook,
         // but has not authenticated your app, or
         // the user isn't logged in to Facebook.
         FB.login(newResponse => {
           if (newResponse.authResponse) {
-            postPhoto(blob, newResponse.authResponse.accessToken, this.state.message);
+            postPhoto(
+              blob,
+              newResponse.authResponse.accessToken,
+              this.state.message,
+              () => this.props.facebookPosted()
+            );
           }
         }, { scope: 'publish_actions' });
       }
@@ -242,7 +251,8 @@ CalendarHeader.propTypes = {
   onlyCalendar: React.PropTypes.bool,
   handleAuth: React.PropTypes.func,
   hasClasses: React.PropTypes.bool,
-  currentTermName: React.PropTypes.string
+  currentTermName: React.PropTypes.string,
+  facebookPosted: React.PropTypes.func
 };
 
 export default CalendarHeader;
