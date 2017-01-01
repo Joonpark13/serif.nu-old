@@ -135,35 +135,16 @@ class CalendarHeader extends React.Component {
     const dataUrl = this.state.canvas.toDataURL();
     const blob = dataURItoBlob(dataUrl);
 
-    FB.getLoginStatus(response => {
-      if (response.status === 'connected') {
-        // the user is logged in and has authenticated your
-        // app, and response.authResponse supplies
-        // the user's ID, a valid access token, a signed
-        // request, and the time the access token
-        // and signed request each expire
+    FB.login(newResponse => {
+      if (newResponse.authResponse) {
         postPhoto(
           blob,
-          response.authResponse.accessToken,
+          newResponse.authResponse.accessToken,
           this.state.message,
           () => this.props.facebookPosted()
         );
-      } else {
-        // the user is logged in to Facebook,
-        // but has not authenticated your app, or
-        // the user isn't logged in to Facebook.
-        FB.login(newResponse => {
-          if (newResponse.authResponse) {
-            postPhoto(
-              blob,
-              newResponse.authResponse.accessToken,
-              this.state.message,
-              () => this.props.facebookPosted()
-            );
-          }
-        }, { scope: 'publish_actions' });
       }
-    });
+    }, { scope: 'publish_actions' });
   }
   render() {
     const actions = [
