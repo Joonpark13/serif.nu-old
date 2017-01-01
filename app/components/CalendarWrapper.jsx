@@ -25,6 +25,7 @@ const CalendarWrapper = ({
   eventOpen,
   selectedEvents,
   currentCalendarName,
+  currentTermName,
   onlyCalendar,
   remove,
   closeDialog,
@@ -100,6 +101,7 @@ const CalendarWrapper = ({
             onlyCalendar={onlyCalendar}
             handleAuth={handleAuth}
             hasClasses={sections.size !== 0}
+            currentTermName={currentTermName}
           />
           <Calendar
             coursecomps={scheduled}
@@ -168,5 +170,6 @@ CalendarWrapper.propTypes = {
   currentCalendarName: React.PropTypes.string,
   setCalendarName: React.PropTypes.func,
   removeCalendar: React.PropTypes.func,
-  handleAuth: React.PropTypes.func
+  handleAuth: React.PropTypes.func,
+  currentTermName: React.PropTypes.string
 };

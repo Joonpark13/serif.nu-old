@@ -238,6 +238,7 @@ const mapStateToProps = (state) => {
     const sections = state.calendar.get('sections');
     const currentTerm = state.terms.currentTerm;
     const currentCalendar = state.calendar.get('currentCalendar');
+    const currentTermObj = findTermObj(state.terms.terms.items, currentTerm);
     return {
         currentTerm,
         coursecomps: parseClasses(state.calendar, currentTerm, currentCalendar),
@@ -249,7 +250,8 @@ const mapStateToProps = (state) => {
         hoverComponent: addHoverColor(parseComponent(state.calendar.getIn(['hover', 'component']))),
         currentCalendarName: getCurrentCalendarName(sections, currentTerm, currentCalendar),
         onlyCalendar: checkIfOnlyCalendar(sections, currentTerm),
-        currentTermObj: findTermObj(state.terms.terms.items, currentTerm) // Only for mergeProps
+        currentTermObj,  // Only for mergeProps
+        currentTermName: currentTermObj ? currentTermObj.term : undefined
     };
 };
 

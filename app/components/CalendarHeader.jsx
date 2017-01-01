@@ -7,6 +7,7 @@ import FlatButton from 'material-ui/FlatButton';
 import $ from 'jquery';
 
 import html2canvas from '../js/html2canvas';
+import { northwesternPurple } from '../colors';
 
 const style = {
   header: {
@@ -106,6 +107,15 @@ class CalendarHeader extends React.Component {
       $(canvas).css('width', '700px');
       $(canvas).css('margin', 'auto');
       $(canvas).css('display', 'block');
+      // Write the term name on the top left
+      const ctx = canvas.getContext('2d');
+      ctx.font = '15px Roboto';
+      ctx.fillText(this.props.currentTermName, 6, 18);
+      // Write 'Serif.nu' on the bottom right
+      ctx.font = '20px Roboto';
+      ctx.fillStyle = northwesternPurple;
+      ctx.fillText('Serif.nu', canvas.width - 80, canvas.height - 15);
+
       this.setState({ open: true, canvas });
       document.getElementById('screenshot').appendChild(canvas);
     });
@@ -130,18 +140,18 @@ class CalendarHeader extends React.Component {
         // the user is logged in and has authenticated your
         // app, and response.authResponse supplies
         // the user's ID, a valid access token, a signed
-        // request, and the time the access token 
+        // request, and the time the access token
         // and signed request each expire
         postPhoto(blob, response.authResponse.accessToken, this.state.message);
       } else {
-        // the user is logged in to Facebook, 
+        // the user is logged in to Facebook,
         // but has not authenticated your app, or
         // the user isn't logged in to Facebook.
         FB.login(newResponse => {
           if (newResponse.authResponse) {
             postPhoto(blob, newResponse.authResponse.accessToken, this.state.message);
           }
-        });
+        }, { scope: 'publish_actions' });
       }
     });
   }
@@ -231,7 +241,8 @@ CalendarHeader.propTypes = {
   removeCalendar: React.PropTypes.func,
   onlyCalendar: React.PropTypes.bool,
   handleAuth: React.PropTypes.func,
-  hasClasses: React.PropTypes.bool
+  hasClasses: React.PropTypes.bool,
+  currentTermName: React.PropTypes.string
 };
 
 export default CalendarHeader;
