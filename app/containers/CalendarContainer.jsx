@@ -280,7 +280,15 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch(googleCalendar()); // For confirmation snackbar
     },
     handleFacebook: () => {
-
+        // FB.login(() => {
+        //     FB.api('/me/photos', 'POST', {
+        //         url: 'http:\/\/shushi168.com/data/out/255/35986723-white-background-image.png'
+        //     }, (response) => {
+        //         if (response && !response.error) {
+        //             // TODO: Snackbar error message
+        //         }
+        //     });
+        // }, {scope: 'publish_actions'});
     }
 });
 
