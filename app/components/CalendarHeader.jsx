@@ -105,6 +105,7 @@ class CalendarHeader extends React.Component {
     html2canvas(document.getElementById('calendar')).then(canvas => {
       $(canvas).css('width', '700px');
       $(canvas).css('margin', 'auto');
+      $(canvas).css('marginTop', '10px');
       $(canvas).css('display', 'block');
       // Write the term name on the top left
       const ctx = canvas.getContext('2d');
