@@ -31,7 +31,7 @@ const Footer = () => (
       <h1 style={{ marginTop: 0 }}>Serif.nu</h1>
       <p>&copy; 2017 <a style={style.anchorColor} href="http://joonparkmusic.com/">Joon Park</a></p>
       <p>Serif.nu is neither created nor endorsed by Northwestern University.</p>
-      <Link to="/tos"><p style={style.anchorColor}>Terms of Service</p></Link>
+      <Link to="/tos"><p style={style.anchorColor}>Terms of Service and Privacy Policy</p></Link>
     </div>
     <div style={style.panel}>
       <a href="https://www.facebook.com/nuserif/"><img src={facebook} alt="Facebook" style={style.icon} /></a>
