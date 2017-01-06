@@ -178,7 +178,7 @@ class CalendarHeader extends React.Component {
       );
     });
     console.log(componentFilled.toJS());
-    // chrome.runtime.sendMessage('PUT_REGAL_ID_HERE', componentFilled, null, response => {
+    // chrome.runtime.sendMessage('mkdokopdmkonfilpmjjpdcmedmnhjgie', componentFilled, null, response => {
     //   if (response) {
     //     this.props.regalSent();
     //   }
