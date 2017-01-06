@@ -37,7 +37,8 @@ const CalendarWrapper = ({
   setCalendarName,
   removeCalendar,
   handleAuth,
-  facebookPosted
+  facebookPosted,
+  regalSent
 }) => {
   // Separate unschedule courses from scheduled ones
   const unscheduled = [];
@@ -103,6 +104,9 @@ const CalendarWrapper = ({
             hasClasses={sections.size !== 0}
             currentTermName={currentTermName}
             facebookPosted={facebookPosted}
+            sections={sections}
+            components={components}
+            regalSent={regalSent}
           />
           <Calendar
             coursecomps={scheduled}

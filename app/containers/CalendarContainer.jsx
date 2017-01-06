@@ -11,7 +11,8 @@ import {
     setCalendarName,
     removeCalendar,
     googleCalendar,
-    facebookPosted
+    facebookPosted,
+    regalSent
 } from '../action-creators';
 import {
     northwesternPurple30,
@@ -284,6 +285,9 @@ const mapDispatchToProps = (dispatch) => ({
     },
     facebookPosted: () => {
         dispatch(facebookPosted());
+    },
+    regalSent: () => {
+        dispatch(regalSent());
     }
 });
 

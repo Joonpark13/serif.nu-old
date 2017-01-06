@@ -28,6 +28,8 @@ function snackbar(state = initialSnackbar, action) {
       return state.set('open', true).set('message', 'Classes saved to Google Calendar.');
     case 'FACEBOOK_POSTED':
       return state.set('open', true).set('message', 'Photo shared to Facebook.');
+    case 'REGAL_SENT':
+      return state.set('open', true).set('message', 'Classes sent to CAESAR.');
     case 'CLOSE_SNACKBAR':
       return state.set('open', false);
     default:

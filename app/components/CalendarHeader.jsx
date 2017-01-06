@@ -5,9 +5,12 @@ import FontIcon from 'material-ui/FontIcon';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import $ from 'jquery';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import { List, fromJS } from 'immutable';
 
 import html2canvas from '../js/html2canvas';
 import { northwesternPurple } from '../colors';
+import sculptedN from '../images/SculptedN.png';
 
 const style = {
   header: {
@@ -37,6 +40,12 @@ const style = {
   },
   messageBox: {
     width: '450px'
+  },
+  sculptedN: {
+    // maintain aspect ratio of approx. 36:56
+    // and fit in the default size FloatingActionButton
+    width: '27px',
+    height: '42px'
   }
 };
 
@@ -89,7 +98,8 @@ class CalendarHeader extends React.Component {
     this.state = {
       value: this.props.currentCalendarName,
       open: false,
-      message: ''
+      message: '',
+      regalOpen: false
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -97,6 +107,9 @@ class CalendarHeader extends React.Component {
     this.handleClose = this.handleClose.bind(this);
     this.handleMessageChange = this.handleMessageChange.bind(this);
     this.handleFacebook = this.handleFacebook.bind(this);
+    this.handleOpenRegal = this.handleOpenRegal.bind(this);
+    this.handleCloseRegal = this.handleCloseRegal.bind(this);
+    this.handleRegal = this.handleRegal.bind(this);
   }
   componentWillReceiveProps(nextProps) {
     this.setState({ value: nextProps.currentCalendarName });
@@ -146,6 +159,31 @@ class CalendarHeader extends React.Component {
       }
     }, { scope: 'publish_actions' });
   }
+  handleOpenRegal() {
+    this.setState({ regalOpen: true });
+  }
+  handleCloseRegal() {
+    this.setState({ regalOpen: false });
+  }
+  handleRegal() {
+    const data = this.props.sections.map(section => fromJS({
+      id: section.get('id'),
+      component: null
+    }));
+    let componentFilled;
+    this.props.components.forEach(component => {
+      componentFilled = data.update(
+        data.findIndex(section => section.id === component.id),
+        section => section.set('component', component.delete('id'))
+      );
+    });
+    console.log(componentFilled.toJS());
+    // chrome.runtime.sendMessage('PUT_REGAL_ID_HERE', componentFilled, null, response => {
+    //   if (response) {
+    //     this.props.regalSent();
+    //   }
+    // });
+  }
   render() {
     const actions = [
       <FlatButton
@@ -162,6 +200,22 @@ class CalendarHeader extends React.Component {
         }}
       />
     ];
+    const regalActions = [
+      <FlatButton
+        label="Cancel"
+        primary
+        onTouchTap={() => this.handleCloseRegal()}
+      />,
+      <FlatButton
+        label="Add"
+        primary
+        onTouchTap={() => {
+          this.handleCloseRegal();
+          this.handleRegal();
+        }}
+      />
+    ];
+    const isChrome = !!window.chrome && !!window.chrome.webstore;
     return (
       <div>
         <div style={style.header}>
@@ -195,9 +249,16 @@ class CalendarHeader extends React.Component {
             >
               <FontIcon className="material-icons">delete</FontIcon>
             </IconButton>
+            {isChrome && (
+              <FloatingActionButton
+                onTouchTap={() => this.handleOpenRegal()}
+              >
+                <img src={sculptedN} style={style.sculptedN} alt="Sculpted N" />
+              </FloatingActionButton>
+            )}
           </div>
-
         </div>
+
         <Dialog
           title="Share to Facebook"
           actions={actions}
@@ -221,6 +282,21 @@ class CalendarHeader extends React.Component {
             </div>
           </div>
         </Dialog>
+
+        <Dialog
+          title="Add to CAESAR"
+          actions={regalActions}
+          open={this.state.regalOpen}
+          onRequestClose={() => this.handleCloseRegal()}
+        >
+          <p>
+            You can add the classes currently in your calendar to CAESAR through
+            the Regal Chrome extension. If Regal is not installed, install it from
+            <a href="https://chrome.google.com/webstore/detail/regal-for-caesar/mkdokopdmkonfilpmjjpdcmedmnhjgie">
+            the Chrome Web Store</a>. After installing Regal, click ADD to add your
+            classes to your CAESAR shopping cart.
+          </p>
+        </Dialog>
       </div>
     );
   }
@@ -234,7 +310,10 @@ CalendarHeader.propTypes = {
   handleAuth: React.PropTypes.func,
   hasClasses: React.PropTypes.bool,
   currentTermName: React.PropTypes.string,
-  facebookPosted: React.PropTypes.func
+  facebookPosted: React.PropTypes.func,
+  sections: React.PropTypes.instanceOf(List),
+  components: React.PropTypes.instanceOf(List),
+  regalSent: React.PropTypes.func
 };
 
 export default CalendarHeader;

@@ -423,3 +423,7 @@ export const googleCalendar = () => ({
 export const facebookPosted = () => ({
   type: 'FACEBOOK_POSTED'
 });
+
+export const regalSent = () => ({
+  type: 'REGAL_SENT'
+});
