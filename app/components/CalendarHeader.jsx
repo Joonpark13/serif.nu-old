@@ -8,6 +8,7 @@ import $ from 'jquery';
 
 import html2canvas from '../js/html2canvas';
 import { northwesternPurple } from '../colors';
+import googleCalendar from '../images/logo_calendar_64px.png';
 
 const style = {
   header: {
@@ -37,7 +38,8 @@ const style = {
   },
   messageBox: {
     width: '450px'
-  }
+  },
+  googleCalendar: { width: '24px', height: '24px' }
 };
 
 // http://stackoverflow.com/questions/4998908/convert-data-uri-to-file-then-append-to-formdata
@@ -177,7 +179,7 @@ class CalendarHeader extends React.Component {
               onTouchTap={() => this.handleOpen()}
               disabled={!this.props.hasClasses}
             >
-              <FontIcon className="fa fa-facebook-official" />
+              <FontIcon className="fa fa-facebook-official" color="#3b5998" />
             </IconButton>
             <IconButton
               tooltip="Save to Google Calendar"
@@ -185,7 +187,7 @@ class CalendarHeader extends React.Component {
               onTouchTap={() => this.props.handleAuth()}
               disabled={!this.props.hasClasses}
             >
-              <FontIcon className="material-icons">event_note</FontIcon>
+              <img src={googleCalendar} style={style.googleCalendar} alt="Google Calendar" />
             </IconButton>
             <IconButton
               tooltip="Remove Calendar"
