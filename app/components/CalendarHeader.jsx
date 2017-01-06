@@ -295,6 +295,10 @@ class CalendarHeader extends React.Component {
             the Chrome Web Store</a>. After installing Regal, click ADD to add your
             classes to your CAESAR shopping cart.
           </p>
+          <p>
+            WARNING: Clicking ADD will overwrite any classes you currently have in
+            your CAESAR shopping cart.
+          </p>
         </Dialog>
       </div>
     );
