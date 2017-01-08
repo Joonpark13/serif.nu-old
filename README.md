@@ -15,7 +15,7 @@ Serif.nu is built with [React](https://facebook.github.io/react/), [React Router
 	npm install
 
 ## Compiling and Running Locally
-For development, comment out the following lines in webpack.config.js:
+For development, comment out the following lines in `webpack.config.js`:
 
                 NODE_ENV: JSON.stringify('production')
 and
