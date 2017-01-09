@@ -177,7 +177,12 @@ class CalendarHeader extends React.Component {
         section => section.set('component', component.delete('id'))
       );
     });
-    chrome.runtime.sendMessage('mkdokopdmkonfilpmjjpdcmedmnhjgie', componentFilled, null, response => {
+    const wrapper = {
+      source: 'Serif',
+      type: 'addToCart',
+      courses: componentFilled
+    }
+    chrome.runtime.sendMessage('mkdokopdmkonfilpmjjpdcmedmnhjgie', wrapper, null, response => {
       if (response) {
         this.props.regalSent();
       }
@@ -290,14 +295,10 @@ class CalendarHeader extends React.Component {
         >
           <p>
             You can add the classes currently in your calendar to CAESAR through
-            the Regal Chrome extension. If Regal is not installed, install it from
+            the Regal Chrome extension. If Regal is not installed, install it from 
             <a href="https://chrome.google.com/webstore/detail/regal-for-caesar/mkdokopdmkonfilpmjjpdcmedmnhjgie">
             the Chrome Web Store</a>. After installing Regal, click ADD to add your
             classes to your CAESAR shopping cart.
-          </p>
-          <p>
-            WARNING: Clicking ADD will overwrite any classes you currently have in
-            your CAESAR shopping cart.
           </p>
         </Dialog>
       </div>
