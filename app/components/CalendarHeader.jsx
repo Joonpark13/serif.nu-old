@@ -166,22 +166,18 @@ class CalendarHeader extends React.Component {
     this.setState({ regalOpen: false });
   }
   handleRegal() {
-    const data = this.props.sections.map(section => fromJS({
-      id: section.get('id'),
-      component: null
-    }));
-    let componentFilled;
-    this.props.components.forEach(component => {
-      componentFilled = data.update(
-        data.findIndex(section => section.id === component.id),
-        section => section.set('component', component.delete('id'))
-      );
+    const data = this.props.sections.map(section => {
+      const component = this.props.components.find(comp => comp.get('id') === section.get('id'));
+      return fromJS({
+        id: section.get('id'),
+        component
+      });
     });
     const request = {
       source: 'Serif',
       type: 'addToCart',
-      courses: componentFilled
-    }
+      courses: data.toJS()
+    };
     chrome.runtime.sendMessage('mkdokopdmkonfilpmjjpdcmedmnhjgie', request, null, response => {
       if (response) {
         this.props.regalSent();
