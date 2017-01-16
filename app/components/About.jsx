@@ -13,6 +13,7 @@ import browse from '../images/Browse.png';
 import search from '../images/Search.png';
 import calendarLogo from '../images/logo_calendar_128px.png';
 import screenshot4 from '../images/MultipleCalendars.gif';
+import facebookLogo from '../images/FB-f-Logo__blue_144.png';
 
 const style = {
   hero: {
@@ -83,6 +84,10 @@ const style = {
   compareTitle: {
     marginTop: '20px',
     marginBottom: '20px'
+  },
+  logos: {
+    width: '128px',
+    height: '128px'
   }
 };
 
@@ -174,10 +179,12 @@ const About = () => (
     <div style={style.sectionOdd}>
       <div style={style.divideTwo}>
         <div style={style.blurbs}>
-          <h3>When you're done,</h3>
-          <h3>just click to add your schedule to your Google Calendar.</h3>
+          <h3>With just a click,</h3>
+          <h3>add your schedule to your Google Calendar</h3>
+          <h3>or share it on Facebook!</h3>
         </div>
-        <img src={calendarLogo} alt="Google Calendar Logo" />
+        <img style={style.logos} src={calendarLogo} alt="Google Calendar Logo" />
+        <img style={style.logos} src={facebookLogo} alt="Facebook Logo" />
       </div>
     </div>
 
