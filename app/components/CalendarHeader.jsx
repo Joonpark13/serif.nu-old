@@ -170,7 +170,7 @@ class CalendarHeader extends React.Component {
       const component = this.props.components.find(comp => comp.get('id') === section.get('id'));
       return fromJS({
         id: section.get('id'),
-        name: section.get('subject') + ' '  + section.get('course'),
+        name: `${section.get('subject')} ${section.get('course')}`,
         component
       });
     });
