@@ -13,6 +13,7 @@ import browse from '../images/Browse.png';
 import search from '../images/Search.png';
 import calendarLogo from '../images/logo_calendar_128px.png';
 import screenshot4 from '../images/MultipleCalendars.gif';
+import regalLogo from '../images/wreath.png';
 
 const style = {
   hero: {
@@ -83,6 +84,9 @@ const style = {
   compareTitle: {
     marginTop: '20px',
     marginBottom: '20px'
+  },
+  regalLogo: {
+    width: '250px'
   }
 };
 
@@ -182,6 +186,19 @@ const About = () => (
     </div>
 
     <div style={style.sectionEven}>
+      <h1 style={style.centeredPurpleHeader}>
+        Regal Integration for CAESAR
+      </h1>
+      <div style={style.divideTwo}>
+        <img style={style.regalLogo} src={regalLogo} alt="Regal Logo" />
+        <div style={style.blurbs}>
+          <h3>Using Google Chrome?</h3>
+          <h3>Install <a href="bit.ly/regalnu">Regal</a> and add your Serif.nu courses to CAESAR with one click.</h3>
+        </div>
+      </div>
+    </div>
+
+    <div style={style.sectionOdd}>
       <div style={style.divideTwo}> {/* Can be used to divide into more than two sections */}
         <div style={style.compareItem}>
           <h2 style={style.centeredPurpleHeader}>
