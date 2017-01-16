@@ -233,7 +233,7 @@ class CalendarHeader extends React.Component {
               onTouchTap={() => this.handleOpen()}
               disabled={!this.props.hasClasses}
             >
-              <FontIcon className="fa fa-facebook-official" />
+              <FontIcon className="fa fa-facebook-official" color="#3b5998" />
             </IconButton>
             <IconButton
               tooltip="Save to Google Calendar"
