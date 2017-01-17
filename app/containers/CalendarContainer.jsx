@@ -253,7 +253,8 @@ const mapStateToProps = (state) => {
         currentCalendarName: getCurrentCalendarName(sections, currentTerm, currentCalendar),
         onlyCalendar: checkIfOnlyCalendar(sections, currentTerm),
         currentTermObj,  // Only for mergeProps
-        currentTermName: currentTermObj ? currentTermObj.term : undefined
+        currentTermName: currentTermObj ? currentTermObj.term : undefined,
+        hasRegal: state.hasRegal
     };
 };
 

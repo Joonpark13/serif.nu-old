@@ -23,7 +23,8 @@ import {
   fetchSchools,
   fetchSearchData,
   firstCalendar,
-  closeSnackbar
+  closeSnackbar,
+  fetchRegal
 } from '../action-creators';
 
 const style = {
@@ -94,12 +95,16 @@ const mapDispatchToProps = (dispatch) => ({
   },
   closeSnackbar: () => {
     dispatch(closeSnackbar());
+  },
+  checkRegal: () => {
+    dispatch(fetchRegal());
   }
 });
 
 class Serif extends React.Component {
   componentDidMount() {
     this.props.fetchTerms();
+    this.props.checkRegal();
     window.fbAsyncInit = () => {
         FB.init({
             appId      : process.env.FB_APP_ID,
@@ -231,7 +236,8 @@ Serif.propTypes = {
   fetchSchools: React.PropTypes.func,
   fetchSearchData: React.PropTypes.func,
   firstCalendar: React.PropTypes.func,
-  closeSnackbar: React.PropTypes.func
+  closeSnackbar: React.PropTypes.func,
+  checkRegal: React.PropTypes.func
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Serif);

@@ -427,3 +427,28 @@ export const facebookPosted = () => ({
 export const regalSent = () => ({
   type: 'REGAL_SENT'
 });
+
+export const requestRegal = () => ({
+    type: 'REQUEST_REGAL'
+});
+
+export const receiveRegal = (hasRegal) => ({
+    type: 'RECEIVE_REGAL',
+    hasRegal
+});
+
+export const fetchRegal = () => (
+  function (dispatch) {
+    dispatch(requestRegal());
+    return chrome.runtime.sendMessage(
+      'mkdokopdmkonfilpmjjpdcmedmnhjgie',
+      { message: 'installed' },
+      (reply) => {
+        if (reply) {
+          if (reply.installed) dispatch(receiveRegal(true));
+          else dispatch(receiveRegal(false));
+        } else dispatch(receiveRegal(false));
+      }
+    );
+  }
+);

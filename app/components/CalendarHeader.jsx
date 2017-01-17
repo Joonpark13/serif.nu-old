@@ -187,6 +187,7 @@ class CalendarHeader extends React.Component {
     });
   }
   render() {
+    const isChrome = !!window.chrome && !!window.chrome.webstore;
     const actions = [
       <FlatButton
         label="Cancel"
@@ -211,13 +212,13 @@ class CalendarHeader extends React.Component {
       <FlatButton
         label="Add"
         primary
+        disabled={!this.props.hasRegal}
         onTouchTap={() => {
           this.handleCloseRegal();
           this.handleRegal();
         }}
       />
     ];
-    const isChrome = !!window.chrome && !!window.chrome.webstore;
     return (
       <div>
         <div style={style.header}>
@@ -315,7 +316,8 @@ CalendarHeader.propTypes = {
   facebookPosted: React.PropTypes.func,
   sections: React.PropTypes.instanceOf(List),
   components: React.PropTypes.instanceOf(List),
-  regalSent: React.PropTypes.func
+  regalSent: React.PropTypes.func,
+  hasRegal: React.PropTypes.bool
 };
 
 export default CalendarHeader;

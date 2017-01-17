@@ -40,6 +40,16 @@ function firstVisit(state = true, action) {
   }
 }
 
+const hasRegal = (state = false, action) => {
+  switch (action.type) {
+    case 'RECEIVE_REGAL':
+      return action.hasRegal;
+    case 'REQUEST_REGAL':
+    default:
+      return state;
+  }
+};
+
 const reducer = (state = {}, action) => {
   const currentTerm = state.terms ? state.terms.currentTerm : '';
   return {
@@ -51,7 +61,8 @@ const reducer = (state = {}, action) => {
     tabState: tabState(state.tabState, action),
     firstVisit: firstVisit(state.firstVisit, action),
     terms: terms(state.terms, action),
-    snackbar: snackbar(state.snackbar, action)
+    snackbar: snackbar(state.snackbar, action),
+    hasRegal: hasRegal(state.hasRegal, action)
   };
 };
 
