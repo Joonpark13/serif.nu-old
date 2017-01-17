@@ -1,3 +1,7 @@
+<a href="https://serif.nu/">
+    <img src="SerifLogo.png" alt="Serif.nu Logo" align="right" width="100" />
+</a>
+
 # Serif.nu
 #### Simple. Fast. Visual. Course Planning for Northwestern University.
 
