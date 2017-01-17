@@ -7,6 +7,7 @@
 
 ## Current Status
 The new Serif.nu is currently in *private beta*. There will not be a public beta. Estimated release date is Winter 2017, week 5.
+This repository is a complete rebuild of the [previous application, Serif](https://github.com/Joonpark13/nuvsc).
 
 ## About
 Serif.nu is a course scheduler for Northwestern University, designed to make your registration week easy and painless. No more drawing it out on paper, no more clunky spreadsheets. Draft up a dream schedule (or four) before you register.
@@ -18,7 +19,7 @@ Serif.nu is built with [React](https://facebook.github.io/react/), [React Router
 	npm install
 
 ## Compiling and Running Locally
-For development, comment out the following lines in webpack.config.js:
+For development, comment out the following lines in `webpack.config.js`:
 
                 NODE_ENV: JSON.stringify('production')
 and
@@ -28,7 +29,7 @@ then run
 
 	npm run dev
 	
-For a production build, run
+For a production build, leave the two lines as is and run
 
 	npm run build
 	npm start
