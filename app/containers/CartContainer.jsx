@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import $ from 'jquery';
+import moment from 'moment';
 
 import {
   remove,
@@ -11,27 +11,29 @@ import {
   removeAll
 } from '../action-creators';
 import Cart from '../components/Cart.jsx';
-import { findData } from '../helpers';
+import { findData, parseSection, parseComponent } from '../helpers';
 
-const calculateHours = (sections) => {
-  let events = $('#calendar').fullCalendar('clientEvents');
-  if (Array.isArray(events)) { // events can be a jQuery object on load
-    const idList = sections.map(section => section.get('id'));
-    events = events.filter(event => idList.includes(event.id));
-    // events updates too slowly for values to be updated on prop change.
-    // thus we must be sure we are only adding times for courses that are
-    // still in the calendar.
+const calculateHours = (sections, components) => {
+  const events = [];
+  sections.forEach(section => {
+      events.push(parseSection(section));
+  });
+  components.forEach(component => {
+      events.push(parseComponent(component));
+  });
 
-    let sum = 0;
-    events.forEach(event => {
-      let diff = event.end.diff(event.start, 'minutes');
+  let sum = 0;
+  events.forEach(event => {
+    if (!event.unscheduled) {
+      const start = moment(`2016-02-05 ${event.start}`); // Arbitrary date to allow moment to parse
+      const end = moment(`2016-02-05 ${event.end}`);
+      let diff = end.diff(start, 'minutes');
       // If difference in minutes is not a multiple of 30, add 10
       if (diff % 30 !== 0) diff += 10;
-      sum += diff;
-    });
-    return sum / 60; // Hours
-  }
-  return 0;
+      sum += diff * event.dow.length; // Multiply by how many times the class meets per week
+    }
+  });
+  return sum / 60; // Hours
 };
 
 const mapStateToProps = (state) => {
@@ -53,7 +55,7 @@ const mapStateToProps = (state) => {
     components,
     details: state.cart.data.details.info,
     swapping: state.cart.swapping,
-    hours: calculateHours(sections)
+    hours: calculateHours(sections, components)
   });
 };
 
