@@ -5,12 +5,11 @@ import FontIcon from 'material-ui/FontIcon';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import $ from 'jquery';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
 import { List, fromJS } from 'immutable';
 
 import html2canvas from '../js/html2canvas';
 import { northwesternPurple } from '../colors';
-import sculptedN from '../images/SculptedN.png';
+import RegalLogo from '../images/wreath.png';
 
 const style = {
   header: {
@@ -41,11 +40,11 @@ const style = {
   messageBox: {
     width: '450px'
   },
-  sculptedN: {
-    // maintain aspect ratio of approx. 36:56
-    // and fit in the default size FloatingActionButton
-    width: '27px',
-    height: '42px'
+  regal: {
+    display: 'block',
+    margin: 'auto',
+    padding: '10px',
+    width: '200px'
   }
 };
 
@@ -236,6 +235,7 @@ class CalendarHeader extends React.Component {
             >
               <FontIcon className="fa fa-facebook-official" color="#3b5998" />
             </IconButton>
+
             <IconButton
               tooltip="Save to Google Calendar"
               tooltipPosition="top-center"
@@ -244,6 +244,7 @@ class CalendarHeader extends React.Component {
             >
               <FontIcon className="material-icons">event_note</FontIcon>
             </IconButton>
+
             <IconButton
               tooltip="Remove Calendar"
               tooltipPosition="top-center"
@@ -252,12 +253,13 @@ class CalendarHeader extends React.Component {
             >
               <FontIcon className="material-icons">delete</FontIcon>
             </IconButton>
+
             {isChrome && (
-              <FloatingActionButton
+              <FlatButton
+                label="Send to CAESAR"
+                primary
                 onTouchTap={() => this.handleOpenRegal()}
-              >
-                <img src={sculptedN} style={style.sculptedN} alt="Sculpted N" />
-              </FloatingActionButton>
+              />
             )}
           </div>
         </div>
@@ -287,18 +289,26 @@ class CalendarHeader extends React.Component {
         </Dialog>
 
         <Dialog
-          title="Add to CAESAR"
+          title="Send to CAESAR"
           actions={regalActions}
           open={this.state.regalOpen}
           onRequestClose={() => this.handleCloseRegal()}
+          autoScrollBodyContent
         >
-          <p>
-            You can add the classes currently in your calendar to CAESAR through
-            the Regal Chrome extension. If Regal is not installed,
-            install it from <a href="bit.ly/regalnu">the Chrome Web Store</a>.
-            After installing Regal, click ADD to add your
-            classes to your CAESAR shopping cart.
-          </p>
+          <img src={RegalLogo} style={style.regal} alt="Regal Logo" />
+          {this.props.hasRegal ?
+            <p>
+              Click ADD to send the classes that are currently in your calendar
+              to CAESAR using Regal.
+            </p>
+            :
+            <p>
+              You can send the classes that are currently in your calendar
+              to CAESAR through the Regal Chrome extension. Install Regal
+              from <a href="bit.ly/regalnu">the Chrome Web Store</a>.
+              After installing, click ADD to send your classes to CAESAR.
+            </p>
+          }
         </Dialog>
       </div>
     );

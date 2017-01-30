@@ -444,10 +444,11 @@ export const fetchRegal = () => (
       'mkdokopdmkonfilpmjjpdcmedmnhjgie',
       { message: 'installed' },
       (reply) => {
-        if (reply) {
-          if (reply.installed) dispatch(receiveRegal(true));
-          else dispatch(receiveRegal(false));
-        } else dispatch(receiveRegal(false));
+        if (reply && reply.installed) {
+          dispatch(receiveRegal(true));
+        } else {
+          dispatch(receiveRegal(false));
+        }
       }
     );
   }
