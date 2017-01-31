@@ -173,14 +173,16 @@ class CalendarHeader extends React.Component {
         component
       });
     });
+
     const request = {
       source: 'Serif',
       type: 'addToCart',
       term: this.props.currentTermName,
       courses: data.toJS()
     };
-    chrome.runtime.sendMessage('mkdokopdmkonfilpmjjpdcmedmnhjgie', request, null, response => {
-      if (response) {
+
+    chrome.runtime.sendMessage('mkdokopdmkonfilpmjjpdcmedmnhjgie', request, undefined, response => {
+      if (response.success) { // Expect a resonse of type { success: true }
         this.props.regalSent();
       }
     });

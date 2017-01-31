@@ -29,7 +29,7 @@ function snackbar(state = initialSnackbar, action) {
     case 'FACEBOOK_POSTED':
       return state.set('open', true).set('message', 'Photo shared to Facebook.');
     case 'REGAL_SENT':
-      return state.set('open', true).set('message', 'Classes sent to CAESAR.');
+      return state.set('open', true).set('message', 'Classes sent to CAESAR. Check your shopping cart!');
     case 'CLOSE_SNACKBAR':
       return state.set('open', false);
     default:
