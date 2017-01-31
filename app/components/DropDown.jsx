@@ -39,10 +39,20 @@ export default class DropDown extends React.Component {
   render() {
     return (
       <div style={Object.assign({}, style.box, this.props.style)}>
-        <Chip onTouchTap={this.handleTouchTap}>
-          <Avatar icon={<FontIcon className="material-icons">expand_more</FontIcon>} />
-          {this.props.displayValue[this.props.primaryTextValue]}
-        </Chip>
+        {this.props.deleteButton ?
+          <Chip
+            onTouchTap={this.handleTouchTap}
+            onRequestDelete={() => this.props.deleteCallback()}
+          >
+            <Avatar icon={<FontIcon className="material-icons">expand_more</FontIcon>} />
+            {this.props.displayValue[this.props.primaryTextValue]}
+          </Chip>
+        :
+          <Chip onTouchTap={this.handleTouchTap}>
+            <Avatar icon={<FontIcon className="material-icons">expand_more</FontIcon>} />
+            {this.props.displayValue[this.props.primaryTextValue]}
+          </Chip>
+        }
         <Popover
           anchorEl={this.state.anchorEl}
           open={this.state.open}
@@ -72,5 +82,7 @@ DropDown.propTypes = {
   displayValue: React.PropTypes.object,
   items: React.PropTypes.arrayOf(React.PropTypes.object),
   primaryTextValue: React.PropTypes.string,
-  onSelect: React.PropTypes.func
+  onSelect: React.PropTypes.func,
+  deleteButton: React.PropTypes.bool,
+  deleteCallback: React.PropTypes.func
 };

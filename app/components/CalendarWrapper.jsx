@@ -26,7 +26,6 @@ const CalendarWrapper = ({
   selectedEvents,
   currentCalendarName,
   currentTermName,
-  onlyCalendar,
   remove,
   closeDialog,
   swapComponent,
@@ -35,7 +34,6 @@ const CalendarWrapper = ({
   hoverSection,
   hoverComponent,
   setCalendarName,
-  removeCalendar,
   handleAuth,
   facebookPosted
 }) => {
@@ -97,8 +95,6 @@ const CalendarWrapper = ({
           <CalendarHeader
             currentCalendarName={currentCalendarName}
             setCalendarName={setCalendarName}
-            removeCalendar={removeCalendar}
-            onlyCalendar={onlyCalendar}
             handleAuth={handleAuth}
             hasClasses={sections.size !== 0}
             currentTermName={currentTermName}
@@ -170,7 +166,6 @@ CalendarWrapper.propTypes = {
   components: React.PropTypes.instanceOf(List),
   currentCalendarName: React.PropTypes.string,
   setCalendarName: React.PropTypes.func,
-  removeCalendar: React.PropTypes.func,
   handleAuth: React.PropTypes.func,
   currentTermName: React.PropTypes.string,
   facebookPosted: React.PropTypes.func

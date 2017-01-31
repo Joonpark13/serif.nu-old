@@ -1,5 +1,4 @@
 import React from 'react';
-import CircularProgress from 'material-ui/CircularProgress';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import FontIcon from 'material-ui/FontIcon';
@@ -51,6 +50,8 @@ export default class TermSelect extends React.Component {
               items={this.props.calendars}
               primaryTextValue="name"
               onSelect={(calendar) => this.props.changeCalendar(calendar.id)}
+              deleteButton={!this.props.onlyCalendar}
+              deleteCallback={this.props.removeCalendar}
             />
           }
           <FloatingActionButton
@@ -74,5 +75,7 @@ TermSelect.propTypes = {
   calendars: React.PropTypes.arrayOf(React.PropTypes.object),
   currentCalendar: React.PropTypes.number,
   changeCalendar: React.PropTypes.func,
-  addCalendar: React.PropTypes.func
+  addCalendar: React.PropTypes.func,
+  removeCalendar: React.PropTypes.func,
+  onlyCalendar: React.PropTypes.bool
 };

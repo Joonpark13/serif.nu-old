@@ -187,14 +187,6 @@ class CalendarHeader extends React.Component {
             >
               <FontIcon className="material-icons">event_note</FontIcon>
             </IconButton>
-            <IconButton
-              tooltip="Remove Calendar"
-              tooltipPosition="top-center"
-              onTouchTap={() => this.props.removeCalendar()}
-              disabled={this.props.onlyCalendar}
-            >
-              <FontIcon className="material-icons">delete</FontIcon>
-            </IconButton>
           </div>
 
         </div>
