@@ -441,7 +441,7 @@ export const fetchRegal = () => (
   function (dispatch) {
     dispatch(requestRegal());
     return chrome.runtime.sendMessage(
-      'mkdokopdmkonfilpmjjpdcmedmnhjgie',
+      'kidmdeobbleagbkgmbeocoommcgifloo',
       { message: 'installed' },
       (reply) => {
         if (reply && reply.installed) {

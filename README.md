@@ -1,5 +1,5 @@
 <a href="https://serif.nu/">
-    <img src="SerifLogo.png" alt="Serif.nu Logo" align="right" width="100" />
+    <img src="app/images/SerifLogo.png" alt="Serif.nu Logo" align="right" width="100" />
 </a>
 
 # Serif.nu

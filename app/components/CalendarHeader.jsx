@@ -6,6 +6,7 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import $ from 'jquery';
 import { List, fromJS } from 'immutable';
+import { Link } from 'react-router';
 
 import html2canvas from '../js/html2canvas';
 import { northwesternPurple } from '../colors';
@@ -181,7 +182,7 @@ class CalendarHeader extends React.Component {
       courses: data.toJS()
     };
 
-    chrome.runtime.sendMessage('mkdokopdmkonfilpmjjpdcmedmnhjgie', request, undefined, response => {
+    chrome.runtime.sendMessage('kidmdeobbleagbkgmbeocoommcgifloo', request, undefined, response => {
       if (response.success) { // Expect a resonse of type { success: true }
         this.props.regalSent();
       }
@@ -299,16 +300,21 @@ class CalendarHeader extends React.Component {
         >
           <img src={RegalLogo} style={style.regal} alt="Regal Logo" />
           {this.props.hasRegal ?
-            <p>
-              Click ADD to send the classes that are currently in your calendar
-              to CAESAR using Regal.
-            </p>
+            <div>
+              <p>
+                Click ADD to send the classes that are currently in your calendar
+                to CAESAR using Regal.
+              </p>
+              <p>Confused? <Link to="/regal">This might help.</Link></p>
+            </div>
             :
             <p>
               You can send the classes that are currently in your calendar
               to CAESAR through the Regal Chrome extension. Install Regal
-              from <a href="bit.ly/regalnu">the Chrome Web Store</a>.
+              from <a href="http://bit.ly/regalnu">the Chrome Web Store</a>.
               After installing, click ADD to send your classes to CAESAR.
+              For more information, <Link to="/regal">check out our
+              instructions page</Link>.
             </p>
           }
         </Dialog>

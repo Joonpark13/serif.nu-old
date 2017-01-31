@@ -34,6 +34,27 @@ const FAQ = () => (
       <p>
         Yes, and yes! Serif.nu is actively being updated to include
         new features to better serve the Northwestern student experience.
+        You can expect course data to be updated regularly during registration
+        season.
+      </p>
+    </div>
+
+    <div style={style.question}>
+      <h3>I'm a developer. I'd like to contribute.</h3>
+      <p>
+        Wonderful! <Link to="/contact">Send us a message</Link> and
+        <a href="https://github.com/Joonpark13/serif.nu"> check out our repository.</a>
+      </p>
+    </div>
+
+    <div style={style.question}>
+      <h3>Does Serif.nu work with CAESAR?</h3>
+      <p>
+        If you have the Regal chrome extension installed, yes! Serif.nu works together
+        with Regal to provide the ultimate registration week experience. Design the
+        schedule you want right here on Serif.nu, then send those courses straight
+        to CAESAR at the click of a button. <Link to="/regal">Check out how it works
+        here</Link>.
       </p>
     </div>
 
@@ -51,14 +72,6 @@ const FAQ = () => (
         of your window saying "Photo posted to Facebook", you will not be making duplicate
         posts. However, once you do see this notification, you can rest assured the photo
         has been posted to Facebook!
-      </p>
-    </div>
-
-    <div style={style.question}>
-      <h3>I'm a developer. I'd like to contribute.</h3>
-      <p>
-        Wonderful! <Link to="/contact">Send us a message</Link> and
-        <a href="https://github.com/Joonpark13/serif.nu"> check out our repository.</a>
       </p>
     </div>
 

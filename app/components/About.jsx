@@ -200,7 +200,7 @@ const About = () => (
         <img style={style.regalLogo} src={regalLogo} alt="Regal Logo" />
         <div style={style.blurbs}>
           <h3>Using Google Chrome?</h3>
-          <h3>Install <a href="bit.ly/regalnu">Regal</a> and add your Serif.nu courses to CAESAR with one click.</h3>
+          <h3>Install <a href="http://bit.ly/regalnu">Regal</a> and add your Serif.nu courses to CAESAR with one click.</h3>
         </div>
       </div>
     </div>

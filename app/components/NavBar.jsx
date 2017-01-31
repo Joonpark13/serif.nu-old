@@ -53,6 +53,11 @@ export default class NavBar extends React.Component {
               onTouchTap={this.handleToggle}
               primaryText="Contact"
             />
+            <ListItem
+              containerElement={<Link to="/regal" />}
+              onTouchTap={this.handleToggle}
+              primaryText="Regal"
+            />
           </List>
         </Drawer>
       </div>
