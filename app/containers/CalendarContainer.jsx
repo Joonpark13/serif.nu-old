@@ -17,7 +17,7 @@ import {
     brightGreen, brightCyan, brightBlue, brightYellow, brightOrange, brightRed,
     darkGreen, darkCyan, darkBlue, darkYellow, darkOrange, darkRed
 } from '../colors';
-import { findCalObj, findData, parseSection, parseComponent } from '../helpers';
+import { findCalObj, findData, parseTime, parseSection, parseComponent } from '../helpers';
 
 const colorArray = [brightGreen, brightOrange, brightBlue, brightYellow, brightCyan, brightRed,
     darkGreen, darkOrange, darkBlue, darkYellow, darkCyan, darkRed
