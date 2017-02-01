@@ -92,6 +92,14 @@ const style = {
   logos: {
     width: '128px',
     height: '128px'
+  },
+  learnMoreButton: {
+    display: 'block',
+    margin: 'auto',
+    width: '120px'
+  },
+  learnMoreButtonWrapper: {
+    padding: '20px'
   }
 };
 
@@ -194,13 +202,16 @@ const About = () => (
 
     <div style={style.sectionEven}>
       <h1 style={style.centeredPurpleHeader}>
-        Regal Integration for CAESAR
+        Send courses to CAESAR using Regal
       </h1>
       <div style={style.divideTwo}>
         <img style={style.regalLogo} src={regalLogo} alt="Regal Logo" />
         <div style={style.blurbs}>
           <h3>Using Google Chrome?</h3>
-          <h3>Install <a href="http://bit.ly/regalnu">Regal</a> and add your Serif.nu courses to CAESAR with one click.</h3>
+          <h3>Install <a href="http://bit.ly/regalnu">Regal</a> and send your Serif.nu courses to CAESAR with one click.</h3>
+          <div style={style.learnMoreButtonWrapper}>
+            <Link style={style.learnMoreButton} to="/regal"><RaisedButton label="Learn More" primary /></Link>
+          </div>
         </div>
       </div>
     </div>
