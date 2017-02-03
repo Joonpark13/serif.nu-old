@@ -168,8 +168,11 @@ class CalendarHeader extends React.Component {
   handleRegal() {
     const data = this.props.sections.map(section => {
       const component = this.props.components.find(comp => comp.get('id') === section.get('id'));
+      console.log(section.toJS());
       return fromJS({
         id: section.get('id'),
+        time: section.getIn(['meeting_time', 0]),
+        topic: section.get('topic'),
         name: `${section.get('subject')} ${section.get('course')}`,
         component
       });
