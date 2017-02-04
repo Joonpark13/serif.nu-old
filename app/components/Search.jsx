@@ -10,7 +10,6 @@ const Search = ({ currentTerm, searchData, onSelect }) => (
   <AutoComplete
     hintText="Search for classes"
     dataSource={searchData}
-    // maxSearchResults={12}
     filter={combineFilters}
     fullWidth
     onNewRequest={(chosenRequest, index) => {

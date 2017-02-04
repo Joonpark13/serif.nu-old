@@ -17,9 +17,9 @@ function snackbar(state = initialSnackbar, action) {
     case 'REMOVE':
       return state.set('open', true).set('message', 'Class removed.');
     case 'ADD_CALENDAR':
-      return state.set('open', true).set('message', 'Calendar added.');
+      return state.set('open', true).set('message', 'Schedule added.');
     case 'REMOVE_CALENDAR':
-      return state.set('open', true).set('message', 'Calendar removed.');
+      return state.set('open', true).set('message', 'Schedule removed.');
     case 'REMOVE_ALL':
       return state.set('open', true).set('message', 'All classes removed.');
     case 'GOOGLE_CALENDAR':

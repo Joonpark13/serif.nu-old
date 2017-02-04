@@ -53,7 +53,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(changeCalendar(calId));
   },
   removeCalendar: () => {
-      dispatch(removeCalendar());
+    dispatch(removeCalendar());
   }
 });
 
