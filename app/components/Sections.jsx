@@ -68,6 +68,7 @@ const Sections = ({
             }}
           >
             <h4 style={style.title}>{`Section ${section.section}`}</h4>
+            {section.topic && <p>{section.topic}</p>}
             <p style={style.bodyText}>{section.meeting_time}</p>
             <p style={style.bodyText}>{section.location}</p>
             <p style={style.bodyText}>{section.instructor.join(', ')}</p>
@@ -94,7 +95,8 @@ Sections.propTypes = {
   checkComponents: React.PropTypes.func.isRequired,
   addCourse: React.PropTypes.func.isRequired,
   addCourseHover: React.PropTypes.func,
-  removeHover: React.PropTypes.func
+  removeHover: React.PropTypes.func,
+  currentCalendar: React.PropTypes.number
 };
 
 export default Sections;
