@@ -25,8 +25,16 @@ const style = {
   title: {
     marginTop: 0
   },
+  disabledTitle: {
+    marginTop: 0,
+    opacity: 0.35
+  },
   bodyText: {
     fontSize: 'small'
+  },
+  disabledBodyText: {
+    fontSize: 'small',
+    opacity: 0.35
   },
   checkbox: {
     paddingLeft: '5px'
@@ -93,11 +101,11 @@ export default class Sections extends React.Component {
                   removeHover(section.id);
                 }}
               >
-                <h4 style={style.title}>{`Section ${section.section}`}</h4>
-                {section.topic && <p>{section.topic}</p>}
-                <p style={style.bodyText}>{section.meeting_time}</p>
-                <p style={style.bodyText}>{section.location}</p>
-                <p style={style.bodyText}>{section.instructor.join(', ')}</p>
+                <h4 style={inCal ? style.disabledTitle : style.title}>{`Section ${section.section}`}</h4>
+                {section.topic && inCal ? <p style={{ opacity: 0.35 }}>{section.topic}</p> : <p>{section.topic}</p>}
+                <p style={inCal ? style.disabledBodyText : style.bodyText}>{section.meeting_time}</p>
+                <p style={inCal ? style.disabledBodyText : style.bodyText}>{section.location}</p>
+                <p style={inCal ? style.disabledBodyText : style.bodyText}>{section.instructor.join(', ')}</p>
                 {this.state.checkboxOpen && <p style={style.bodyText}>{courseDesc}</p>}
               </ListItem>
             );
