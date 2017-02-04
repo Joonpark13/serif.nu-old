@@ -155,7 +155,7 @@ function calendar(state = initialCalendar, action, currentTerm) {
       if (hasNewSchedule) {
         currentTermCalendars.forEach(cal => {
           const calName = cal.get('name');
-          if (calName.match(/New Schedule \([0-9]+\)/)) {
+          if (calName.match(/^New Schedule \([0-9]+\)$/)) {
             calNumber = parseInt(calName.substring(14, calName.length - 1), 10);
             // Second parameter to parseInt is to indicate base 10
           }
