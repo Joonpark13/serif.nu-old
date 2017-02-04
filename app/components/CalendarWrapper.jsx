@@ -134,7 +134,7 @@ const CalendarWrapper = ({
 
       {selected && ( // Dialog that appears on event select
         <Dialog
-          title={`${selected.subject} ${selected.course} ${selected.name}`}
+          title={`${selected.subject} ${selected.course} ${selected.name} -- Section ${selected.section}`}
           actions={actions}
           open={eventOpen}
           onRequestClose={() => closeDialog()}

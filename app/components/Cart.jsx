@@ -67,7 +67,7 @@ const Cart = ({
               <Card style={style.card}>
                 <CardHeader
                   title={section.get('name')}
-                  subtitle={`${section.get('subject')} ${section.get('course')}`}
+                  subtitle={`${section.get('subject')} ${section.get('course')} - Section ${section.get('section')}`}
                   actAsExpander
                   showExpandableButton
                 />
