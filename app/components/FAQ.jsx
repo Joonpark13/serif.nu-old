@@ -81,6 +81,13 @@ const FAQ = () => (
         Please report it <Link to="/bug">using this form</Link>.
       </p>
     </div>
+
+    <div style={style.question}>
+      <h3>I'd like to adapt Serif.nu for scheduling courses at another university. How can I do that?</h3>
+      <p>
+        Please <Link to="/contact">contact us through email</Link> - we'd be happy to help.
+      </p>
+    </div>
   </div>
 );
 

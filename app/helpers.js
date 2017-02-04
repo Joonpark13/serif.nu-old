@@ -113,7 +113,9 @@ export const parseSection = (section) => {
     if (!section) return null;
     return {
         id: section.get('id'),
-        title: section.get('name'),
+        // Use topic as calendar event's name if topic is not empty string
+        // This is for courses such as Special Topics in Theatre or Special Topics in EECS
+        title: section.get('topic') ? section.get('topic') : section.get('name'),
         ...parseMeetingTime(section.get('meeting_time').get(0))
     };
 };

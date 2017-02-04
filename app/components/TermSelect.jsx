@@ -1,5 +1,4 @@
 import React from 'react';
-import CircularProgress from 'material-ui/CircularProgress';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import FontIcon from 'material-ui/FontIcon';
@@ -23,49 +22,61 @@ const style = {
   }
 };
 
-export default class TermSelect extends React.Component {
-  render() {
-    // filteredTerm will be an undefined upon initalizing,
-    // and will be object with matching id when populated
-    const filteredTerm = this.props.terms.filter(matchId(this.props.currentTerm))[0];
+const TermSelect = ({
+  terms,
+  currentTerm,
+  calendars,
+  currentCalendar,
+  changeTerm,
+  changeCalendar,
+  onlyCalendar,
+  removeCalendar,
+  addCalendar
+}) => {
+  // filteredTerm will be an undefined upon initalizing,
+  // and will be object with matching id when populated
+  const filteredTerm = terms.filter(matchId(currentTerm))[0];
+  const filteredName = calendars.filter(matchId(currentCalendar))[0];
 
-    const filteredName = this.props.calendars.filter(matchId(this.props.currentCalendar))[0];
-    return (
-      <div style={style.wrapper}>
-        {/* TODO: Implement CircularProgress */}
-        {this.props.terms && this.props.currentTerm &&
+  return (
+    <div style={style.wrapper}>
+      {terms && currentTerm &&
+        <DropDown
+          promptText="Term"
+          displayValue={filteredTerm}
+          items={terms}
+          primaryTextValue="term"
+          onSelect={(term) => changeTerm(term.id)}
+        />
+      }
+      <FontIcon className="material-icons">chevron_right</FontIcon>
+      <div style={style.calendar}>
+        {filteredName &&
           <DropDown
-            promptText="Term"
-            displayValue={filteredTerm}
-            items={this.props.terms}
-            primaryTextValue="term"
-            onSelect={(term) => this.props.changeTerm(term.id)}
+            promptText="Calendar"
+            displayValue={filteredName}
+            items={calendars}
+            primaryTextValue="name"
+            onSelect={(calendar) => changeCalendar(calendar.id)}
+            deleteButton={!onlyCalendar} // If there is only one calendar, do not show delete button
+            deleteCallback={removeCalendar}
+            deleteLabel="Delete Schedule"
+            deleteMessage="Are you sure you want to delete this schedule?"
+            deleteTitle="Confirm Schedule Delete"
           />
         }
-        <FontIcon className="material-icons">chevron_right</FontIcon>
-        <div style={style.calendar}>
-          {filteredName &&
-            <DropDown
-              promptText="Calendar"
-              displayValue={filteredName}
-              items={this.props.calendars}
-              primaryTextValue="name"
-              onSelect={(calendar) => this.props.changeCalendar(calendar.id)}
-            />
-          }
-          <FloatingActionButton
-            mini
-            secondary
-            onTouchTap={() => this.props.addCalendar()}
-            style={style.add}
-          >
-            <ContentAdd />
-          </FloatingActionButton>
-        </div>
+        <FloatingActionButton
+          mini
+          secondary
+          onTouchTap={() => addCalendar()}
+          style={style.add}
+        >
+          <ContentAdd />
+        </FloatingActionButton>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 TermSelect.propTypes = {
   terms: React.PropTypes.arrayOf(React.PropTypes.object),
@@ -74,5 +85,9 @@ TermSelect.propTypes = {
   calendars: React.PropTypes.arrayOf(React.PropTypes.object),
   currentCalendar: React.PropTypes.number,
   changeCalendar: React.PropTypes.func,
-  addCalendar: React.PropTypes.func
+  addCalendar: React.PropTypes.func,
+  removeCalendar: React.PropTypes.func,
+  onlyCalendar: React.PropTypes.bool
 };
+
+export default TermSelect;

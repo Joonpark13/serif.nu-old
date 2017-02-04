@@ -32,8 +32,8 @@ const style = {
     paddingRight: 0,
     paddingLeft: 0
   },
-  browse: {
-    maxHeight: '675px',
+  tabs: {
+    maxHeight: '685px', // Sum of the height of calendar, empty unscheduled courses, and whitespace in between
     overflow: 'scroll',
     position: 'relative', // Necessary for z-index
     zIndex: 2
@@ -46,14 +46,6 @@ const style = {
     right: 0,
     top: 0,
     zIndex: 1
-  },
-  search: {
-    position: 'relative', // Necessary for z-index
-    zIndex: 2
-  },
-  cart: {
-    position: 'relative', // Necessary for z-index
-    zIndex: 2
   },
   buttonBox: {
     display: 'flex',
@@ -180,7 +172,7 @@ class Serif extends React.Component {
 
               <Tabs value={tabState} onChange={handleTabChange}>
                 <Tab label="Search" value="search">
-                  <Card style={style.search}>
+                  <Card style={style.tabs}>
                     <CardText>
                       <SearchContainer />
                     </CardText>
@@ -188,7 +180,7 @@ class Serif extends React.Component {
                 </Tab>
 
                 <Tab label="Browse" value="browse">
-                  <Card style={style.browse}>
+                  <Card style={style.tabs}>
                     <CardText>
                       <BrowseContainer />
                     </CardText>
@@ -196,7 +188,7 @@ class Serif extends React.Component {
                 </Tab>
 
                 <Tab label="Cart" value="cart">
-                  <Card style={style.cart}>
+                  <Card style={style.tabs}>
                     <CardText>
                       <CartContainer />
                     </CardText>

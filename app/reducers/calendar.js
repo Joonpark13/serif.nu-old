@@ -113,7 +113,7 @@ function calendar(state = initialCalendar, action, currentTerm) {
     case 'FIRST_CALENDAR': {
       // Do nothing if already populated
       let populated = false;
-      state.get('sections').map(term => {
+      state.get('sections').forEach(term => {
         if (term.get('id') === currentTerm) populated = true;
       });
       if (populated) return state;
@@ -123,7 +123,7 @@ function calendar(state = initialCalendar, action, currentTerm) {
           id: currentTerm,
           items: [{
             id: 1,
-            name: 'Calendar 1',
+            name: 'My Schedule',
             data: []
           }]
         })))
@@ -131,18 +131,40 @@ function calendar(state = initialCalendar, action, currentTerm) {
         id: currentTerm,
         items: [{
           id: 1,
-          name: 'Calendar 1',
+          name: 'My Schedule',
           data: []
         }]
       })));
     }
     case 'ADD_CALENDAR': {
       const sections = state.get('sections');
-      const sectionTermObj = sections.find(term => term.get('id') === currentTerm);
-      const newId = sectionTermObj.get('items').last().get('id') + 1;
+      const currentTermCalendars = sections
+        .find(term => term.get('id') === currentTerm)
+        .get('items'); // currentTermCalendars is a list of calendar objects from the current term
+
+      const newId = currentTermCalendars.last().get('id') + 1;
+      // If a schedule with the name "New Schedule" exists, hasNewSchedule will be set to true
+      const hasNewSchedule = currentTermCalendars.findIndex(
+        cal => cal.get('name') === 'New Schedule'
+      ) !== -1;
+
+      // If a schedule with the name "New Schedule" exists",
+      // find the schedules with names in the format of "New Schedule (x)"
+      // where x is an integer, and assign the largest x to calNumber
+      let calNumber = 0;
+      if (hasNewSchedule) {
+        currentTermCalendars.forEach(cal => {
+          const calName = cal.get('name');
+          if (calName.match(/^New Schedule \([0-9]+\)$/)) {
+            calNumber = parseInt(calName.substring(14, calName.length - 1), 10);
+            // Second parameter to parseInt is to indicate base 10
+          }
+        });
+      }
+
       const newCal = fromJS({
         id: newId,
-        name: `Calendar ${newId}`,
+        name: hasNewSchedule ? `New Schedule (${calNumber + 1})` : 'New Schedule',
         data: []
       });
       const newSections = sections.update(

@@ -6,7 +6,6 @@ import { List } from 'immutable';
 
 import '../stylesheets/materialFullCalendar.css';
 import { findSelected } from '../helpers';
-import { northwesternPurple } from '../colors';
 
 export default class Calendar extends React.Component {
   constructor(props) {

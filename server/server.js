@@ -12,7 +12,7 @@ app.listen(port, () => {
 
 const dataPath = '../app/data/';
 
-app.get(['/', '/about', '/faq', '/bug', '/contact', '/tos', '/regal'], (req, res) => {
+app.get(['/', '/about', '/faq', '/bug', '/contact', '/tos', '/acknowledgements'], (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'app', 'index.html'));
 });
 

@@ -9,7 +9,6 @@ import {
     swapComponent,
     showCart,
     setCalendarName,
-    removeCalendar,
     googleCalendar,
     facebookPosted,
     regalSent
@@ -19,7 +18,7 @@ import {
     brightGreen, brightCyan, brightBlue, brightYellow, brightOrange, brightRed,
     darkGreen, darkCyan, darkBlue, darkYellow, darkOrange, darkRed
 } from '../colors';
-import { findCalObj, findData, parseSection, parseComponent } from '../helpers';
+import { findCalObj, findData, parseTime, parseSection, parseComponent } from '../helpers';
 
 const colorArray = [brightGreen, brightOrange, brightBlue, brightYellow, brightCyan, brightRed,
     darkGreen, darkOrange, darkBlue, darkYellow, darkCyan, darkRed
@@ -68,12 +67,6 @@ const getCurrentCalendarName = (sections, currentTerm, currentCalendar) => {
     const cal = findCalObj(sections, currentTerm, currentCalendar);
     if (cal) return cal.get('name');
     return '';
-};
-
-const checkIfOnlyCalendar = (sections, currentTerm) => {
-    const term = sections.find(term => term.get('id') === currentTerm);
-    if (term) return term.get('items').toJS().length === 1;
-    return true;
 };
 
 const findTermObj = (items, currentTerm) => {
@@ -165,7 +158,6 @@ const mapStateToProps = (state) => {
         hoverSection: addHoverColor(parseSection(state.calendar.getIn(['hover', 'section']))),
         hoverComponent: addHoverColor(parseComponent(state.calendar.getIn(['hover', 'component']))),
         currentCalendarName: getCurrentCalendarName(sections, currentTerm, currentCalendar),
-        onlyCalendar: checkIfOnlyCalendar(sections, currentTerm),
         currentTermObj,  // Only for mergeProps
         currentTermName: currentTermObj ? currentTermObj.term : undefined,
         hasRegal: state.hasRegal
@@ -185,9 +177,6 @@ const mapDispatchToProps = (dispatch) => ({
     },
     setCalendarName: (name) => {
         dispatch(setCalendarName(name));
-    },
-    removeCalendar: () => {
-        dispatch(removeCalendar());
     },
     swapComponent: (termId, schoolId, subjectAbbv, courseAbbv, sectionId) => {
         dispatch(fetchDetailsCart(termId, schoolId, subjectAbbv, courseAbbv, sectionId));

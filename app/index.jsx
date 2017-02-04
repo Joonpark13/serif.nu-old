@@ -9,6 +9,7 @@ import ReportBug from './components/ReportBug.jsx';
 import Contact from './components/Contact.jsx';
 import Terms from './components/Terms.jsx';
 import Regal from './components/Regal.jsx';
+import Acknowledgements from './components/Acknowledgements.jsx';
 
 const routes = (
   <Route path="/" component={Layout}>
@@ -19,6 +20,7 @@ const routes = (
     <Route path="/contact" component={Contact} />
     <Route path="/tos" component={Terms} />
     <Route path="/regal" component={Regal} />
+    <Route path="/acknowledgements" component={Acknowledgements} />
   </Route>
 );
 

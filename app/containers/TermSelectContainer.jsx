@@ -1,7 +1,13 @@
 import { connect } from 'react-redux';
 import { List } from 'immutable';
 
-import { changeTerm, firstCalendar, addCalendar, changeCalendar } from '../action-creators';
+import {
+  changeTerm,
+  firstCalendar,
+  addCalendar,
+  changeCalendar,
+  removeCalendar
+} from '../action-creators';
 import TermSelect from '../components/TermSelect.jsx';
 
 const compareTermId = (termA, termB) => (
@@ -17,12 +23,23 @@ const findCalendar = (sections, currentTerm) => {
   return items;
 };
 
-const mapStateToProps = (state) => ({
-  terms: state.terms.terms.items.sort(compareTermId),
-  currentTerm: state.terms.currentTerm,
-  calendars: findCalendar(state.calendar.get('sections'), state.terms.currentTerm).toJS(),
-  currentCalendar: state.calendar.get('currentCalendar')
-});
+const checkIfOnlyCalendar = (sections, currentTerm) => {
+    const term = sections.find(termObj => termObj.get('id') === currentTerm);
+    if (term) return term.get('items').toJS().length === 1;
+    return true;
+};
+
+const mapStateToProps = (state) => {
+  const sections = state.calendar.get('sections');
+  const currentTerm = state.terms.currentTerm;
+  return {
+    terms: state.terms.terms.items.sort(compareTermId),
+    currentTerm: state.terms.currentTerm,
+    calendars: findCalendar(sections, currentTerm).toJS(),
+    currentCalendar: state.calendar.get('currentCalendar'),
+    onlyCalendar: checkIfOnlyCalendar(sections, currentTerm)
+  };
+};
 
 const mapDispatchToProps = (dispatch) => ({
   changeTerm: (termId) => {
@@ -34,6 +51,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   changeCalendar: (calId) => {
     dispatch(changeCalendar(calId));
+  },
+  removeCalendar: () => {
+    dispatch(removeCalendar());
   }
 });
 
