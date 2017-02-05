@@ -2,7 +2,13 @@ import React from 'react';
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import { List, ListItem } from 'material-ui/List';
-import { IndexLink, Link } from 'react-router';
+import { IndexLink, Link, browserHistory } from 'react-router';
+
+const style = {
+  title: {
+    cursor: 'pointer'
+  }
+};
 
 export default class NavBar extends React.Component {
   constructor(props) {
@@ -11,16 +17,25 @@ export default class NavBar extends React.Component {
       open: false
     };
     this.handleToggle = this.handleToggle.bind(this);
+    this.handleTitleTouchTap = this.handleTitleTouchTap.bind(this);
   }
 
   handleToggle() {
     this.setState({ open: !this.state.open });
   }
 
+  handleTitleTouchTap() {
+    browserHistory.push('/'); // Navigate home
+  }
+
   render() {
     return (
       <div>
-        <AppBar onLeftIconButtonTouchTap={this.handleToggle} title="Serif.nu" />
+        <AppBar
+          onLeftIconButtonTouchTap={this.handleToggle}
+          title={<span style={style.title}>Serif.nu</span>}
+          onTitleTouchTap={this.handleTitleTouchTap}
+        />
         <Drawer
           docked={false}
           width={200}
@@ -28,11 +43,6 @@ export default class NavBar extends React.Component {
           onRequestChange={(open) => this.setState({ open })}
         >
           <List>
-            <ListItem
-              containerElement={<IndexLink to="/" />}
-              onTouchTap={this.handleToggle}
-              primaryText="Serif.nu"
-            />
             <ListItem
               containerElement={<Link to="/about" />}
               onTouchTap={this.handleToggle}
