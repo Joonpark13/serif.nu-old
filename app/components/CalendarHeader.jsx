@@ -174,6 +174,7 @@ class CalendarHeader extends React.Component {
         time: section.getIn(['meeting_time', 0]),
         topic: section.get('topic'),
         name: `${section.get('subject')} ${section.get('course')}`,
+        section: section.get('section'),
         component
       });
     });
@@ -185,7 +186,7 @@ class CalendarHeader extends React.Component {
       courses: data.toJS()
     };
 
-    chrome.runtime.sendMessage('kidmdeobbleagbkgmbeocoommcgifloo', request, undefined, response => {
+    chrome.runtime.sendMessage('mkdokopdmkonfilpmjjpdcmedmnhjgie', request, undefined, response => {
       if (response.success) { // Expect a resonse of type { success: true }
         this.props.regalSent();
       }
