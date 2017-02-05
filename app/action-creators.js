@@ -440,16 +440,20 @@ export const receiveRegal = (hasRegal) => ({
 export const fetchRegal = () => (
   function (dispatch) {
     dispatch(requestRegal());
-    return chrome.runtime.sendMessage(
-      'mkdokopdmkonfilpmjjpdcmedmnhjgie',
-      { message: 'installed' },
-      (reply) => {
-        if (reply && reply.installed) {
-          dispatch(receiveRegal(true));
-        } else {
-          dispatch(receiveRegal(false));
+    // http://stackoverflow.com/questions/9847580/how-to-detect-safari-chrome-ie-firefox-and-opera-browser
+    if (!!window.chrome && !!window.chrome.webstore) {
+      return chrome.runtime.sendMessage(
+        'mkdokopdmkonfilpmjjpdcmedmnhjgie',
+        { message: 'installed' },
+        (reply) => {
+          if (reply && reply.installed) {
+            dispatch(receiveRegal(true));
+          } else {
+            dispatch(receiveRegal(false));
+          }
         }
-      }
-    );
+      );
+    }
+    return null;
   }
 );
