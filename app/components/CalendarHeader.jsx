@@ -186,7 +186,7 @@ class CalendarHeader extends React.Component {
       courses: data.toJS()
     };
 
-    chrome.runtime.sendMessage('kidmdeobbleagbkgmbeocoommcgifloo', request, undefined, response => {
+    chrome.runtime.sendMessage('mkdokopdmkonfilpmjjpdcmedmnhjgie', request, undefined, response => {
       if (response.success) { // Expect a resonse of type { success: true }
         this.props.regalSent();
       }
