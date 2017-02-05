@@ -11,9 +11,22 @@ app.listen(port, () => {
 });
 
 const dataPath = '../app/data/';
+const getPaths = ['/', '/about', '/faq', '/bug', '/contact', '/tos', '/acknowledgements'];
+const faviconPaths = [
+    '/favicon.ico',
+    '/apple-touch-icon.png',
+    '/favicon-32x32.png',
+    '/favicon-16x16.png',
+    '/manifest.json',
+    '/safari-pinned-tab.svg'
+];
 
-app.get(['/', '/about', '/faq', '/bug', '/contact', '/tos', '/acknowledgements'], (req, res) => {
+app.get(getPaths, (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'app', 'index.html'));
+});
+
+app.get(faviconPaths, (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'app', 'favicons', req.path));
 });
 
 app.get('/data/terms', (req, res) => {
