@@ -174,6 +174,7 @@ class CalendarHeader extends React.Component {
         time: section.getIn(['meeting_time', 0]),
         topic: section.get('topic'),
         name: `${section.get('subject')} ${section.get('course')}`,
+        section: section.get('section'),
         component
       });
     });
