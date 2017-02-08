@@ -22,6 +22,9 @@ const style = {
   },
   title: {
     marginTop: 0
+  },
+  bodyText: {
+    fontSize: 'small'
   }
 };
 
@@ -53,15 +56,17 @@ const Components = ({
           return (
             <ListItem
               key={index}
-              primaryText={<h4 style={style.title}>{comp.component}</h4>}
-              secondaryText={comp.meeting_time}
               onMouseEnter={() => addComponentHover(formattedComp)}
               onMouseLeave={() => removeHover(comp.id)}
               onTouchTap={() => {
                 addComponent(formattedComp);
                 removeHover(comp.id);
               }}
-            />
+            >
+              <h4 style={style.title}>{comp.component}</h4>
+              <p style={style.bodyText}>{comp.meeting_time}</p>
+              <p style={style.bodyText}>{comp.room}</p>
+            </ListItem>
           );
         })}
       </List>

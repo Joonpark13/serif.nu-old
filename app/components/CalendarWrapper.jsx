@@ -6,7 +6,6 @@ import { List } from 'immutable';
 
 import Calendar from './Calendar.jsx';
 import Unscheduled from './Unscheduled.jsx';
-import { matchId } from '../helpers';
 import CalendarHeader from './CalendarHeader.jsx';
 
 const style = {
@@ -17,6 +16,10 @@ const style = {
     marginTop: '24px'
   }
 };
+
+const matchId = (id) => (
+  (component) => (id === component.get('id'))
+);
 
 const CalendarWrapper = ({
   currentTerm,
@@ -88,7 +91,7 @@ const CalendarWrapper = ({
   if (selectedComponent) actions.push(swapButton);
   actions.push(cancelButton);
 
-  const component = selected ? components.filter(matchId(selected.id))[0] : null;
+  const component = selected ? components.filter(matchId(selected.id)).toJS()[0] : null;
 
   return (
     <div>
