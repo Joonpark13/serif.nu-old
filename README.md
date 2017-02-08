@@ -6,7 +6,8 @@
 #### Simple. Fast. Visual. Course Planning for Northwestern University.
 
 ## Current Status
-The new Serif.nu is currently in *private beta*. There will not be a public beta. Estimated release date is Winter 2017, week 5.
+The new Serif.nu was released on Feb. 6th 2017 and currently resides at https://serif.nu.
+
 This repository is a complete rebuild of the [previous application, Serif](https://github.com/Joonpark13/nuvsc).
 
 ## About
@@ -265,10 +266,3 @@ The complete store is composed as such:
 	
 ### localStorage
 Serif.nu is able to maintain user schedules even if the user closes and re-opens the website. This is because the `calendar` section of the state is stored in the browser's localStorage using [redux-localstorage](https://github.com/elgerlambert/redux-localstorage). See the implementation in `app/store.js`.
-
-## Backlog
-Here is a list of features to be implemented in the future:
-
-* Undo button on the snackbar.
-* Fix a known Firefox bug where the text of the course buttons in browse overflows.
-* The ability to swap sections
