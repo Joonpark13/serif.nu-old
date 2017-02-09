@@ -16,6 +16,7 @@ import SearchContainer from '../containers/SearchContainer.jsx';
 import CalendarContainer from '../containers/CalendarContainer.jsx';
 import BrowseContainer from '../containers/BrowseContainer.jsx';
 import CartContainer from '../containers/CartContainer.jsx';
+import MiscContainer from '../containers/MiscContainer.jsx';
 import {
   changeTab,
   onFirstVisit,
@@ -191,6 +192,14 @@ class Serif extends React.Component {
                   <Card style={style.tabs}>
                     <CardText>
                       <CartContainer />
+                    </CardText>
+                  </Card>
+                </Tab>
+
+                <Tab label="Misc" value="misc">
+                  <Card style={style.tabs}>
+                    <CardText>
+                      <MiscContainer />
                     </CardText>
                   </Card>
                 </Tab>

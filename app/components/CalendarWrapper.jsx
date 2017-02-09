@@ -40,7 +40,8 @@ const CalendarWrapper = ({
   handleAuth,
   facebookPosted,
   regalSent,
-  hasRegal
+  hasRegal,
+  customEvents
 }) => {
   // Separate unschedule courses from scheduled ones
   const unscheduled = [];
@@ -61,8 +62,19 @@ const CalendarWrapper = ({
     else scheduled.push(hoverComponent);
   }
 
-  const selected = selectedEvents.section;
-  const selectedComponent = selectedEvents.component;
+  let selected;
+  let selectedComponent;
+  let selectedType;
+  if (selectedEvents.get('section')) {
+    selectedType = 'coursecomp';
+    selected = selectedEvents.get('section').toJS();
+    if (selectedEvents.get('component')) {
+      selectedComponent = selectedEvents.get('component').toJS();
+    }
+  } else if (selectedEvents.get('customEvent')) {
+    selectedType = 'customEvent';
+    selected = selectedEvents.get('customEvent').toJS();
+  }
   const removeButton = (
     <FlatButton
       label="Remove"
@@ -114,6 +126,7 @@ const CalendarWrapper = ({
             selectEvent={selectEvent}
             sections={sections}
             components={components}
+            customEvents={customEvents}
           />
         </CardText>
       </Card>
@@ -135,7 +148,7 @@ const CalendarWrapper = ({
         </CardText>
       </Card>
 
-      {selected && ( // Dialog that appears on event select
+      {selected && selectedType === 'coursecomp' && ( // Dialog that appears on event select
         <Dialog
           title={`${selected.subject} ${selected.course} ${selected.name} -- Section ${selected.section}`}
           actions={actions}
@@ -158,6 +171,17 @@ const CalendarWrapper = ({
           )}
         </Dialog>
       )}
+      {selected && selectedType === 'customEvent' && ( // Dialog that appears on custom event select
+        <Dialog
+          title={`${selected.eventName}`}
+          actions={actions}
+          open={eventOpen}
+          onRequestClose={() => closeDialog()}
+          autoScrollBodyContent
+        >
+          <p style={style.dialogContent}>This is a custom event you added.</p>
+        </Dialog>
+      )}
     </div>
   );
 };
@@ -173,6 +197,7 @@ CalendarWrapper.propTypes = {
   swapComponent: React.PropTypes.func,
   sections: React.PropTypes.instanceOf(List),
   components: React.PropTypes.instanceOf(List),
+  customEvents: React.PropTypes.instanceOf(List),
   currentCalendarName: React.PropTypes.string,
   setCalendarName: React.PropTypes.func,
   handleAuth: React.PropTypes.func,

@@ -25,6 +25,7 @@ export const initialCalendar = fromJS({
   currentCalendar: 1,
   sections: [],
   components: [],
+  customEvents: [],
   hover: {
     section: null,
     component: null

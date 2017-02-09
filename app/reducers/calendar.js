@@ -29,6 +29,18 @@ const filterClasses = (classes, classId, currentTerm, currentCalendar) => {
   return newClasses;
 };
 
+const filterCustomEvents = (customEvents, id, currentTerm, currentCalendar) => {
+  return customEvents.filter(customEvent => customEvent.get('id') !== id);
+}
+
+// http://stackoverflow.com/questions/6860853/generate-random-string-for-div-id
+const guidGenerator = () => {
+    var S4 = function() {
+       return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+    };
+    return (S4()+"-"+S4());
+};
+
 function calendar(state = initialCalendar, action, currentTerm) {
   switch (action.type) {
     case 'ADD_COURSE':
@@ -65,21 +77,32 @@ function calendar(state = initialCalendar, action, currentTerm) {
       return state.set('components', newComponents);
     }
     case 'REMOVE': {
+      const currentCalendar = state.get('currentCalendar');
       // Take out any matching ids to sectionId in sections
       const newSections = filterClasses(
         state.get('sections'),
         action.sectionId,
         currentTerm,
-        state.get('currentCalendar')
+        currentCalendar
       );
       // Take out any matching ids to sectionId in components
       const newComponents = filterClasses(
         state.get('components'),
         action.sectionId,
         currentTerm,
-        state.get('currentCalendar')
+        currentCalendar
       );
-      return state.set('sections', newSections).set('components', newComponents);
+      // Take out matching id in custom events
+      const newCustomEvents = filterCustomEvents(
+        state.get('customEvents'),
+        action.sectionId,
+        currentTerm,
+        currentCalendar
+      )
+      return state
+        .set('sections', newSections)
+        .set('components', newComponents)
+        .set('customEvents', newCustomEvents);
     }
     case 'SWAP_COMPONENT': {
       // Remove currently selected component
@@ -94,7 +117,7 @@ function calendar(state = initialCalendar, action, currentTerm) {
     case 'SELECT_EVENT':
       return state.set('eventOpen', true).set('selectedEvents', fromJS(action.coursecomps));
     case 'CLOSE_EVENT_DIALOG':
-      return state.set('eventOpen', false);
+      return state.set('eventOpen', false).set('selectedEvents', state.get('selectedEvents').clear());
     case 'ADD_COURSE_HOVER':
       return state.set('hover', Map({
         section: fromJS(action.section),
@@ -266,6 +289,28 @@ function calendar(state = initialCalendar, action, currentTerm) {
             ))
           )
         );
+    }
+    case 'ADD_EVENT': {
+      let id = guidGenerator();
+      let isUnique = true;
+      // Go through list of events and make sure generated key is unique
+      // if not, repeat generating ids until it is
+      do {
+        state.get('customEvents').forEach(customEvent => {
+          if (customEvent.get('id') === id) {
+            isUnique = false;
+          }
+        })
+      } while (!isUnique);
+      return state.set(
+        'customEvents',
+        state.get('customEvents').push(fromJS({
+          id,
+          calendarId: state.get('currentCalendar'),
+          termId: currentTerm,
+          ...action.customEvent
+        }))
+      );
     }
     default:
       return state;

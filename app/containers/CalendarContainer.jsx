@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 import CalendarWrapper from '../components/CalendarWrapper.jsx';
 import {
@@ -51,10 +52,46 @@ const parseComponents = (components, sections) => {
     return events;
 };
 
+const findCustomEvents = (customEvents, currentTerm, currentCalendar) => {
+    // customEvents is an Immutable JS List
+
+    // return customEvents that match the current term and calendar
+    return customEvents.filter(customEvent => 
+        customEvent.get('termId') === currentTerm
+        && customEvent.get('calendarId') === currentCalendar
+    );
+};
+
+const parseCustomEvents = (customEvents) => {
+    // return the customEvents formatted in the Fullcalendar format
+    return customEvents.map(customEvent => {
+        const dow = [];
+        customEvent.get('daysOfWeek').forEach((dayOfWeek, index) => {
+            // daysOfWeek contains a list of five booleans, representing
+            // Monday through Friday. Fullcalendar represents Sunday as 0,
+            // Monday as 1, and so on (hence we add 1 to the index).
+            if (dayOfWeek) dow.push(index + 1);
+        });
+        // parse start and end times
+        const start = moment(customEvent.get('start')).format('kk:mm:00'); // kk for 24 hr format
+        const end = moment(customEvent.get('end')).format('kk:mm:00');
+        return {
+            id: customEvent.get('id'),
+            title: customEvent.get('eventName'),
+            dow,
+            start,
+            end
+        };
+    });
+};
+
 const parseClasses = (calendar, currentTerm, currentCalendar) => {
     let sections = findData(calendar.get('sections'), currentTerm, currentCalendar);
     let components = findData(calendar.get('components'), currentTerm, currentCalendar);
-    return parseSections(sections).concat(parseComponents(components, sections));
+    const customEvents = findCustomEvents(calendar.get('customEvents'), currentTerm, currentCalendar);
+    return parseSections(sections)
+        .concat(parseComponents(components, sections))
+        .concat(parseCustomEvents(customEvents).toJS());
 };
 
 const addHoverColor = (coursecomp) => {
@@ -152,9 +189,10 @@ const mapStateToProps = (state) => {
         currentTerm,
         coursecomps: parseClasses(state.calendar, currentTerm, currentCalendar),
         eventOpen: state.calendar.get('eventOpen'),
-        selectedEvents: state.calendar.get('selectedEvents').toJS(),
+        selectedEvents: state.calendar.get('selectedEvents'),
         sections: findData(sections, currentTerm, currentCalendar),
         components: findData(state.calendar.get('components'), currentTerm, currentCalendar),
+        customEvents: findCustomEvents(state.calendar.get('customEvents'), currentTerm, currentCalendar),
         hoverSection: addHoverColor(parseSection(state.calendar.getIn(['hover', 'section']))),
         hoverComponent: addHoverColor(parseComponent(state.calendar.getIn(['hover', 'component']))),
         currentCalendarName: getCurrentCalendarName(sections, currentTerm, currentCalendar),

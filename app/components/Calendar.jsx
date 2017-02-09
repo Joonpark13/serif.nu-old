@@ -41,7 +41,12 @@ export default class Calendar extends React.Component {
       },
       eventClick: (event) => {
         // Find the corresponding event from the state arrays
-        this.props.selectEvent(findSelected(this.props.sections, this.props.components, event.id));
+        this.props.selectEvent(findSelected(
+          this.props.sections,
+          this.props.components,
+          this.props.customEvents,
+          event.id
+        ));
       }
     });
   }
@@ -54,5 +59,6 @@ Calendar.propTypes = {
   coursecomps: React.PropTypes.arrayOf(React.PropTypes.object),
   selectEvent: React.PropTypes.func,
   sections: React.PropTypes.instanceOf(List),
-  components: React.PropTypes.instanceOf(List)
+  components: React.PropTypes.instanceOf(List),
+  customEvents: React.PropTypes.instanceOf(List)
 };

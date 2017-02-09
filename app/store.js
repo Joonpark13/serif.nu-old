@@ -6,13 +6,14 @@ import { fromJS } from 'immutable';
 
 import { initialCalendar } from './reducers/helpers';
 
-const localStorageVersion = '2';
+const localStorageVersion = '3';
 const setVersion = (state, version) => {
     const subState = {};
     subState[version] = {
         calendar: {
             sections: state.calendar.get('sections'),
             components: state.calendar.get('components'),
+            customEvents: state.calendar.get('customEvents'),
             currentCalendar: state.calendar.get('currentCalendar'),
             hover: initialCalendar.get('hover'),
             eventOpen: initialCalendar.get('eventOpen'),

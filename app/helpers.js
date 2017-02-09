@@ -29,7 +29,7 @@ export const inCalendar = (classes, id, currentTerm, currentCalendar) => {
   return data.toJS().some(coursecomp => coursecomp.id === id);
 };
 
-export const findSelected = (sections, components, id) => {
+export const findSelected = (sections, components, customEvents, id) => {
   // sections and components should be an Immutable List
   const selected = {};
   sections.map(section => {
@@ -37,6 +37,9 @@ export const findSelected = (sections, components, id) => {
   });
   components.map(component => {
     if (component.get('id') === id) selected.component = component.toJS();
+  });
+  customEvents.forEach(customEvent => {
+      if (customEvent.get('id') === id) selected.customEvent = customEvent.toJS();
   });
   return selected;
 };

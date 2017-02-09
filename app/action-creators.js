@@ -457,3 +457,8 @@ export const fetchRegal = () => (
     return null;
   }
 );
+
+export const addEvent = (customEvent) => ({
+  type: 'ADD_EVENT',
+  customEvent
+});
