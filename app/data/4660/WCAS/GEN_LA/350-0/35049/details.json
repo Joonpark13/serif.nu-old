@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 [{"class_mtg_info": [{"meet_t": "TBA", "meet_l": "TBA"}], "school": "WCAS", "enrl_requirement": "", "qtr": "Spring 2017", "name": "35049", "title": "WCAS GEN_LA 350-0-20 Study Abroad Research Program", "class_attributes": "", "section": "35049", "instructors": [{"instructor_phone": "", "instructor_name": "Robin Ann Leephaibul", "instructor_addr": ""}], "topic": "", "course": "350-0", "descriptions": [{"name": "Overview of Class", "value": "Contact the department for further information"}], "lmod": "2/8/17 6:42 PM (CT)", "subject": "GEN_LA"}]
+=======
+[{"class_mtg_info": [{"meet_t": "TBA", "meet_l": "TBA"}], "school": "WCAS", "enrl_requirement": "", "qtr": "Spring 2017", "name": "35049", "title": "WCAS GEN_LA 350-0-20 Study Abroad Research Program", "class_attributes": "", "section": "35049", "instructors": [{"instructor_phone": "", "instructor_name": "Robin Ann Leephaibul", "instructor_addr": ""}], "topic": "", "course": "350-0", "descriptions": [{"name": "Overview of Class", "value": "Contact the department for further information"}], "lmod": "2/9/17 6:43 PM (CT)", "subject": "GEN_LA"}]
+>>>>>>> 550bd7c... Update Spring 2017 data

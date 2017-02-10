@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 [{"class_mtg_info": [{"meet_t": "Th 9:00AM - 12:00PM", "meet_l": "Technological Institute M349"}], "school": "MEAS", "enrl_requirement": "", "qtr": "Spring 2017", "name": "31247", "title": "MEAS CIV_ENV 495-0-32 Selected Topics in Civil Engineering", "class_attributes": "", "section": "31247", "topic": "Data Analytics for Transportation and Urban Infras", "course": "495-0", "descriptions": [{"name": "Overview of Class", "value": "Contact the department for further information"}], "lmod": "2/8/17 6:34 PM (CT)", "subject": "CIV_ENV"}]
+=======
+[{"class_mtg_info": [{"meet_t": "Th 9:00AM - 12:00PM", "meet_l": "Technological Institute M349"}], "school": "MEAS", "enrl_requirement": "", "qtr": "Spring 2017", "name": "31247", "title": "MEAS CIV_ENV 495-0-32 Selected Topics in Civil Engineering", "class_attributes": "", "section": "31247", "topic": "Data Analytics for Transportation and Urban Infras", "course": "495-0", "descriptions": [{"name": "Overview of Class", "value": "Contact the department for further information"}], "lmod": "2/9/17 6:34 PM (CT)", "subject": "CIV_ENV"}]
+>>>>>>> 550bd7c... Update Spring 2017 data
