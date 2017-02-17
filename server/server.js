@@ -11,7 +11,7 @@ app.listen(port, () => {
 });
 
 const dataPath = '../app/data/';
-const getPaths = ['/', '/about', '/faq', '/bug', '/contact', '/tos', '/acknowledgements'];
+const getPaths = ['/', '/about', '/faq', '/bug', '/contact', '/tos', '/regal', '/acknowledgements'];
 const faviconPaths = [
     '/favicon.ico',
     '/apple-touch-icon.png',

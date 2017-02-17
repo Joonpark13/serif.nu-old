@@ -79,7 +79,16 @@ const Browse = (
     removeHover
   }
 ) => {
-  const homeChip = <Chip onTouchTap={() => showSchools()}>All</Chip>;
+  const homeChip = (
+    <Chip
+      onTouchTap={(event) => {
+        event.preventDefault();
+        showSchools();
+      }}
+    >
+      All
+    </Chip>
+  );
   const arrow = <FontIcon className="material-icons">chevron_right</FontIcon>;
   const schoolNav = <Chip onTouchTap={() => showSubjects(currentTerm, selected.school)}>{selected.school}</Chip>;
   const subjectNav = (
