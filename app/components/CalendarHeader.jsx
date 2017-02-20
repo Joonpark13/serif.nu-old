@@ -127,7 +127,7 @@ class CalendarHeader extends React.Component {
       // Write 'Serif.nu' on the bottom right
       ctx.font = '20px Roboto';
       ctx.fillStyle = northwesternPurple;
-      ctx.fillText('Serif.nu', canvas.width - 80, canvas.height - 15);
+      ctx.fillText('https://Serif.nu', canvas.width - 150, canvas.height - 15);
 
       this.setState({ open: true, canvas });
       document.getElementById('screenshot').appendChild(canvas);
