@@ -45,6 +45,7 @@ const Acknowledgements = () => (
         <li>Tushar C.</li>
         <li>Scott B.</li>
         <li>Ryan R.</li>
+        <li>Matt L.</li>
       </ul>
     </div>
 
