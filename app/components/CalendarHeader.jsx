@@ -320,8 +320,6 @@ class CalendarHeader extends React.Component {
 CalendarHeader.propTypes = {
   currentCalendarName: React.PropTypes.string,
   setCalendarName: React.PropTypes.func,
-  removeCalendar: React.PropTypes.func,
-  onlyCalendar: React.PropTypes.bool,
   handleAuth: React.PropTypes.func,
   hasClasses: React.PropTypes.bool,
   currentTermName: React.PropTypes.string,

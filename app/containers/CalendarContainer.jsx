@@ -114,11 +114,13 @@ const addEvents = (type, section, term) => {
     }
     const startTime = parseTime(startTimeStr);
     // startTime format example: 10:00
-    const startTimeFormatted = `${term.start}T${startTime}:00-06:00` // -06:00 indicates UTC-6
+    const startTimeFormatted = `${term.start}T${startTime}:00-05:00`; // -06:00 indicates UTC-6
+    const d = new Date();
+    console.log(d.toISOString());
 
     const endTime = parseTime(endTimeStr);
     // endTime format example: 10:50
-    const endTimeFormatted = `${term.start}T${endTime}:00-06:00`
+    const endTimeFormatted = `${term.start}T${endTime}:00-05:00`;
 
     const endDate = term.end.split('-').join('');
 
