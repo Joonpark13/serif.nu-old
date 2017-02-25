@@ -5,7 +5,6 @@ import {
     selectEvent,
     remove,
     closeEventDialog,
-    fetchDetailsCart,
     swapComponent,
     showCart,
     setCalendarName,
@@ -181,7 +180,6 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch(setCalendarName(name));
     },
     swapComponent: (termId, schoolId, subjectAbbv, courseAbbv, sectionId) => {
-        dispatch(fetchDetailsCart(termId, schoolId, subjectAbbv, courseAbbv, sectionId));
         dispatch(showCart());
         dispatch(closeEventDialog());
         dispatch(swapComponent(schoolId, subjectAbbv, courseAbbv, sectionId));

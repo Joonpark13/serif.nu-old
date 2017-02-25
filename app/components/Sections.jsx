@@ -96,15 +96,15 @@ export default class Sections extends React.Component {
                   }
                 }}
                 onTouchTap={() => {
-                  checkComponents(currentTerm, selected.school, selected.subject, selected.course, section.id);
+                  checkComponents(selected.subject, section.associated_classes);
                   addCourse(section);
                   removeHover(section.id);
                 }}
               >
                 <h4 style={inCal ? style.disabledTitle : style.title}>{`Section ${section.section}`}</h4>
                 {section.topic && inCal ? <p style={{ opacity: 0.35 }}>{section.topic}</p> : <p>{section.topic}</p>}
-                <p style={inCal ? style.disabledBodyText : style.bodyText}>{section.meeting_time}</p>
-                <p style={inCal ? style.disabledBodyText : style.bodyText}>{section.location}</p>
+                <p style={inCal ? style.disabledBodyText : style.bodyText}>{section.class_mtg_info[0].meet_t}</p>
+                <p style={inCal ? style.disabledBodyText : style.bodyText}>{section.class_mtg_info[0].meet_l}</p>
                 <p style={inCal ? style.disabledBodyText : style.bodyText}>{section.instructor.join(', ')}</p>
                 {this.state.checkboxOpen && <p style={style.bodyText}>{courseDesc}</p>}
               </ListItem>

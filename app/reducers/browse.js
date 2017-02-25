@@ -17,8 +17,7 @@ const initialBrowse = {
     schools: initialData,
     subjects: initialData,
     courses: initialData,
-    sections: initialData,
-    details: initialDataDetails
+    sections: initialData
   }
 };
 
@@ -143,24 +142,12 @@ function browse(state = initialBrowse, action) {
           details: initialDataDetails
         }
       };
-    case 'REQUEST_DETAILS':
+    case 'SHOW_COMPONENTS_BROWSE':
       newState = {
-        data: {
-          details: details(state.data.details, action)
-        }
-      };
-      break;
-    case 'RECEIVE_DETAILS':
-      newState = {
-        // If there are components to select, show components
-        // If not, go back to course view
-        currentView: action.details[0].associated_classes ? 'components' : 'courses',
+        currentView: 'components',
         selected: {
-          course: action.details[0].associated_classes ? state.selected.course : '',
-          section: action.details[0].associated_classes ? state.selected.section : ''
-        },
-        data: {
-          details: details(state.data.details, action)
+          course: state.selected.course,
+          section: state.selected.section
         }
       };
       break;

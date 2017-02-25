@@ -13,12 +13,6 @@ export const initialData = {
   items: []
 };
 
-export const initialDataDetails = {
-  isFetching: false,
-  lastUpdated: 0,
-  info: {}
-};
-
 // When modifying calendar initial state, you must also correspondingly
 // modify the persisted state in store.js
 export const initialCalendar = fromJS({
@@ -34,7 +28,7 @@ export const initialCalendar = fromJS({
 });
 
 export function schools(state = {}, action) {
-  switch(action.type) {
+  switch (action.type) {
     case 'REQUEST_SCHOOLS':
       return {
         ...state,
@@ -53,7 +47,7 @@ export function schools(state = {}, action) {
 }
 
 export function subjects(state = {}, action) {
-  switch(action.type) {
+  switch (action.type) {
     case 'REQUEST_SUBJECTS':
       return {
         ...state,
@@ -72,7 +66,7 @@ export function subjects(state = {}, action) {
 }
 
 export function courses(state = {}, action) {
-  switch(action.type) {
+  switch (action.type) {
     case 'REQUEST_COURSES':
       return {
         ...state,
@@ -91,7 +85,7 @@ export function courses(state = {}, action) {
 }
 
 export function sections(state = {}, action) {
-  switch(action.type) {
+  switch (action.type) {
     case 'REQUEST_SECTIONS':
     case 'REQUEST_SECTIONS_SEARCH':
       return {
@@ -111,31 +105,8 @@ export function sections(state = {}, action) {
   }
 }
 
-export function details(state = {}, action) {
-  switch(action.type) {
-    case 'REQUEST_DETAILS':
-    case 'REQUEST_DETAILS_SEARCH':
-    case 'REQUEST_DETAILS_CART':
-      return {
-        ...state,
-        isFetching: true
-      };
-    case 'RECEIVE_DETAILS':
-    case 'RECEIVE_DETAILS_SEARCH':
-    case 'RECEIVE_DETAILS_CART':
-      return {
-        ...state,
-        isFetching: false,
-        info: action.details[0],
-        lastUpdated: action.receivedAt
-      };
-    default:
-      return state;
-  }
-}
-
 export function searchHandler(state = {}, action) {
-  switch(action.type) {
+  switch (action.type) {
     case 'REQUEST_SEARCH_DATA':
       return {
         ...state,
