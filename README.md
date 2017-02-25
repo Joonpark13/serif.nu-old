@@ -19,7 +19,7 @@ Serif.nu is built with [React](https://facebook.github.io/react/), [React Router
 	git clone https://github.com/Joonpark13/serif.nu.git
 	npm install
 
-## Compiling and Running Locally
+## Bulding and Running Locally
 For development, run:
 
 	npm run dev
