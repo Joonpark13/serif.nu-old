@@ -13,7 +13,8 @@ const style = {
     paddingLeft: '5px',
     paddingRight: '5px',
     fontWeight: 'bold',
-    marginRight: '10px'
+    marginRight: '10px',
+    overflow: 'hidden'
   }
 };
 
