@@ -32,7 +32,7 @@ const calculateHours = (sections, components) => {
       sum += diff * event.dow.length; // Multiply by how many times the class meets per week
     }
   });
-  return sum / 60; // Hours
+  return (sum / 60).toFixed(1); // Hours
 };
 
 const mapStateToProps = (state) => {

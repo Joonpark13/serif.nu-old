@@ -117,7 +117,7 @@ Cart.propTypes = {
   sections: React.PropTypes.instanceOf(List),
   components: React.PropTypes.instanceOf(List),
   swapping: React.PropTypes.bool,
-  hours: React.PropTypes.number,
+  hours: React.PropTypes.string,
   remove: React.PropTypes.func,
   swapComponent: React.PropTypes.func,
   addComponent: React.PropTypes.func,
