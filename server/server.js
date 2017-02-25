@@ -82,9 +82,3 @@ app.get('/data/:term/sections/:school/:subject/:course', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify(result));
 });
-
-app.get('/data/:term/details/:school/:subject/:course/:section', (req, res) => {
-    const result = require(`${dataPath}${req.params.term}/${req.params.school}/${req.params.subject}/${req.params.course}/${req.params.section}/details.json`);
-    res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify(result));
-});

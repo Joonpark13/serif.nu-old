@@ -5,7 +5,6 @@ import {
   remove,
   swapComponent,
   addComponentCart,
-  fetchDetailsCart,
   addComponentHover,
   removeHover,
   removeAll
@@ -49,11 +48,9 @@ const mapStateToProps = (state) => {
   );
   return ({
     currentTerm: state.terms.currentTerm,
-    isFetching: state.cart.data.details.isFetching,
     selected: state.cart.selected,
     sections,
     components,
-    details: state.cart.data.details.info,
     swapping: state.cart.swapping,
     hours: calculateHours(sections, components)
   });
@@ -64,7 +61,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(remove(sectionId));
   },
   swapComponent: (currentTerm, schoolId, subjectAbbv, courseAbbv, sectionId) => {
-    dispatch(fetchDetailsCart(currentTerm, schoolId, subjectAbbv, courseAbbv, sectionId));
     dispatch(swapComponent(schoolId, subjectAbbv, courseAbbv, sectionId));
   },
   addComponent: (detail) => {

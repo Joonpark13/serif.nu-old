@@ -8,9 +8,6 @@
     },
     "globals": {
         "document": true,
-        "React": true,
-        "ReactDOM": true,
-        "$": true,
         "DATA_URL": true,
         "window": true,
         "localStorage": true

@@ -156,8 +156,8 @@ const CalendarWrapper = ({
           onRequestClose={() => closeDialog()}
           autoScrollBodyContent
         >
-          <p style={style.dialogContent}>{selected.meeting_time}</p>
-          <p>{selected.location}</p>
+          <p style={style.dialogContent}>{selected.class_mtg_info[0].meet_t}</p>
+          <p>{selected.class_mtg_info[0].meet_l}</p>
           <p>{selected.instructor.join(', ')}</p>
           {selected.topic && <p>{selected.topic}</p>}
           <p>{selected.overview_of_class}</p>

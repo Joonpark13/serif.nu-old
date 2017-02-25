@@ -4,7 +4,6 @@ import {
   fetchSubjects,
   fetchCourses,
   fetchSections,
-  fetchDetails,
   showSchools,
   showSubjects,
   showCourses,
@@ -13,8 +12,10 @@ import {
   addComponent,
   addCourseHover,
   addComponentHover,
-  removeHover
+  removeHover,
+  showComponentsBrowse
 } from '../action-creators';
+import { findData } from '../helpers';
 import Browse from '../components/Browse.jsx';
 
 const mapStateToProps = (state) => ({
@@ -25,13 +26,11 @@ const mapStateToProps = (state) => ({
   isFetching: state.browse.data.schools.isFetching ||
     state.browse.data.subjects.isFetching ||
     state.browse.data.courses.isFetching ||
-    state.browse.data.sections.isFeting ||
-    state.browse.data.details.isFetching,
+    state.browse.data.sections.isFetching,
   schools: state.browse.data.schools.items,
   subjects: state.browse.data.subjects.items,
   courses: state.browse.data.courses.items,
   sections: state.browse.data.sections.items,
-  details: state.browse.data.details.info,
   calendar: state.calendar
 });
 
@@ -51,8 +50,9 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(fetchSections(currentTerm, schoolId, subjectAbbv, courseAbbv));
     dispatch(showSections(courseAbbv));
   },
-  checkComponents: (currentTerm, schoolId, subjectAbbv, courseAbbv, sectionId) => {
-    dispatch(fetchDetails(currentTerm, schoolId, subjectAbbv, courseAbbv, sectionId));
+  checkComponents: (subjectAbbv, associatedClasses) => {
+    if (associatedClasses) dispatch(showComponentsBrowse());
+    else dispatch(showCourses(subjectAbbv));
   },
   addCourse: (section) => {
     dispatch(addCourse(section));

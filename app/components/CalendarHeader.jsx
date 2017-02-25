@@ -127,7 +127,7 @@ class CalendarHeader extends React.Component {
       // Write 'Serif.nu' on the bottom right
       ctx.font = '20px Roboto';
       ctx.fillStyle = northwesternPurple;
-      ctx.fillText('Serif.nu', canvas.width - 80, canvas.height - 15);
+      ctx.fillText('https://Serif.nu', canvas.width - 150, canvas.height - 15);
 
       this.setState({ open: true, canvas });
       document.getElementById('screenshot').appendChild(canvas);
@@ -170,7 +170,7 @@ class CalendarHeader extends React.Component {
       const component = this.props.components.find(comp => comp.get('id') === section.get('id'));
       return fromJS({
         id: section.get('id'),
-        time: section.getIn(['meeting_time', 0]),
+        time: section.getIn(['class_mtg_info', 0, 'meet_t']),
         topic: section.get('topic'),
         name: `${section.get('subject')} ${section.get('course')}`,
         section: section.get('section'),
@@ -320,8 +320,6 @@ class CalendarHeader extends React.Component {
 CalendarHeader.propTypes = {
   currentCalendarName: React.PropTypes.string,
   setCalendarName: React.PropTypes.func,
-  removeCalendar: React.PropTypes.func,
-  onlyCalendar: React.PropTypes.bool,
   handleAuth: React.PropTypes.func,
   hasClasses: React.PropTypes.bool,
   currentTermName: React.PropTypes.string,

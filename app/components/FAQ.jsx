@@ -88,6 +88,14 @@ const FAQ = () => (
         Please <Link to="/contact">contact us through email</Link> - we'd be happy to help.
       </p>
     </div>
+
+    <div style={style.question}>
+      <h3>Is there a mobile version?</h3>
+      <p>
+        Currently, Serif.nu is best viewed on a laptop or desktop screen. However, enhancements for mobile
+        screens are in the works!
+      </p>
+    </div>
   </div>
 );
 

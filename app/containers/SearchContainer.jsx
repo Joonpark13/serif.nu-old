@@ -2,7 +2,6 @@ import { connect } from 'react-redux';
 
 import SearchWrapper from '../components/SearchWrapper.jsx';
 import {
-  fetchDetailsSearch,
   addCourseSearch,
   populateSelected,
   fetchSectionsSearch,
@@ -10,7 +9,8 @@ import {
   addCourseHover,
   addComponentHover,
   removeHover,
-  showSearch
+  showSearch,
+  showComponentsSearch
 } from '../action-creators';
 
 const mapStateToProps = state => ({
@@ -21,7 +21,6 @@ const mapStateToProps = state => ({
   currentView: state.search.currentView,
   selected: state.search.selected,
   sections: state.search.data.sections.items,
-  details: state.search.data.details.info,
   calendar: state.calendar
 });
 
@@ -30,8 +29,9 @@ const mapDispatchToProps = dispatch => ({
     dispatch(populateSelected(schoolId, subjectAbbv, courseAbbv));
     dispatch(fetchSectionsSearch(currentTerm, schoolId, subjectAbbv, courseAbbv));
   },
-  checkComponents: (currentTerm, schoolId, subjectAbbv, courseAbbv, sectionId) => {
-    dispatch(fetchDetailsSearch(currentTerm, schoolId, subjectAbbv, courseAbbv, sectionId));
+  checkComponents: (subjectAbbv, associatedClasses) => {
+    if (associatedClasses) dispatch(showComponentsSearch());
+    else dispatch(showSearch());
   },
   addCourse: (section) => {
     dispatch(addCourseSearch(section));

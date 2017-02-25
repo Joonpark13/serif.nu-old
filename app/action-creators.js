@@ -177,74 +177,13 @@ export function fetchSectionsSearch(currentTerm, schoolId, subjectAbbv, courseAb
   };
 }
 
-export function requestDetails() {
-  return {
-    type: 'REQUEST_DETAILS'
-  };
-}
+export const showComponentsSearch = () => ({
+  type: 'SHOW_COMPONENTS_SEARCH'
+});
 
-export function receiveDetails(json) {
-  return {
-    type: 'RECEIVE_DETAILS',
-    details: json,
-    receivedAt: Date.now()
-  };
-}
-
-export function fetchDetails(currentTerm, schoolId, subjectAbbv, courseAbbv, sectionId) {
-  return function (dispatch) {
-    dispatch(requestDetails());
-    return fetch(`/data/${currentTerm}/details/${schoolId}/${subjectAbbv}/${courseAbbv}/${sectionId}`)
-      .then(response => response.json())
-      .then(json => dispatch(receiveDetails(json)));
-  };
-}
-
-export function requestDetailsSearch() {
-  return {
-    type: 'REQUEST_DETAILS_SEARCH'
-  };
-}
-
-export function receiveDetailsSearch(json) {
-  return {
-    type: 'RECEIVE_DETAILS_SEARCH',
-    details: json,
-    receivedAt: Date.now()
-  };
-}
-
-export function fetchDetailsSearch(currentTerm, schoolId, subjectAbbv, courseAbbv, sectionId) {
-  return function (dispatch) {
-    dispatch(requestDetailsSearch());
-    return fetch(`/data/${currentTerm}/details/${schoolId}/${subjectAbbv}/${courseAbbv}/${sectionId}`)
-      .then(response => response.json())
-      .then(json => dispatch(receiveDetailsSearch(json)));
-  };
-}
-
-export function requestDetailsCart() {
-  return {
-    type: 'REQUEST_DETAILS_CART'
-  };
-}
-
-export function receiveDetailsCart(json) {
-  return {
-    type: 'RECEIVE_DETAILS_CART',
-    details: json,
-    receivedAt: Date.now()
-  };
-}
-
-export function fetchDetailsCart(currentTerm, schoolId, subjectAbbv, courseAbbv, sectionId) {
-  return function (dispatch) {
-    dispatch(requestDetailsCart());
-    return fetch(`/data/${currentTerm}/details/${schoolId}/${subjectAbbv}/${courseAbbv}/${sectionId}`)
-      .then(response => response.json())
-      .then(json => dispatch(receiveDetailsCart(json)));
-  };
-}
+export const showComponentsBrowse = () => ({
+  type: 'SHOW_COMPONENTS_BROWSE'
+});
 
 export function requestSearchData() {
   return {

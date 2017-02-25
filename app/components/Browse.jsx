@@ -65,7 +65,6 @@ const Browse = (
     subjects,
     courses,
     sections,
-    details,
     calendar,
     showSchools,
     showSubjects,
@@ -254,7 +253,6 @@ const Browse = (
           <Components
             sections={sections}
             selected={selected}
-            details={details}
             addComponent={addComponent}
             addComponentHover={addComponentHover}
             removeHover={removeHover}
@@ -278,7 +276,6 @@ Browse.propTypes = {
   subjects: React.PropTypes.arrayOf(React.PropTypes.object),
   courses: React.PropTypes.arrayOf(React.PropTypes.object),
   sections: React.PropTypes.arrayOf(React.PropTypes.object),
-  details: React.PropTypes.object,
   showSchools: React.PropTypes.func.isRequired,
   showSubjects: React.PropTypes.func.isRequired,
   showCourses: React.PropTypes.func.isRequired,
