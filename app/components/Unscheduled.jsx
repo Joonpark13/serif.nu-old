@@ -17,9 +17,9 @@ const style = {
   }
 };
 
-const Unscheduled = ({ id, title, color, sections, components, selectEvent }) => {
+const Unscheduled = ({ id, title, color, sections, components, selectEvent, customEvents }) => {
   // Find the corresponding event from the state arrays
-  const selected = findSelected(sections, components, id);
+  const selected = findSelected(sections, components, customEvents, id);
   return (
     <Paper
       style={{ backgroundColor: color, ...style.paper }}

@@ -4,7 +4,8 @@
         "indent": 1,
         "react/jsx-indent": 1,
         "react/jsx-indent-props": 1,
-        "comma-dangle": ["warn", "never"]
+        "comma-dangle": ["warn", "never"],
+        "arrow-parens": ["warn", "as-needed"]
     },
     "globals": {
         "document": true,

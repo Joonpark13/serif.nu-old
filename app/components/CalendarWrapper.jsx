@@ -143,6 +143,7 @@ const CalendarWrapper = ({
               sections={sections}
               components={components}
               selectEvent={selectEvent}
+              customEvents={customEvents}
             />
           ))}
         </CardText>
