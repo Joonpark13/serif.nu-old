@@ -13,7 +13,7 @@ import {
   addCourseHover,
   addComponentHover,
   removeHover,
-  showComponents
+  showComponentsBrowse
 } from '../action-creators';
 import { findData } from '../helpers';
 import Browse from '../components/Browse.jsx';
@@ -51,7 +51,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(showSections(courseAbbv));
   },
   checkComponents: (subjectAbbv, associatedClasses) => {
-    if (associatedClasses) dispatch(showComponents());
+    if (associatedClasses) dispatch(showComponentsBrowse());
     else dispatch(showCourses(subjectAbbv));
   },
   addCourse: (section) => {

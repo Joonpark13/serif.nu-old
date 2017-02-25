@@ -10,8 +10,7 @@ import {
   addComponentHover,
   removeHover,
   showSearch,
-  showComponents,
-  showCourses
+  showComponentsSearch
 } from '../action-creators';
 
 const mapStateToProps = state => ({
@@ -31,7 +30,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(fetchSectionsSearch(currentTerm, schoolId, subjectAbbv, courseAbbv));
   },
   checkComponents: (subjectAbbv, associatedClasses) => {
-    if (associatedClasses) dispatch(showComponents());
+    if (associatedClasses) dispatch(showComponentsSearch());
     else dispatch(showSearch());
   },
   addCourse: (section) => {

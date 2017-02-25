@@ -177,8 +177,12 @@ export function fetchSectionsSearch(currentTerm, schoolId, subjectAbbv, courseAb
   };
 }
 
-export const showComponents = () => ({
-  type: 'SHOW_COMPONENTS',
+export const showComponentsSearch = () => ({
+  type: 'SHOW_COMPONENTS_SEARCH'
+});
+
+export const showComponentsBrowse = () => ({
+  type: 'SHOW_COMPONENTS_BROWSE'
 });
 
 export function requestSearchData() {

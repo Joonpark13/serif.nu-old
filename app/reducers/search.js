@@ -54,7 +54,7 @@ function search(state = initialSearch, action) {
           details: state.data.details
         }
       };
-    case 'SHOW_COMPONENTS':
+    case 'SHOW_COMPONENTS_SEARCH':
       newState = {
         currentView: 'components'
       };

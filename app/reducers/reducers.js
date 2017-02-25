@@ -7,7 +7,8 @@ import snackbar from './snackbar';
 
 function selectingComponent(state = false, action) {
   switch (action.type) {
-    case 'SHOW_COMPONENTS':
+    case 'SHOW_COMPONENTS_SEARCH':
+    case 'SHOW_COMPONENTS_BROWSE':
     case 'SWAP_COMPONENT':
       return true;
     case 'ADD_COMPONENT':

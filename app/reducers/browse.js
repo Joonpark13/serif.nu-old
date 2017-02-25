@@ -142,7 +142,7 @@ function browse(state = initialBrowse, action) {
           details: initialDataDetails
         }
       };
-    case 'SHOW_COMPONENTS':
+    case 'SHOW_COMPONENTS_BROWSE':
       newState = {
         currentView: 'components',
         selected: {
