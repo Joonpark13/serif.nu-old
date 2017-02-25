@@ -54,25 +54,9 @@ function search(state = initialSearch, action) {
           details: state.data.details
         }
       };
-    case 'REQUEST_DETAILS_SEARCH':
+    case 'SHOW_COMPONENTS':
       newState = {
-        data: {
-          details: details(state.data.details, action)
-        }
-      };
-      break;
-    case 'RECEIVE_DETAILS_SEARCH':
-      newState = {
-        // If there are components to select, show components
-        // If not, go back to course view
-        currentView: action.details[0].associated_classes ? 'components' : 'search',
-        selected: {
-          course: action.details[0].associated_classes ? state.selected.course : '',
-          section: action.details[0].associated_classes ? state.selected.section : ''
-        },
-        data: {
-          details: details(state.data.details, action)
-        }
+        currentView: 'components'
       };
       break;
     case 'REQUEST_SEARCH_DATA':
@@ -81,7 +65,7 @@ function search(state = initialSearch, action) {
         data: {
           autocomplete: searchHandler(state.data.autocomplete, action),
         },
-        currentView: state.currentView,
+        currentView: state.currentView
       };
       break;
     case 'POPULATE_SELECTED':

@@ -1,6 +1,5 @@
 import React from 'react';
 import { List, ListItem } from 'material-ui/List';
-import FlatButton from 'material-ui/FlatButton';
 
 const style = {
   headings: {
@@ -29,17 +28,16 @@ const style = {
 };
 
 const Components = ({
-  sections,
   selected,
-  details,
+  sections,
   addComponent,
   addComponentHover,
   removeHover
 }) => {
-  let sectionTitle = '';
+  let selectedSection = '';
   sections.forEach((section) => {
     if (section.id === selected.section) {
-      sectionTitle = section.name;
+      selectedSection = section;
     }
   });
   return (
@@ -47,10 +45,10 @@ const Components = ({
       <h3 style={style.headings}>Choose a component:</h3>
 
       <List>
-        {details.associated_classes.map((comp, index) => {
+        {selectedSection && selectedSection.associated_classes.map((comp, index) => {
           const formattedComp = {
             id: selected.section,
-            title: `${sectionTitle} ${comp.component}`,
+            title: `${selectedSection.name} ${comp.component}`,
             ...comp
           };
           return (
@@ -82,24 +80,9 @@ Components.propTypes = {
     course: React.PropTypes.string,
     section: React.PropTypes.string
   }).isRequired,
-  details: React.PropTypes.shape({
-    _id: React.PropTypes.string,
-    qtr: React.PropTypes.string,
-    lmod: React.PropTypes.string,
-    name: React.PropTypes.string,
-    title: React.PropTypes.string,
-    topic: React.PropTypes.string,
-    class_mtg_info: React.PropTypes.array,
-    descriptions: React.PropTypes.array,
-    enrl_requirement: React.PropTypes.string,
-    class_attributes: React.PropTypes.string,
-    associated_classes: React.PropTypes.array,
-    school: React.PropTypes.string,
-    subject: React.PropTypes.string,
-    course: React.PropTypes.string,
-    section: React.PropTypes.string
-  }),
-  addComponent: React.PropTypes.func
+  addComponent: React.PropTypes.func,
+  addComponentHover: React.PropTypes.func,
+  removeHover: React.PropTypes.func
 };
 
 export default Components;

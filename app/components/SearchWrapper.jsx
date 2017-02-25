@@ -38,7 +38,6 @@ const SearchWrapper = ({
   currentView,
   selected,
   sections,
-  details,
   calendar,
   checkComponents,
   addCourse,
@@ -87,7 +86,6 @@ const SearchWrapper = ({
         <Components
           selected={selected}
           sections={sections}
-          details={details}
           addComponent={addComponent}
           addComponentHover={addComponentHover}
           removeHover={removeHover}

@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/Joonpark13/serif.nu#readme",
   "devDependencies": {
-    "concurrently": "^3.1.0",
+    "concurrently": "^3.3.0",
     "core-js": "^2.4.1",
     "eslint": "^3.11.1",
     "eslint-config-airbnb": "^13.0.0",
