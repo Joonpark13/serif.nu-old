@@ -20,17 +20,11 @@ Serif.nu is built with [React](https://facebook.github.io/react/), [React Router
 	npm install
 
 ## Compiling and Running Locally
-For development, comment out the following lines in `webpack.config.js`:
-
-                NODE_ENV: JSON.stringify('production')
-and
-
-        new webpack.optimize.UglifyJsPlugin()
-then run
+For development, run:
 
 	npm run dev
 	
-For a production build, leave the two lines as is and run
+For a production build, run
 
 	npm run build
 	npm start

@@ -7,9 +7,9 @@
     "webpack-watch": "webpack -w",
     "express-server": "node ./server/index.js",
     "dev": "concurrently --kill-others \"npm run webpack-watch\" \"npm run express-server\"",
-    "build": "webpack -p",
+    "build": "webpack --config webpack.production.config.js -p",
     "start": "node ./server/index.js",
-    "heroku-postbuild": "webpack -p",
+    "heroku-postbuild": "webpack --config webpack.production.config.js -p",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -66,10 +66,7 @@
     "webpack": "^2.2.1"
   },
   "babel": {
-    "presets": [
-      "es2015",
-      "react"
-    ],
+    "presets": ["es2015", "react"],
     "plugins": [
       "transform-object-rest-spread"
     ]
