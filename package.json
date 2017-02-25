@@ -4,7 +4,7 @@
   "description": "Simple. Fast. Visual. Course Planning for Northwestern University.",
   "main": "index.jsx",
   "scripts": {
-    "webpack-watch": "webpack -w --devtool source-map",
+    "webpack-watch": "webpack -w",
     "express-server": "node ./server/index.js",
     "dev": "concurrently --kill-others \"npm run webpack-watch\" \"npm run express-server\"",
     "build": "webpack -p",

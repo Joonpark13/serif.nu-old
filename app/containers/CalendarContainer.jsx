@@ -79,9 +79,9 @@ const everyTwoInsert = (target, char) => {
 const addEvents = (type, section, term) => {
     // Don't add unschedule classes
     if (type === 'section') {
-        if (startTimeStr = section.getIn(['meeting_time', 0]) === 'TBA') return;
+        if (startTimeStr = section.getIn(['class_mtg_info', 0, 'meet_t']) === 'TBA') return;
     } else if (type === 'component') {
-        if (startTimeStr = section.get('meeting_time') === 'TBA') return;
+        if (startTimeStr = section.getIn(['class_mtg_info', 0, 'meet_t']) === 'TBA') return;
     }
 
     let startTimeStr = '';
@@ -92,12 +92,12 @@ const addEvents = (type, section, term) => {
     let location = '';
     if (type === 'section') {
         // meeting_time[0] format example: MoWeFr 10:00AM - 10:50AM
-        startTimeStr = section.getIn(['meeting_time', 0]).split(' ')[1];
+        startTimeStr = section.getIn(['class_mtg_info', 0, 'meet_t']).split(' ')[1];
         // startTimeStr format example: 10:00AM
-        endTimeStr = section.getIn(['meeting_time', 0]).split(' ')[3];
+        endTimeStr = section.getIn(['class_mtg_info', 0, 'meet_t']).split(' ')[3];
         // endTimeStr format example: 10:50AM
         summary = section.get('name');
-        days = everyTwoInsert(section.getIn(['meeting_time', 0]).split(' ')[0].toUpperCase(), ',');
+        days = everyTwoInsert(section.getIn(['class_mtg_info', 0, 'meet_t']).split(' ')[0].toUpperCase(), ',');
         description = section.get('overview_of_class');
         location = section.get('location');
     } else if (type === 'component') {
@@ -115,7 +115,6 @@ const addEvents = (type, section, term) => {
     // startTime format example: 10:00
     const startTimeFormatted = `${term.start}T${startTime}:00-05:00`; // -06:00 indicates UTC-6
     const d = new Date();
-    console.log(d.toISOString());
 
     const endTime = parseTime(endTimeStr);
     // endTime format example: 10:50
