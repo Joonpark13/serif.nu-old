@@ -35,7 +35,7 @@ const style = {
   },
   tabs: {
     maxHeight: '685px', // Sum of the height of calendar, empty unscheduled courses, and whitespace in between
-    overflow: 'scroll',
+    overflow: 'auto',
     position: 'relative', // Necessary for z-index
     zIndex: 2
   },
