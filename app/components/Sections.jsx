@@ -79,7 +79,8 @@ export default class Sections extends React.Component {
         <List>
           {sections.map(section => {
             const inCal = inCalendar(calendar.get('sections'), section.id, currentTerm, currentCalendar);
-            const courseDesc = section.overview_of_class ? section.overview_of_class : 'No description available.';
+            const descriptions = section.overview_of_class ? section.overview_of_class.split('<br/>') : ['No description available.'];
+            const courseDesc = descriptions.map((desc, index) => <span key={index}>{desc}<br /></span>);
             return (
               <ListItem
                 key={section.section}
@@ -106,7 +107,7 @@ export default class Sections extends React.Component {
                 <p style={inCal ? style.disabledBodyText : style.bodyText}>{section.class_mtg_info[0].meet_t}</p>
                 <p style={inCal ? style.disabledBodyText : style.bodyText}>{section.class_mtg_info[0].meet_l}</p>
                 <p style={inCal ? style.disabledBodyText : style.bodyText}>{section.instructor.join(', ')}</p>
-                {this.state.checkboxOpen && <p style={style.bodyText}>{courseDesc}</p>}
+                {this.state.checkboxOpen && <p style={inCal ? style.disabledBodyText : style.bodyText}>{courseDesc}</p>}
               </ListItem>
             );
           })}

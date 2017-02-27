@@ -104,6 +104,11 @@ const CalendarWrapper = ({
   actions.push(cancelButton);
 
   const component = selected ? components.filter(matchId(selected.id)).toJS()[0] : null;
+  let courseDesc;
+  if (selected) {
+    const descriptions = selected.overview_of_class ? selected.overview_of_class.split('<br/>') : ['No description available.'];
+    courseDesc = descriptions.map((desc, index) => <span key={index}>{desc}<br /></span>);
+  }
 
   return (
     <div>
@@ -161,7 +166,7 @@ const CalendarWrapper = ({
           <p>{selected.class_mtg_info[0].meet_l}</p>
           <p>{selected.instructor.join(', ')}</p>
           {selected.topic && <p>{selected.topic}</p>}
-          <p>{selected.overview_of_class}</p>
+          {courseDesc && <p>{courseDesc}</p>}
           <p>ID: {selected.id}</p>
           {component && (
             <div>
