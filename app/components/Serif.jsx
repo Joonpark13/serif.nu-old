@@ -197,12 +197,8 @@ class Serif extends React.Component {
                   </Card>
                 </Tab>
 
-                <Tab label="Custom" value="misc">
-                  <Card style={style.tabs}>
-                    <CardText>
-                      <MiscContainer />
-                    </CardText>
-                  </Card>
+                <Tab label="Misc" value="misc">
+                  <MiscContainer />
                 </Tab>
               </Tabs>
             </Col>

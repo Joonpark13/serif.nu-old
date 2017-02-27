@@ -4,6 +4,11 @@ import TimePicker from 'material-ui/TimePicker';
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import moment from 'moment';
+import { List } from 'immutable';
+import { Tabs, Tab } from 'material-ui/Tabs';
+import { Card, CardText } from 'material-ui/Card';
+
+import { northwesternPurple60, northwesternPurple10 } from '../colors';
 
 const style = {
   eventName: {
@@ -26,9 +31,9 @@ const style = {
   timePicker: {
     marginBottom: '10px'
   },
-  button: {
-    float: 'right',
-    marginBottom: '10px'
+  buttonWrapper: {
+    display: 'flex',
+    justifyContent: 'flex-end'
   },
   p: {
     margin: 0
@@ -37,6 +42,12 @@ const style = {
     margin: 0,
     color: 'red',
     width: '150px'
+  },
+  tabLabels: {
+    backgroundColor: northwesternPurple60
+  },
+  inkBar: {
+    backgroundColor: northwesternPurple10
   }
 };
 
@@ -121,91 +132,115 @@ export default class Misc extends React.Component {
     });
   }
   render() {
-    const { addEvent } = this.props;
+    const { addEvent, classMaterials } = this.props;
     return (
-      <div>
-        <h3>Add Custom Events</h3>
+      <Tabs tabItemContainerStyle={style.tabLabels} inkBarStyle={style.inkBar}>
+        <Tab label="Materials">
+          <Card>
+            <CardText>
+              <div>
+                {classMaterials.map(data => {
+                  const materials = data.materials ? data.materials.split('<br/>') : undefined;
+                  return (
+                    <div key={data.name}>
+                      <h4>{data.name}</h4>
+                      <p>{materials ? materials.map((line, index) => <span key={index}>{line}<br /></span>) : 'No materials listed.'}</p>
+                    </div>
+                  );
+                })}
+              </div>
+            </CardText>
+          </Card>
+        </Tab>
 
-        <div style={style.eventName}>
-          <p style={{ display: 'inline-block' }}>Event name:</p>
-          <TextField
-            style={style.eventNameTextField}
-            hintText="Enter event name"
-            value={this.state.eventName}
-            onChange={this.handleEventNameChange}
-          />
-        </div>
+        <Tab label="Custom Events">
+          <Card>
+            <CardText>
+              <div style={style.eventName}>
+                <p style={{ display: 'inline-block' }}>Event name:</p>
+                <TextField
+                  style={style.eventNameTextField}
+                  hintText="Enter event name"
+                  value={this.state.eventName}
+                  onChange={this.handleEventNameChange}
+                />
+              </div>
 
-        <div style={style.optionsMenu}>
-          <div>
-            <Checkbox
-              checked={this.state.daysOfWeek[0]}
-              label="Mon"
-              onCheck={() => this.handleCheck(0)}
-            />
-            <Checkbox
-              checked={this.state.daysOfWeek[1]}
-              label="Tue"
-              onCheck={() => this.handleCheck(1)}
-            />
-            <Checkbox
-              checked={this.state.daysOfWeek[2]}
-              label="Wed"
-              onCheck={() => this.handleCheck(2)}
-            />
-            <Checkbox
-              checked={this.state.daysOfWeek[3]}
-              label="Thu"
-              onCheck={() => this.handleCheck(3)}
-            />
-            <Checkbox
-              checked={this.state.daysOfWeek[4]}
-              label="Fri"
-              onCheck={() => this.handleCheck(4)}
-            />
-          </div>
+              <div style={style.optionsMenu}>
+                <div>
+                  <Checkbox
+                    checked={this.state.daysOfWeek[0]}
+                    label="Mon"
+                    onCheck={() => this.handleCheck(0)}
+                  />
+                  <Checkbox
+                    checked={this.state.daysOfWeek[1]}
+                    label="Tue"
+                    onCheck={() => this.handleCheck(1)}
+                  />
+                  <Checkbox
+                    checked={this.state.daysOfWeek[2]}
+                    label="Wed"
+                    onCheck={() => this.handleCheck(2)}
+                  />
+                  <Checkbox
+                    checked={this.state.daysOfWeek[3]}
+                    label="Thu"
+                    onCheck={() => this.handleCheck(3)}
+                  />
+                  <Checkbox
+                    checked={this.state.daysOfWeek[4]}
+                    label="Fri"
+                    onCheck={() => this.handleCheck(4)}
+                  />
+                </div>
 
-          <div>
-            <p style={style.p} >Start:</p>
-            <TimePicker
-              style={style.timePicker}
-              textFieldStyle={style.timePickerTextField}
-              hintText="Pick a start time"
-              value={this.state.start}
-              onChange={this.handleStart}
-            />
-            <p style={style.p} >End:</p>
-            <TimePicker
-              style={style.timePicker}
-              textFieldStyle={style.timePickerTextField}
-              hintText="Pick an end time"
-              value={this.state.end}
-              onChange={this.handleEnd}
-            />
-            {!this.validTimes() && <p style={style.invalidTime}>You must pick an end time that is later than the start time.</p>}
-            {!this.validStart() && <p style={style.invalidTime}>Start time must be after 8AM.</p>}
-            {!this.validEnd() && <p style={style.invalidTime}>End time must be before 10PM.</p>}
-          </div>
-        </div>
+                <div>
+                  <p style={style.p} >Start:</p>
+                  <TimePicker
+                    style={style.timePicker}
+                    textFieldStyle={style.timePickerTextField}
+                    hintText="Pick a start time"
+                    value={this.state.start}
+                    onChange={this.handleStart}
+                  />
+                  <p style={style.p} >End:</p>
+                  <TimePicker
+                    style={style.timePicker}
+                    textFieldStyle={style.timePickerTextField}
+                    hintText="Pick an end time"
+                    value={this.state.end}
+                    onChange={this.handleEnd}
+                  />
+                  {!this.validTimes() && <p style={style.invalidTime}>You must pick an end time that is later than the start time.</p>}
+                  {!this.validStart() && <p style={style.invalidTime}>Start time must be after 8AM.</p>}
+                  {!this.validEnd() && <p style={style.invalidTime}>End time must be before 10PM.</p>}
+                </div>
+              </div>
 
-        <FlatButton
-          style={style.button}
-          label="Add Event"
-          primary
-          disabled={!this.validValues()} // Prevent submission without valid values
-          onTouchTap={() => {
-            this.setState({
-              ...defaultState,
-              daysOfWeek: [false, false, false, false, false] // avoid deep copy issues
-            });
-            addEvent(this.state);
-          }}
-        />
-      </div>
+              <div style={style.buttonWrapper}>
+                <FlatButton
+                  label="Add Event"
+                  primary
+                  disabled={!this.validValues()} // Prevent submission without valid values
+                  onTouchTap={() => {
+                    this.setState({
+                      ...defaultState,
+                      daysOfWeek: [false, false, false, false, false] // avoid deep copy issues
+                    });
+                    addEvent(this.state);
+                  }}
+                />
+              </div>
+            </CardText>
+          </Card>
+        </Tab>
+      </Tabs>
     );
   }
 }
 
 Misc.propTypes = {
-  addEvent: React.PropTypes.func
+  addEvent: React.PropTypes.func,
+  classMaterials: React.PropTypes.instanceOf(List)
 };
