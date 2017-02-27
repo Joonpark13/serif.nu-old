@@ -139,6 +139,7 @@ export default class Misc extends React.Component {
           <Card>
             <CardText>
               <div>
+                {classMaterials.size === 0 && <h4>Add a class to see materials.</h4>}
                 {classMaterials.map(data => {
                   const materials = data.materials ? data.materials.split('<br/>') : undefined;
                   return (
