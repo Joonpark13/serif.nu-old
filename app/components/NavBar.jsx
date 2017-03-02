@@ -44,6 +44,11 @@ export default class NavBar extends React.Component {
         >
           <List>
             <ListItem
+              containerElement={<IndexLink to="/" />}
+              onTouchTap={this.handleToggle}
+              primaryText="Serif.nu"
+            />
+            <ListItem
               containerElement={<Link to="/about" />}
               onTouchTap={this.handleToggle}
               primaryText="About"
