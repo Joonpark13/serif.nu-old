@@ -214,6 +214,7 @@ class Serif extends React.Component {
         <Snackbar
           open={snackbarOpen}
           message={snackbarMessage}
+          autoHideDuration={4000}
           onRequestClose={() => closeSnackbar()}
         />
       </div>
