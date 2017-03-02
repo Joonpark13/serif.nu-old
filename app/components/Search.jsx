@@ -17,8 +17,7 @@ const Search = ({ currentTerm, searchData, onSelect }) => (
         onSelect(currentTerm, chosenRequest.school, chosenRequest.subject, chosenRequest.course);
       }
     }}
-    // textFieldStyle={{ fullWidth: true }}
-    menuStyle={{ height: '500px' }}
+    listStyle={{ height: '500px', overflow: 'auto' }}
     anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
     targetOrigin={{ vertical: 'top', horizontal: 'right' }}
   />
