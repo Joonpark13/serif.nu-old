@@ -9,6 +9,7 @@ import Dialog from 'material-ui/Dialog';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Link } from 'react-router';
 import Snackbar from 'material-ui/Snackbar';
+import FontIcon from 'material-ui/FontIcon';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import TermSelectContainer from '../containers/TermSelectContainer.jsx';
@@ -197,7 +198,7 @@ class Serif extends React.Component {
                   </Card>
                 </Tab>
 
-                <Tab label="Misc" value="misc">
+                <Tab icon={<FontIcon className="material-icons">more_horiz</FontIcon>} value="Misc" >
                   <MiscContainer />
                 </Tab>
               </Tabs>
