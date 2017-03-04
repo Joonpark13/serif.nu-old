@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import React from 'react';
 
 import {
   addEvent
@@ -6,18 +7,30 @@ import {
 import { findData } from '../helpers';
 import Misc from '../components/Misc.jsx';
 
+const parseMaterials = (data) => data.map(section => {
+  let required = section.get('descriptions').find(desc => desc.get('name') === 'Class Materials (Required)');
+  let suggested = section.get('descriptions').find(desc => desc.get('name') === 'Class Materials (Suggested)');
+  if (required) {
+    required = required.get('value').split('<br/>');
+    required = required.map((material, index) => <span key={index}>{material}<br /></span>);
+  }
+  if (suggested) {
+    suggested = suggested.get('value').split('<br/>');
+    suggested = suggested.map((material, index) => <span key={index}>{material}<br /></span>);
+  }
+  return {
+    name: `${section.get('subject')} ${section.get('course')} ${section.get('name')}`,
+    required,
+    suggested
+  };
+});
+
 const mapStateToProps = (state) => ({
-  classMaterials: findData(
+  classMaterials: parseMaterials(findData(
     state.calendar.get('sections'),
     state.terms.currentTerm,
     state.calendar.get('currentCalendar')
-  ).map(section => {
-    const materials = section.get('descriptions').find(desc => desc.get('name') === 'Class Materials (Required)');
-    return {
-      name: `${section.get('subject')} ${section.get('course')} ${section.get('name')}`,
-      materials: materials ? materials.get('value') : undefined
-    };
-  })
+  ))
 });
 
 const mapDispatchToProps = (dispatch) => ({

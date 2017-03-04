@@ -141,11 +141,13 @@ export default class Misc extends React.Component {
               <div>
                 {classMaterials.size === 0 && <h4>Add a class to see materials.</h4>}
                 {classMaterials.map(data => {
-                  const materials = data.materials ? data.materials.split('<br/>') : undefined;
                   return (
                     <div key={data.name}>
                       <h4>{data.name}</h4>
-                      <p>{materials ? materials.map((line, index) => <span key={index}>{line}<br /></span>) : 'No materials listed.'}</p>
+                      {!data.required && !data.suggested && <p>No materials listed.</p>}
+                      {data.required && <div><p style={{ fontWeight: 'bold' }}>Required:</p><p>{data.required}</p></div>}
+                      <br />
+                      {data.suggested && <div><p style={{ fontWeight: 'bold' }}>Suggested:</p><p>{data.suggested}</p></div>}
                     </div>
                   );
                 })}
