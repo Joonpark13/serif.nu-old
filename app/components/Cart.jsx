@@ -62,6 +62,11 @@ const Cart = ({
         {sections.map(section => {
           const sectionId = section.get('id');
           const component = components.find(comp => comp.get('id') === sectionId);
+          const courseDesc = section.get('descriptions').map(desc => {
+            const split = desc.get('value').split('<br/>');
+            const prepared = split.map((des, index) => <span key={index}>{des}<br /></span>);
+            return <div key={desc.get('name')}><h4>{desc.get('name')}</h4><p>{prepared}</p><br /></div>;
+          });
           return (
             <div key={sectionId}>
               <Card style={style.card}>
@@ -72,12 +77,14 @@ const Cart = ({
                   showExpandableButton
                 />
                 <CardText expandable>
+                  {section.get('topic') && <h4>{section.get('topic')}</h4>}
                   <p>{section.getIn(['class_mtg_info', 0, 'meet_t'])}</p>
-                  <p>{section.get('location')}</p>
+                  <p>{section.getIn(['class_mtg_info', 0, 'meet_l'])}</p>
                   <p>{section.get('instructor').toJS().join(', ')}</p>
-                  {section.get('topic') && <p>{section.get('topic')}</p>}
-                  <p>{section.get('overview_of_class')}</p>
+                  <br />
+                  {courseDesc}
                   <p>ID: {sectionId}</p>
+                  <br />
                   {component && (
                     <div>
                       <h4>{component.get('component')}</h4>
