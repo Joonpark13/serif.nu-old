@@ -1,32 +1,60 @@
 import React from 'react';
-import AutoComplete from 'material-ui/AutoComplete';
+import TextField from 'material-ui/TextField';
+import Fuse from 'fuse.js';
 
-const combineFilters = (searchText, key) => {
-  if (searchText.length < 3) return false; // Set min character number for search
-  return AutoComplete.caseInsensitiveFilter(searchText, key);
-};
+export default class Search extends React.Component {
+  constructor(props) {
+    super(props);
 
-const Search = ({ currentTerm, searchData, onSelect }) => (
-  <AutoComplete
-    hintText="Search for classes"
-    dataSource={searchData}
-    filter={combineFilters}
-    fullWidth
-    onNewRequest={(chosenRequest, index) => {
-      if (index !== -1) { // Make sure not triggered by hitting enter.
-        onSelect(currentTerm, chosenRequest.school, chosenRequest.subject, chosenRequest.course);
-      }
-    }}
-    listStyle={{ height: '500px', overflow: 'auto' }}
-    anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-    targetOrigin={{ vertical: 'top', horizontal: 'right' }}
-  />
-);
+    this.state = {
+      query: ''
+    };
 
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(event) {
+    const query = event.target.value;
+    this.setState({ query });
+
+    const options = {
+      shouldSort: true,
+      includeMatches: true,
+      minMatchCharLength: 3,
+      threshold: 0.4,
+      keys: [{
+        name: 'title',
+        weight: 0.9
+      }, {
+        name: 'instructors',
+        weight: 0.5
+      }, {
+        name: 'overview_of_class',
+        weight: 0.3
+      }, {
+        name: 'descriptions',
+        weight: 0.3
+      }]
+    };
+    const fuse = new Fuse(this.props.searchData, options);
+    const result = fuse.search(query);
+
+    console.log(result);
+  }
+
+  render() {
+    return (
+      <TextField
+        hintText="Search for classes"
+        fullWidth
+        value={this.state.query}
+        onChange={this.handleChange}
+      />
+    );
+  }
+}
 Search.propTypes = {
   currentTerm: React.PropTypes.string,
   searchData: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
   onSelect: React.PropTypes.func
 };
-
-export default Search;
