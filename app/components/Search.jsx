@@ -16,14 +16,18 @@ const style = {
   disabledTitle: {
     opacity: 0.35
   },
+  bodyText: {
+    fontSize: 'small'
+  },
   disabledBodyText: {
+    fontSize: 'small',
     opacity: 0.35
+  },
+  matchDesc: {
+    fontSize: 'small'
   },
   disabledMatchDesc: {
     opacity: 0.35,
-    fontSize: 'small'
-  },
-  matchDesc: {
     fontSize: 'small'
   }
 };
@@ -172,36 +176,16 @@ export default class Search extends React.Component {
                   key={item.id}
                   disabled={inCal}
                 >
-                  {inCal ? (
-                    <div>
-                      <h4 style={style.disabledTitle}>{item.title}</h4>
-                      <p style={style.disabledBodyText}>{item.instructors.join(', ')}</p>
-                      {item.class_mtg_info.map((info, index) => (
-                        <div key={index}>
-                          <p style={style.disabledBodyText}>{info.meet_t}</p>
-                          <p style={style.disabledBodyText}>{info.meet_l}</p>
-                        </div>
-                      ))}
-                      {overviewMatch}
+                  {inCal ? <h4 style={style.disabledTitle}>{item.title}</h4> : <h4>{item.title}</h4>}
+                  {item.class_mtg_info.map((info, index) => (
+                    <div key={index}>
+                      <p style={inCal ? style.disabledBodyText : style.bodyText}>{info.meet_t}</p>
+                      <p style={inCal ? style.disabledBodyText : style.bodyText}>{info.meet_l}</p>
                     </div>
-                  ) : (
-                    <div>
-                      <h4>{item.title}</h4>
-                      <p>{item.instructors.join(', ')}</p>
-                      {item.class_mtg_info.map((info, index) => (
-                        <div key={index}>
-                          <p>{info.meet_t}</p>
-                          <p>{info.meet_l}</p>
-                        </div>
-                      ))}
-                      {overviewMatch}
-                    </div>
-                  )}
-                  {match.key === 'descriptions' &&
-                    <p style={inCal ? style.disabledMatchDesc : style.matchDesc}>
-                      A match was found in the course description.
-                    </p>
-                  }
+                  ))}
+                  <p style={inCal ? style.disabledBodyText : style.bodyText}>{item.instructors.join(', ')}</p>
+                  {overviewMatch}
+                  {match.key === 'descriptions' && <p style={inCal ? style.disabledMatchDesc : style.matchDesc}>A match was found in the course description.</p>}
                 </ListItem>
               );
             })}
