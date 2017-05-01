@@ -7,6 +7,12 @@ const style = {
   listWrapper: {
     height: '589px', // 685 - 96 (height of search box)
     overflow: 'auto'
+  },
+  highlight: {
+    fontWeight: 'bold'
+  },
+  matchDesc: {
+    fontSize: 'small'
   }
 };
 
@@ -90,7 +96,8 @@ export default class Search extends React.Component {
           }
         });
 
-        this.setState({ results: results.slice(0, 25), error: '', floatingLabelText: '' });
+        if (results.length === 0) this.setState({ results: [], error: 'No results.', floatingLabelText: '' });
+        else this.setState({ results: results.slice(0, 25), error: '', floatingLabelText: '' });
       }
     }, 300);
   }
@@ -110,19 +117,36 @@ export default class Search extends React.Component {
           <List>
             {this.state.results && this.state.results.map(searchResult => {
               const item = searchResult.item;
-              const instructorText = item.instructors.join(', ');
+              const match = searchResult.matches[0];
+              const overviewMatch = [];
+              const paddingChars = 30;
+              if (match.key === 'overview_of_class') {
+                match.indices.forEach((indexPair, iterIndex) => {
+                  overviewMatch.push(
+                    <p key={iterIndex} style={style.matchDesc}>
+                      ...
+                      {item.overview_of_class.substring(Math.min(0, indexPair[0] - paddingChars), indexPair[0])}
+                      <span style={style.highlight}>{item.overview_of_class.substring(indexPair[0], indexPair[1])}</span>
+                      {item.overview_of_class.substring(indexPair[1], Math.min(indexPair[1] + paddingChars, item.overview_of_class.length))}
+                      ...
+                    </p>
+                  );
+                });
+              }
               return (
                 <ListItem
                   key={item.id}
                 >
                   <h4>{item.title}</h4>
-                  <p>{instructorText}</p>
+                  <p>{item.instructors.join(', ')}</p>
                   {item.class_mtg_info.map((info, index) => (
                     <div key={index}>
                       <p>{info.meet_t}</p>
                       <p>{info.meet_l}</p>
                     </div>
                   ))}
+                  {overviewMatch}
+                  {match.key === 'descriptions' && <p style={style.matchDesc}>A match was found in the course description.</p>}
                 </ListItem>
               );
             })}
