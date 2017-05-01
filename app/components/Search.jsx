@@ -3,6 +3,13 @@ import TextField from 'material-ui/TextField';
 import Fuse from 'fuse.js';
 import { List, ListItem } from 'material-ui/List';
 
+const style = {
+  listWrapper: {
+    height: '589px', // 685 - 96 (height of search box)
+    overflow: 'auto'
+  }
+};
+
 export default class Search extends React.Component {
   constructor(props) {
     super(props);
@@ -99,18 +106,28 @@ export default class Search extends React.Component {
           value={this.state.query}
           onChange={this.handleChange}
         />
-        <List>
-          {this.state.results && this.state.results.map(searchResult => {
-            const item = searchResult.item;
-            return (
-              <ListItem
-                key={item.id}
-              >
-                <h4>{item.title}</h4>
-              </ListItem>
-            );
-          })}
-        </List>
+        <div style={style.listWrapper}>
+          <List>
+            {this.state.results && this.state.results.map(searchResult => {
+              const item = searchResult.item;
+              const instructorText = item.instructors.join(', ');
+              return (
+                <ListItem
+                  key={item.id}
+                >
+                  <h4>{item.title}</h4>
+                  <p>{instructorText}</p>
+                  {item.class_mtg_info.map((info, index) => (
+                    <div key={index}>
+                      <p>{info.meet_t}</p>
+                      <p>{info.meet_l}</p>
+                    </div>
+                  ))}
+                </ListItem>
+              );
+            })}
+          </List>
+        </div>
       </div>
     );
   }
