@@ -9,6 +9,8 @@ export default class Search extends React.Component {
 
     this.state = {
       query: '',
+      error: '',
+      floatingLabelText: '',
       results: [],
       fuseTitle: null,
       fuseInstructor: null,
@@ -46,10 +48,25 @@ export default class Search extends React.Component {
     clearTimeout(this.timeout);
 
     this.timeout = setTimeout(() => {
-      // TODO: Search query is too long message
-      // TODO: Search returned no results message
-      if (query.length >= 32 || query.length < 3) this.setState({ results: [] });
-      else {
+      if (query.length >= 32) {
+        this.setState({
+          results: [],
+          error: 'Your search query is too long.',
+          floatingLabelText: ''
+        });
+      } else if (query.length == 0) {
+        this.setState({
+          results: [],
+          error: '',
+          floatingLabelText: ''
+        });
+      } else if (query.length < 3) {
+        this.setState({
+          results: [],
+          error: '',
+          floatingLabelText: 'Keep typing...'
+        });
+      } else {
         const results = this.state.fuseTitle.search(query);
 
         const instructorResults = this.state.fuseInstructor.search(query);
@@ -66,7 +83,7 @@ export default class Search extends React.Component {
           }
         });
 
-        this.setState({ results: results.slice(0, 25) });
+        this.setState({ results: results.slice(0, 25), error: '', floatingLabelText: '' });
       }
     }, 300);
   }
@@ -77,6 +94,8 @@ export default class Search extends React.Component {
         <TextField
           hintText="Search for classes"
           fullWidth
+          errorText={this.state.error}
+          floatingLabelText={this.state.floatingLabelText}
           value={this.state.query}
           onChange={this.handleChange}
         />
@@ -88,7 +107,6 @@ export default class Search extends React.Component {
                 key={item.id}
               >
                 <h4>{item.title}</h4>
-                <p>{item.instructor}</p>
               </ListItem>
             );
           })}
