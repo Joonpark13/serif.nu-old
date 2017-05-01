@@ -3,6 +3,8 @@ import TextField from 'material-ui/TextField';
 import Fuse from 'fuse.js';
 import { List, ListItem } from 'material-ui/List';
 
+import { inCalendar } from '../helpers';
+
 const style = {
   listWrapper: {
     height: '589px', // 685 - 96 (height of search box)
@@ -10,6 +12,16 @@ const style = {
   },
   highlight: {
     fontWeight: 'bold'
+  },
+  disabledTitle: {
+    opacity: 0.35
+  },
+  disabledBodyText: {
+    opacity: 0.35
+  },
+  disabledMatchDesc: {
+    opacity: 0.35,
+    fontSize: 'small'
   },
   matchDesc: {
     fontSize: 'small'
@@ -103,6 +115,24 @@ export default class Search extends React.Component {
   }
 
   render() {
+    const {
+      currentTerm,
+      currentCalendar,
+      searchData,
+      isFetching,
+      currentView,
+      selected,
+      sections,
+      calendar,
+      onSelect,
+      checkComponents,
+      addCourse,
+      addComponent,
+      addCourseHover,
+      addComponentHover,
+      removeHover,
+      showSearch
+    } = this.props;
     return (
       <div>
         <TextField
@@ -117,13 +147,16 @@ export default class Search extends React.Component {
           <List>
             {this.state.results && this.state.results.map(searchResult => {
               const item = searchResult.item;
+
+              const inCal = inCalendar(calendar.get('sections'), item.id, currentTerm, currentCalendar);
+
               const match = searchResult.matches[0];
               const overviewMatch = [];
               const paddingChars = 30;
               if (match.key === 'overview_of_class') {
                 match.indices.forEach((indexPair, iterIndex) => {
                   overviewMatch.push(
-                    <p key={iterIndex} style={style.matchDesc}>
+                    <p key={iterIndex} style={inCal ? style.disabledMatchDesc : style.matchDesc}>
                       ...
                       {item.overview_of_class.substring(Math.min(0, indexPair[0] - paddingChars), indexPair[0])}
                       <span style={style.highlight}>{item.overview_of_class.substring(indexPair[0], indexPair[1])}</span>
@@ -133,20 +166,42 @@ export default class Search extends React.Component {
                   );
                 });
               }
+
               return (
                 <ListItem
                   key={item.id}
+                  disabled={inCal}
                 >
-                  <h4>{item.title}</h4>
-                  <p>{item.instructors.join(', ')}</p>
-                  {item.class_mtg_info.map((info, index) => (
-                    <div key={index}>
-                      <p>{info.meet_t}</p>
-                      <p>{info.meet_l}</p>
+                  {inCal ? (
+                    <div>
+                      <h4 style={style.disabledTitle}>{item.title}</h4>
+                      <p style={style.disabledBodyText}>{item.instructors.join(', ')}</p>
+                      {item.class_mtg_info.map((info, index) => (
+                        <div key={index}>
+                          <p style={style.disabledBodyText}>{info.meet_t}</p>
+                          <p style={style.disabledBodyText}>{info.meet_l}</p>
+                        </div>
+                      ))}
+                      {overviewMatch}
                     </div>
-                  ))}
-                  {overviewMatch}
-                  {match.key === 'descriptions' && <p style={style.matchDesc}>A match was found in the course description.</p>}
+                  ) : (
+                    <div>
+                      <h4>{item.title}</h4>
+                      <p>{item.instructors.join(', ')}</p>
+                      {item.class_mtg_info.map((info, index) => (
+                        <div key={index}>
+                          <p>{info.meet_t}</p>
+                          <p>{info.meet_l}</p>
+                        </div>
+                      ))}
+                      {overviewMatch}
+                    </div>
+                  )}
+                  {match.key === 'descriptions' &&
+                    <p style={inCal ? style.disabledMatchDesc : style.matchDesc}>
+                      A match was found in the course description.
+                    </p>
+                  }
                 </ListItem>
               );
             })}
