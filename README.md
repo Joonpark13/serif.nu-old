@@ -30,7 +30,7 @@ For a production build, run
 	npm start
 	
 ## Data
-The data is stored in static json files under `app/data`. Conceptually, there are 6 different hierarchical levels (from highest to lowest): terms, schools, subjects, courses, sections, details. They are described in more detail below. The directory structure represents the nested nature of the data, as such:
+The data is stored in static json files under `app/data`. Conceptually, there are 5 different hierarchical levels (from highest to lowest): terms, schools, subjects, courses, and sections. They are described in more detail below. The directory structure represents the nested nature of the data, as such:
 
 	data/
 	+-- terms.json
@@ -42,10 +42,6 @@ The data is stored in static json files under `app/data`. Conceptually, there ar
 		        +-- courses.json
 		        +-- 125-1/
 		            +-- sections.json
-		            +-- 12345/
-		                +-- details.json
-		            +-- 12346/
-		                +-- details.json
 		        +-- 135-1/
 		            +-- sections.json
 		            +-- etc...
@@ -134,87 +130,6 @@ Each `sections.json` file contains an array of section objects. Each section obj
 	}
 	
 and represents a section. A section is the most accurate representation of what students conceptualize as "a class". When a student registers for a class on CAESAR, they are signing up for a section. These are also the objects that become added to the calendar on Serif.nu. The unique identifier of a section is its `id`. A section object is unique only within its corresponding course.
-
-### Details
-Each `details.json` file contains an array of details objects. Each details object is formatted as such:
-
-	{
-		"class_mtg_info": [
-			{
-				"meet_t": "MoWeFr 2:00PM - 2:50PM",
-				"meet_l": "Leverone Auditorium Owen Coon"
-			}
-		],
-		"school": "WCAS",
-		"enrl_requirement": "",
-		"qtr": "Winter 2017",
-		"name": "25651",
-		"title": "WCAS HISTORY 200-0-1 New Introductory Courses in History",
-		"class_attributes": "Historical Studies Distro Area",
-		"section": "25651",
-		"instructors": [
-			{
-				"instructor_phone": "123/456-7890",
-				"instructor_name": "Geraldo L Cadava",
-				"instructor_addr": "Harris Hall - Room 210"
-			},
-			{
-				"instructor_phone": "123/456-7890,
-				"instructor_name": "Caitlin Annette Fitz",
-				"instructor_addr": "Harris Hall - Room 205"
-			}
-		],
-		"associated_classes": [
-			{
-				"component": "DIS",
-				"room": "University Hall 412",
-				"meeting_time": "Th 2:00PM - 2:50PM"
-			},
-			{
-				"component": "DIS",
-				"room": "University Hall 318",
-				"meeting_time": "Th 2:00PM - 2:50PM"
-			},
-			{
-				"component": "DIS",
-				"room": "University Hall 418",
-				"meeting_time": "Th 3:00PM - 3:50PM"
-			},
-			{
-				"component": "DIS",
-				"room": "TBA",
-				"meeting_time": "TBA"
-			}
-		],
-		"topic": "Hamilton's America",
-		"course": "200-0",
-		"descriptions": [
-			{
-				"name": "Overview of class",
-				"value": "In this course we will explore the life and times of Alexander Hamilton?both the man and the musical..."
-			},
-			{
-				"name": "Teaching Method",
-				"value": "Discussion sectionLecture"
-			},
-			{
-				"name": "Evaluation Method",
-				"value": "Class participationPapersResearch project"
-			},
-			{
-				"name": "Class Materials (Required)",
-				"value": "***Tentative until posted to Norris website***Ron Chernow. Alexander Hamilton: A Life. 9780143034759. Lin Manuel Miranda and Jeremy McCarter. Hamilton: The Revolution. 9781455539741. Course packet"
-			},
-			{
-				"name": "Class Notes",
-				"value": "AREA OF CONCENTRATION: Americas"
-			}
-		],
-		"lmod": "12/29/16 6:59 PM (CT)",
-		"subject": "HISTORY"
-	}
-	
-A details object contains specific details about a certain section of the class. A field of note is the `associated_classes` key: this contains the component objects. Each component object represents a component, more commonly known as a discussion or a lab. Each component is necessarily tied to a specific section of a course. In the data format example above, section 25651 of HISTORY 200-0 has four components, all of them being discussion sections.
 
 ## State Store
 Serif.nu's state is managed by [Redux](https://github.com/reactjs/redux). Redux is a Flux implementation that is often used together with React, with its core principle being that the entire state of the application is stored inside an object tree called the store. By only allowing the modification of state through *actions*, the state of the application becomes much easier to handle. The actions are fed to a *reducer*, which is just a pure function of the action and state. Since redux forbids modification of state objects and instead requires the return of a new copy of the object for every action, we use a combination of [jquery's `extend`](https://api.jquery.com/jquery.extend/) with the deep parameter set to true and [Immutable.js](https://facebook.github.io/immutable-js/). Immutable.js is implemented currently only for the `calendar` and the `snackbar` portions of the state, and the rest use jquery's `extend`, or in many cases, simply manualy return a new object. Since the reducer is split (see `app/reducers`), this is not difficult to manage on many occasions.
