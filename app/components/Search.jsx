@@ -1,32 +1,274 @@
 import React from 'react';
-import AutoComplete from 'material-ui/AutoComplete';
+import TextField from 'material-ui/TextField';
+import Fuse from 'fuse.js';
+import { List, ListItem } from 'material-ui/List';
 
-const combineFilters = (searchText, key) => {
-  if (searchText.length < 3) return false; // Set min character number for search
-  return AutoComplete.caseInsensitiveFilter(searchText, key);
+import { inCalendar } from '../helpers';
+import Components from './Components.jsx';
+
+const style = {
+  listWrapper: {
+    height: '589px', // 685 - 96 (height of search box)
+    overflow: 'auto'
+  },
+  highlight: {
+    fontWeight: 'bold'
+  },
+  disabledTitle: {
+    opacity: 0.35
+  },
+  bodyText: {
+    fontSize: 'small'
+  },
+  disabledBodyText: {
+    fontSize: 'small',
+    opacity: 0.35
+  },
+  matchDesc: {
+    fontSize: 'small'
+  },
+  disabledMatchDesc: {
+    opacity: 0.35,
+    fontSize: 'small'
+  }
 };
 
-const Search = ({ currentTerm, searchData, onSelect }) => (
-  <AutoComplete
-    hintText="Search for classes"
-    dataSource={searchData}
-    filter={combineFilters}
-    fullWidth
-    onNewRequest={(chosenRequest, index) => {
-      if (index !== -1) { // Make sure not triggered by hitting enter.
-        onSelect(currentTerm, chosenRequest.school, chosenRequest.subject, chosenRequest.course);
-      }
-    }}
-    listStyle={{ height: '500px', overflow: 'auto' }}
-    anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-    targetOrigin={{ vertical: 'top', horizontal: 'right' }}
-  />
-);
+export default class Search extends React.Component {
+  constructor(props) {
+    super(props);
 
+    this.state = {
+      query: '',
+      error: '',
+      floatingLabelText: '',
+      results: [],
+      fuseTitle: null,
+      fuseInstructor: null,
+      fuseOverview: null,
+      overflow: false
+    };
+    this.timeout = null;
+
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+      const options = {
+        includeScore: true,
+        shouldSort: true,
+        includeMatches: true,
+        minMatchCharLength: 3,
+        threshold: 0.4,
+        maxPatternLength: 32
+      };
+
+      options.keys = ['title'];
+      this.setState({ fuseTitle: new Fuse(nextProps.searchData, options) });
+
+      options.keys = ['instructor'];
+      this.setState({ fuseInstructor: new Fuse(nextProps.searchData, options) });
+
+      options.keys = ['overview_of_class', 'descriptions'];
+      this.setState({ fuseOverview: new Fuse(nextProps.searchData, options) });
+  }
+
+  handleChange(event) {
+    const query = event.target.value;
+    this.setState({ query });
+
+    // Remove all hover events in case search changed while mouse was
+    // over a section and it did not fire a mouseleave event
+    this.props.removeHover();
+
+    clearTimeout(this.timeout);
+
+    this.timeout = setTimeout(() => {
+      if (query.length >= 32) {
+        this.setState({
+          results: [],
+          error: 'Your search query is too long.',
+          floatingLabelText: '',
+          overflow: false
+        });
+      } else if (query.length === 0) {
+        this.setState({
+          results: [],
+          error: '',
+          floatingLabelText: '',
+          overflow: false
+        });
+      } else if (query.length < 3) {
+        this.setState({
+          results: [],
+          error: '',
+          floatingLabelText: 'Keep typing...',
+          overflow: false
+        });
+      } else {
+        const results = this.state.fuseTitle.search(query);
+
+        const instructorResults = this.state.fuseInstructor.search(query);
+        instructorResults.forEach(item => {
+          if (!results.some(existingItem => existingItem.item.id === item.item.id)) {
+            results.push(item);
+          }
+        });
+
+        const overviewResults = this.state.fuseOverview.search(query);
+        overviewResults.forEach(item => {
+          if (!results.some(existingItem => existingItem.item.id === item.item.id)) {
+            results.push(item);
+          }
+        });
+
+        const maxResults = 25;
+        if (results.length === 0) {
+          this.setState({
+            results: [],
+            error: 'No results.',
+            floatingLabelText: '',
+            overflow: false
+          });
+        } else {
+          this.setState({
+            results: results.slice(0, maxResults),
+            error: '',
+            floatingLabelText: '',
+            overflow: results.length > maxResults
+          });
+        }
+      }
+    }, 300);
+  }
+
+  render() {
+    const {
+      currentTerm,
+      currentCalendar,
+      searchData,
+      isFetching,
+      currentView,
+      selected,
+      sections,
+      calendar,
+      onSelect,
+      checkComponents,
+      addCourse,
+      addComponent,
+      addCourseHover,
+      addComponentHover,
+      removeHover,
+      showSearch
+    } = this.props;
+    return (
+      <div>
+        <TextField
+          hintText="Enter classname, instructor, or keywords"
+          fullWidth
+          errorText={this.state.error}
+          floatingLabelText={this.state.floatingLabelText}
+          value={this.state.query}
+          onChange={this.handleChange}
+        />
+        <div style={style.listWrapper}>
+          {currentView === 'search' &&
+            <List>
+              {this.state.results && this.state.results.map(searchResult => {
+                const item = searchResult.item;
+
+                const inCal = inCalendar(calendar.get('sections'), item.id, currentTerm, currentCalendar);
+
+                // Match highlighting for class overview
+                const match = searchResult.matches[0];
+                const overviewMatch = [];
+                const paddingChars = 30;
+                if (match.key === 'overview_of_class') {
+                  match.indices.forEach((indexPair, iterIndex) => {
+                    overviewMatch.push(
+                      <p key={iterIndex} style={inCal ? style.disabledMatchDesc : style.matchDesc}>
+                        ...
+                        {item.overview_of_class.substring(Math.min(0, indexPair[0] - paddingChars), indexPair[0])}
+                        <span style={style.highlight}>{item.overview_of_class.substring(indexPair[0], indexPair[1])}</span>
+                        {item.overview_of_class.substring(indexPair[1], Math.min(indexPair[1] + paddingChars, item.overview_of_class.length))}
+                        ...
+                      </p>
+                    );
+                  });
+                }
+
+                return (
+                  <ListItem
+                    key={item.id}
+                    disabled={inCal}
+                    onMouseEnter={() => {
+                      if (!inCal) {
+                        addCourseHover(item);
+                      }
+                    }}
+                    onMouseLeave={() => {
+                      if (!inCal) {
+                        removeHover();
+                      }
+                    }}
+                    onTouchTap={() => {
+                      checkComponents(selected.subject, item.associated_classes);
+                      addCourse(item);
+                      removeHover();
+                    }}
+                  >
+                    {inCal ? <h4 style={style.disabledTitle}>{item.title}</h4> : <h4>{item.title}</h4>}
+                    {item.class_mtg_info.map((info, index) => (
+                      <div key={index}>
+                        <p style={inCal ? style.disabledBodyText : style.bodyText}>{info.meet_t}</p>
+                        <p style={inCal ? style.disabledBodyText : style.bodyText}>{info.meet_l}</p>
+                      </div>
+                    ))}
+                    <p style={inCal ? style.disabledBodyText : style.bodyText}>{item.instructor.join(', ')}</p>
+                    {overviewMatch}
+                    {match.key === 'descriptions' && <p style={inCal ? style.disabledMatchDesc : style.matchDesc}>A match was found in the course description.</p>}
+                  </ListItem>
+                );
+              })}
+              {this.state.overflow && (
+                <ListItem disabled >
+                  <p>Keep typing to see more results.</p>
+                </ListItem>
+              )}
+            </List>
+          }
+          {currentView === 'components' &&
+            <Components
+              selected={selected}
+              sections={this.state.results.map(result => result.item)}
+              addComponent={addComponent}
+              addComponentHover={addComponentHover}
+              removeHover={removeHover}
+            />
+          }
+        </div>
+      </div>
+    );
+  }
+}
 Search.propTypes = {
   currentTerm: React.PropTypes.string,
   searchData: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
-  onSelect: React.PropTypes.func
+  selected: React.PropTypes.shape({
+    school: React.PropTypes.string,
+    subject: React.PropTypes.string,
+    course: React.PropTypes.string,
+    section: React.PropTypes.string
+  }).isRequired,
+  calendar: React.PropTypes.shape({
+    sections: React.PropTypes.array,
+    components: React.PropTypes.array
+  }),
+  currentView: React.PropTypes.string,
+  onSelect: React.PropTypes.func,
+  checkComponents: React.PropTypes.func.isRequired,
+  addCourse: React.PropTypes.func.isRequired,
+  addComponent: React.PropTypes.func,
+  addCourseHover: React.PropTypes.func,
+  addComponentHover: React.PropTypes.func,
+  removeHover: React.PropTypes.func
 };
-
-export default Search;

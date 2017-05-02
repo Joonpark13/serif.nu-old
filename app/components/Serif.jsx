@@ -40,6 +40,11 @@ const style = {
     position: 'relative', // Necessary for z-index
     zIndex: 2
   },
+  searchTab: {
+    height: '685px',
+    position: 'relative', // Necessary for z-index
+    zIndex: 2
+  },
   overlay: {
     backgroundColor: 'rgba(1, 1, 1, 0.4)',
     bottom: 0,
@@ -176,7 +181,7 @@ class Serif extends React.Component {
 
               <Tabs value={tabState} onChange={handleTabChange}>
                 <Tab label="Search" value="search">
-                  <Card style={style.tabs}>
+                  <Card style={style.searchTab}>
                     <CardText>
                       <SearchContainer />
                     </CardText>
