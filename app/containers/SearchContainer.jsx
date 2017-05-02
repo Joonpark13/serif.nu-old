@@ -36,8 +36,8 @@ const mapDispatchToProps = dispatch => ({
   addCourse: (section) => {
     dispatch(addCourseSearch(section));
   },
-  addComponent: (detail) => {
-    dispatch(addComponentSearch(detail));
+  addComponent: (section) => {
+    dispatch(addComponentSearch(section));
   },
   addCourseHover: (section) => {
     dispatch(addCourseHover(section));

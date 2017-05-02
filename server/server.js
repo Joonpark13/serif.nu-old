@@ -46,24 +46,18 @@ app.get('/data/:term/search', (req, res) => {
             coursesData.forEach((course) => {
                 const sectionsData = require(`${dataPath}${req.params.term}/${school.id}/${subject.abbv}/${course.abbv}/sections.json`);
                 sectionsData.forEach((section) => {
+                    const searchObj = {
+                        ...section,
+                        school: course.school,
+                        subject: course.subject,
+                        course: course.abbv,
+                    };
                     // For sections with a non empty topic field (such as EECS 395, THEATRE 330 or other special courses),
                     // It's better to title it using the topic field instead of the name field.
                     let title = `${section.subject} ${section.course}`;
                     if (section.topic) title = `${title} ${section.topic}`;
                     else title = `${title} ${section.name}`;
-                    const searchObj = {
-                        title,
-                        id: section.id,
-                        class_mtg_info: section.class_mtg_info,
-                        overview_of_class: section.overview_of_class,
-                        instructors: section.instructor,
-                        descriptions: section.descriptions,
-                        school: course.school,
-                        subject: course.subject,
-                        course: course.abbv,
-                        name: section.name,
-                        topic: section.topic
-                    };
+                    searchObj.title = title;
                     prepared.push(searchObj);
                 });
             });
