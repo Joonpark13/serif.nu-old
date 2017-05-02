@@ -93,13 +93,13 @@ export default class Sections extends React.Component {
                 }}
                 onMouseLeave={() => {
                   if (!inCal) {
-                    removeHover(section.id);
+                    removeHover();
                   }
                 }}
                 onTouchTap={() => {
                   checkComponents(selected.subject, section.associated_classes);
                   addCourse(section);
-                  removeHover(section.id);
+                  removeHover();
                 }}
               >
                 <h4 style={inCal ? style.disabledTitle : style.title}>{`Section ${section.section}`}</h4>

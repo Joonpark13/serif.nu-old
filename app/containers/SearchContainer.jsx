@@ -45,8 +45,8 @@ const mapDispatchToProps = dispatch => ({
   addComponentHover: (detail) => {
     dispatch(addComponentHover(detail));
   },
-  removeHover: (sectionId) => {
-    dispatch(removeHover(sectionId));
+  removeHover: () => {
+    dispatch(removeHover());
   },
   showSearch: () => {
     dispatch(showSearch());

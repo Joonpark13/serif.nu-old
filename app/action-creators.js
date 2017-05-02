@@ -274,12 +274,9 @@ export function addComponentHover(detail) {
   };
 }
 
-export function removeHover(sectionId) {
-  return {
-    type: 'REMOVE_HOVER',
-    sectionId
-  };
-}
+export const removeHover = () => ({
+  type: 'REMOVE_HOVER'
+});
 
 export function showSearch() {
   return {

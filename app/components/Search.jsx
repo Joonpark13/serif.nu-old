@@ -76,6 +76,10 @@ export default class Search extends React.Component {
     const query = event.target.value;
     this.setState({ query });
 
+    // Remove all hover events in case search changed while mouse was
+    // over a section and it did not fire a mouseleave event
+    this.props.removeHover();
+
     clearTimeout(this.timeout);
 
     this.timeout = setTimeout(() => {
@@ -203,13 +207,13 @@ export default class Search extends React.Component {
                     }}
                     onMouseLeave={() => {
                       if (!inCal) {
-                        removeHover(item.id);
+                        removeHover();
                       }
                     }}
                     onTouchTap={() => {
                       checkComponents(selected.subject, item.associated_classes);
                       addCourse(item);
-                      removeHover(item.id);
+                      removeHover();
                     }}
                   >
                     {inCal ? <h4 style={style.disabledTitle}>{item.title}</h4> : <h4>{item.title}</h4>}

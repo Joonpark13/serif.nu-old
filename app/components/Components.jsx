@@ -55,10 +55,10 @@ const Components = ({
             <ListItem
               key={index}
               onMouseEnter={() => addComponentHover(formattedComp)}
-              onMouseLeave={() => removeHover(comp.id)}
+              onMouseLeave={() => removeHover()}
               onTouchTap={() => {
                 addComponent(formattedComp);
-                removeHover(comp.id);
+                removeHover();
               }}
             >
               <h4 style={style.title}>{comp.component}</h4>
