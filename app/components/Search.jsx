@@ -44,7 +44,8 @@ export default class Search extends React.Component {
       results: [],
       fuseTitle: null,
       fuseInstructor: null,
-      fuseOverview: null
+      fuseOverview: null,
+      overflow: false
     };
     this.timeout = null;
 
@@ -82,19 +83,22 @@ export default class Search extends React.Component {
         this.setState({
           results: [],
           error: 'Your search query is too long.',
-          floatingLabelText: ''
+          floatingLabelText: '',
+          overflow: false
         });
-      } else if (query.length == 0) {
+      } else if (query.length === 0) {
         this.setState({
           results: [],
           error: '',
-          floatingLabelText: ''
+          floatingLabelText: '',
+          overflow: false
         });
       } else if (query.length < 3) {
         this.setState({
           results: [],
           error: '',
-          floatingLabelText: 'Keep typing...'
+          floatingLabelText: 'Keep typing...',
+          overflow: false
         });
       } else {
         const results = this.state.fuseTitle.search(query);
@@ -113,8 +117,22 @@ export default class Search extends React.Component {
           }
         });
 
-        if (results.length === 0) this.setState({ results: [], error: 'No results.', floatingLabelText: '' });
-        else this.setState({ results: results.slice(0, 25), error: '', floatingLabelText: '' });
+        const maxResults = 25;
+        if (results.length === 0) {
+          this.setState({
+            results: [],
+            error: 'No results.',
+            floatingLabelText: '',
+            overflow: false
+          });
+        } else {
+          this.setState({
+            results: results.slice(0, maxResults),
+            error: '',
+            floatingLabelText: '',
+            overflow: results.length > maxResults
+          });
+        }
       }
     }, 300);
   }
@@ -141,7 +159,7 @@ export default class Search extends React.Component {
     return (
       <div>
         <TextField
-          hintText="Search for classes"
+          hintText="Enter classname, instructor, or keywords"
           fullWidth
           errorText={this.state.error}
           floatingLabelText={this.state.floatingLabelText}
@@ -156,6 +174,7 @@ export default class Search extends React.Component {
 
                 const inCal = inCalendar(calendar.get('sections'), item.id, currentTerm, currentCalendar);
 
+                // Match highlighting for class overview
                 const match = searchResult.matches[0];
                 const overviewMatch = [];
                 const paddingChars = 30;
@@ -206,6 +225,11 @@ export default class Search extends React.Component {
                   </ListItem>
                 );
               })}
+              {this.state.overflow && (
+                <ListItem disabled >
+                  <p>Keep typing to see more results.</p>
+                </ListItem>
+              )}
             </List>
           }
           {currentView === 'components' &&
