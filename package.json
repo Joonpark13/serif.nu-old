@@ -41,6 +41,7 @@
     "babel-register": "^6.18.0",
     "bootstrap": "^3.3.7",
     "css-loader": "^0.26.1",
+    "elasticlunr": "^0.9.5",
     "es6-promise": "^4.0.5",
     "express": "^4.14.0",
     "file-loader": "^0.10.0",

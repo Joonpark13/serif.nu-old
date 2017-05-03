@@ -1,6 +1,6 @@
 import React from 'react';
 import TextField from 'material-ui/TextField';
-import Fuse from 'fuse.js';
+import elasticlunr from 'elasticlunr';
 import { List, ListItem } from 'material-ui/List';
 
 import { inCalendar } from '../helpers';
@@ -42,9 +42,7 @@ export default class Search extends React.Component {
       error: '',
       floatingLabelText: '',
       results: [],
-      fuseTitle: null,
-      fuseInstructor: null,
-      fuseOverview: null,
+      index: null,
       overflow: false
     };
     this.timeout = null;
@@ -53,23 +51,17 @@ export default class Search extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-      const options = {
-        includeScore: true,
-        shouldSort: true,
-        includeMatches: true,
-        minMatchCharLength: 3,
-        threshold: 0.4,
-        maxPatternLength: 32
-      };
+    const index = elasticlunr(function() { // Can't be an arrow function due to this binding
+      this.addField('title');
+      this.addField('instructor');
+      this.setRef('id');
+    });
 
-      options.keys = ['title'];
-      this.setState({ fuseTitle: new Fuse(nextProps.searchData, options) });
+    nextProps.searchData.forEach((obj) => {
+      index.addDoc(obj);
+    });
 
-      options.keys = ['instructor'];
-      this.setState({ fuseInstructor: new Fuse(nextProps.searchData, options) });
-
-      options.keys = ['overview_of_class', 'descriptions'];
-      this.setState({ fuseOverview: new Fuse(nextProps.searchData, options) });
+    this.setState({ index });
   }
 
   handleChange(event) {
@@ -83,7 +75,7 @@ export default class Search extends React.Component {
     clearTimeout(this.timeout);
 
     this.timeout = setTimeout(() => {
-      if (query.length >= 32) {
+      if (query.length >= 64) {
         this.setState({
           results: [],
           error: 'Your search query is too long.',
@@ -105,21 +97,10 @@ export default class Search extends React.Component {
           overflow: false
         });
       } else {
-        const results = this.state.fuseTitle.search(query);
-
-        const instructorResults = this.state.fuseInstructor.search(query);
-        instructorResults.forEach(item => {
-          if (!results.some(existingItem => existingItem.item.id === item.item.id)) {
-            results.push(item);
-          }
-        });
-
-        const overviewResults = this.state.fuseOverview.search(query);
-        overviewResults.forEach(item => {
-          if (!results.some(existingItem => existingItem.item.id === item.item.id)) {
-            results.push(item);
-          }
-        });
+        const resultIds = this.state.index.search(query);
+        const results = resultIds.map(
+          (result) => this.props.searchData.find(dataObj => dataObj.id === result.ref)
+        );
 
         const maxResults = 25;
         if (results.length === 0) {
@@ -173,28 +154,8 @@ export default class Search extends React.Component {
         <div style={style.listWrapper}>
           {currentView === 'search' &&
             <List>
-              {this.state.results && this.state.results.map(searchResult => {
-                const item = searchResult.item;
-
+              {this.state.results && this.state.results.map(item => {
                 const inCal = inCalendar(calendar.get('sections'), item.id, currentTerm, currentCalendar);
-
-                // Match highlighting for class overview
-                const match = searchResult.matches[0];
-                const overviewMatch = [];
-                const paddingChars = 30;
-                if (match.key === 'overview_of_class') {
-                  match.indices.forEach((indexPair, iterIndex) => {
-                    overviewMatch.push(
-                      <p key={iterIndex} style={inCal ? style.disabledMatchDesc : style.matchDesc}>
-                        ...
-                        {item.overview_of_class.substring(Math.min(0, indexPair[0] - paddingChars), indexPair[0])}
-                        <span style={style.highlight}>{item.overview_of_class.substring(indexPair[0], indexPair[1])}</span>
-                        {item.overview_of_class.substring(indexPair[1], Math.min(indexPair[1] + paddingChars, item.overview_of_class.length))}
-                        ...
-                      </p>
-                    );
-                  });
-                }
 
                 return (
                   <ListItem
@@ -224,8 +185,6 @@ export default class Search extends React.Component {
                       </div>
                     ))}
                     <p style={inCal ? style.disabledBodyText : style.bodyText}>{item.instructor.join(', ')}</p>
-                    {overviewMatch}
-                    {match.key === 'descriptions' && <p style={inCal ? style.disabledMatchDesc : style.matchDesc}>A match was found in the course description.</p>}
                   </ListItem>
                 );
               })}
