@@ -30,32 +30,32 @@ For a production build, run
 	npm start
 	
 ## Data
-The data is stored in static json files under `app/data`. Conceptually, there are 5 different hierarchical levels (from highest to lowest): terms, schools, subjects, courses, and sections. They are described in more detail below. The directory structure represents the nested nature of the data, as such:
+The data is stored in static json files under `app/data`. Conceptually, there are 5 different hierarchical levels (from highest to lowest): terms, schools, subjects, courses, and sections. They are described in more detail below. Strucurally, they are stored as such:
 
 	data/
 	+-- terms.json
 	+-- 4650/
 		+-- schools.json
-		+-- WCAS/
-		    +-- subjects.json
-		    +-- PHYSICS/
-		        +-- courses.json
-		        +-- 125-1/
-		            +-- sections.json
-		        +-- 135-1/
-		            +-- sections.json
-		            +-- etc...
-		    +-- POLI_SCI/
-		        +-- courses.json
-		        +-- etc...
-		+-- MEAS/
-		    +-- subjects.json
-		    +-- etc...
+		+-- subjects.json
+		+-- courses.json
+		+-- sections.json
 	+-- 4640/
-	    +-- schools.json
-	    +-- etc...
+		+-- schools.json
+		+-- subjects.json
+		+-- courses.json
+		+-- sections.json
+	+-- 4630/
+		+-- schools.json
+		+-- subjects.json
+		+-- courses.json
+		+-- sections.json
+	+-- etc...
 
-At each level, there is a json file containing the relevant objects for that specific level and choice. For example, in `data/4650/MUSIC/CONDUCT/326-0/`, there is a `sections.json` containing an array of objects, each object representing a section of the class CONDUCT 326-0.
+There is a `terms.json` file containing a list of objects describing each of the
+terms at the root of the data directory. The directory also contains a
+subdirectory for each of the terms, which in turn contain `schools.json`,
+`subjects.json`, `courses.json`, and `sections.json` files that hold all of the
+relevant data for each level.
 
 ### Terms
 `terms.json` contains an array of term objects. Each term object is formatted as such:
@@ -71,42 +71,47 @@ At each level, there is a json file containing the relevant objects for that spe
 and represents an academic term, also known as a 'quarter'. The unique identifier of a term object is its `id`.
 
 ### Schools
-Each `schools.json` file contains an array of school objects. Each school object is formatted as such:
+Each `schools.json` file contains an array of all school objects for the term
+under which this file is nested. Each school object is formatted as such:
 
 	{
 		"id": "MUSIC",
 		"name": "Bienen School of Music"
 	}
 
-and represents a school within the university. The unique identifier of a school object is its `id`. However, a school object is unique only within its corresponding term (Ex: both term 4650 and 4640 have a school object with the `id` of `WCAS`).
+and represents a school within the university. The unique identifier of a school
+object is its `id`. However, a school object is unique only within its
+corresponding term (Ex: both term 4650 and 4640 have a school object with the
+`id` of `WCAS`).
 
 ### Subjects
-Each `subjects.json` file contains an array of subject objects. Each subject object is formatted as such:
+Each `subjects.json` file contains an array of all subject objects for the term
+under which this file is nested. Each subject object is formatted as such:
 
 	{
 		"abbv": "HISTORY",
 		"school": "WCAS",
-		"name": "History",
-		"path": "/class-descriptions/4650/WCAS/HISTORY"
+		"name": "History"
 	}
 	
 and represents a subject, also distinguished as separate departments. The unique identifier of a subject object is its `abbv`. A subject object is unique only within its corresponding school.
 
 ### Courses
-Each `courses.json` file contains an array of course objects. Each course object is formatted as such:
+Each `courses.json` file contains an array of all course objects for the term
+under which this file is nested. Each course object is formatted as such:
 
 	{
 		"abbv": "200-0",
 		"school": "WCAS",
 		"subject": "HISTORY",
-		"name": "New Introductory Courses in History",
-		"path": "/class-descriptions/4650/WCAS/HISTORY/200-0"
+		"name": "New Introductory Courses in History"
 	}
 	
 and represents a course. The unique identifier of a course is its `abbv`. A course object is unique only within its corresponding subject.
 
 ### Sections
-Each `sections.json` file contains an array of section objects. Each section object is formatted as such:
+Each `sections.json` file contains an array of all section objects for the term
+under which this file is nested. Each section object is formatted as such:
 
 	{
 		"school": "WCAS",
@@ -119,7 +124,6 @@ Each `sections.json` file contains an array of section objects. Each section obj
 		"meeting_time": [
 			"MoWeFr 2:00PM - 2:50PM"
 		],
-		"path": "/class-descriptions/4650/WCAS/HISTORY/200-0/25651",
 		"instructor": [
 			"Geraldo L Cadava",
 			"Caitlin Annette Fitz"
