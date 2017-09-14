@@ -50,6 +50,7 @@ export default class Search extends React.Component {
     this.timeout = null;
 
     this.handleChange = this.handleChange.bind(this);
+    this.resetSearch = this.resetSearch.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -72,6 +73,15 @@ export default class Search extends React.Component {
       this.setState({ fuseOverview: new Fuse(nextProps.searchData, options) });
   }
 
+  resetSearch() {
+    this.setState({
+      results: [],
+      error: '',
+      floatingLabelText: '',
+      overflow: false
+    });
+  }
+
   handleChange(event) {
     const query = event.target.value;
     this.setState({ query });
@@ -91,12 +101,7 @@ export default class Search extends React.Component {
           overflow: false
         });
       } else if (query.length === 0) {
-        this.setState({
-          results: [],
-          error: '',
-          floatingLabelText: '',
-          overflow: false
-        });
+        this.resetSearch();
       } else if (query.length < 3) {
         this.setState({
           results: [],
@@ -214,6 +219,7 @@ export default class Search extends React.Component {
                       checkComponents(selected.subject, item.associated_classes);
                       addCourse(item);
                       removeHover();
+                      this.resetSearch();
                     }}
                   >
                     {inCal ? <h4 style={style.disabledTitle}>{item.title}</h4> : <h4>{item.title}</h4>}

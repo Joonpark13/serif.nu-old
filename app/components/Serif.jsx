@@ -121,6 +121,7 @@ class Serif extends React.Component {
         fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
   }
+
   componentWillReceiveProps(nextProps) {
     const currentTerm = nextProps.currentTerm;
     if (currentTerm !== this.props.currentTerm && currentTerm) {
@@ -129,6 +130,7 @@ class Serif extends React.Component {
       this.props.firstCalendar();
     }
   }
+
   render() {
     const {
       selectingComponent,
@@ -140,6 +142,7 @@ class Serif extends React.Component {
       snackbarOpen,
       snackbarMessage
     } = this.props;
+
     return (
       <div>
         {/* Welcome Dialog */}
