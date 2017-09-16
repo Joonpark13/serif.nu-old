@@ -216,7 +216,8 @@ export default class Search extends React.Component {
                       }
                     }}
                     onTouchTap={() => {
-                      checkComponents(selected.subject, item.associated_classes);
+                      onSelect(currentTerm, item.school, item.subject, item.course);
+                      checkComponents(item.subject, item.associated_classes);
                       addCourse(item);
                       removeHover();
                       this.resetSearch();
@@ -245,7 +246,7 @@ export default class Search extends React.Component {
           {currentView === 'components' &&
             <Components
               selected={selected}
-              sections={this.state.results.map(result => result.item)}
+              sections={sections}
               addComponent={addComponent}
               addComponentHover={addComponentHover}
               removeHover={removeHover}
