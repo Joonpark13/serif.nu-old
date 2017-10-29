@@ -148,9 +148,7 @@ class Serif extends React.Component {
         {/* Welcome Dialog */}
         <Dialog title="Welcome to Serif.nu!" modal open={firstVisit}>
           <p>
-            Welcome to Serif.nu! Find out more, or dive right in! For our returning users,
-            we've added a new tab to let you add custom events and see your textbooks.
-            (Serif.nu is best viewed on a computer. Mobile enhancements coming soon!)
+            Welcome to Serif.nu! Winter 2018 data is now updated. Find out more, or dive right in!
           </p>
           <div style={style.buttonBox}>
             <RaisedButton
@@ -161,7 +159,7 @@ class Serif extends React.Component {
             />
             <Link to="/about">
               <RaisedButton
-                label="Tell me about Serif"
+                label="Tell me about Serif.nu"
                 primary
                 style={style.button}
                 onTouchTap={() => onFirstVisitProp()}

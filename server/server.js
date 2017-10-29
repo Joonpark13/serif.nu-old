@@ -119,16 +119,14 @@ app.get('/data/:term/search', (req, res) => {
 
     const prepared = [];
 
-    sectionsData.forEach((section) => {
-        const searchObj = section;
-        // For sections with a non empty topic field (such as EECS 395, THEATRE 330 or other special
-        // courses), It's better to title it using the topic field instead of the name field.
-        let title = `${section.subject} ${section.course}`;
-        if (section.topic) title = `${title} ${section.topic}`;
-        else title = `${title} ${section.name}`;
-        searchObj.title = title;
-
-        prepared.push(searchObj);
+    coursesData.forEach((course) => {
+        prepared.push({
+            text: `${course.subject} ${course.abbv} ${course.name}`,
+            value: `${course.subject} ${course.abbv} ${course.name}`,
+            school: course.school,
+            subject: course.subject,
+            course: course.abbv
+        });
     });
 
     res.setHeader('Content-Type', 'application/json');

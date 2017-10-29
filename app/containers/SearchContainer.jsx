@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import Search from '../components/Search.jsx';
+import SearchWrapper from '../components/SearchWrapper.jsx';
 import {
   addCourseSearch,
   populateSelected,
@@ -53,5 +53,5 @@ const mapDispatchToProps = dispatch => ({
   }
 });
 
-const SearchContainer = connect(mapStateToProps, mapDispatchToProps)(Search);
+const SearchContainer = connect(mapStateToProps, mapDispatchToProps)(SearchWrapper);
 export default SearchContainer;
