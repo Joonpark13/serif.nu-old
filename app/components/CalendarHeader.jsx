@@ -213,15 +213,6 @@ class CalendarHeader extends React.Component {
         label="Cancel"
         primary
         onTouchTap={() => this.handleCloseRegal()}
-      />,
-      <FlatButton
-        label="Add"
-        primary
-        disabled={!this.props.hasRegal}
-        onTouchTap={() => {
-          this.handleCloseRegal();
-          this.handleRegal();
-        }}
       />
     ];
     return (
@@ -294,21 +285,14 @@ class CalendarHeader extends React.Component {
         >
           <img src={RegalLogo} style={style.regal} alt="Regal Logo" />
           {this.props.hasRegal ?
-            <div>
-              <p>
-                Click ADD to send the classes that are currently in your calendar
-                to CAESAR using Regal.
-              </p>
-              <p>Confused? <Link to="/regal">This might help.</Link></p>
-            </div>
+            <p>
+              Due to the new CEASAR upgrade, this feature is currently being updated.
+              Sorry!
+            </p>
             :
             <p>
-              You can send the classes that are currently in your calendar
-              to CAESAR through the Regal Chrome extension. Install Regal
-              from <a href="http://bit.ly/regalnu">the Chrome Web Store</a>.
-              After installing, click ADD to send your classes to CAESAR.
-              For more information, <Link to="/regal">check out our
-              instructions page</Link>.
+              Due to the new CEASAR upgrade, this feature is currently being updated.
+              Sorry!
             </p>
           }
         </Dialog>
