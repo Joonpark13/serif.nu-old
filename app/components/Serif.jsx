@@ -42,6 +42,7 @@ const style = {
   },
   searchTab: {
     height: '685px',
+    overflow: 'auto',
     position: 'relative', // Necessary for z-index
     zIndex: 2
   },
