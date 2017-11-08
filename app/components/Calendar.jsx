@@ -25,7 +25,7 @@ export default class Calendar extends React.Component {
       weekends: false, // Hide weekends
       defaultView: 'agendaWeek', // Only show week view
       header: false, // Hide buttons/titles
-      minTime: '07:30:00', // Start time for the calendar
+      minTime: '08:00:00', // Start time for the calendar
       maxTime: '22:00:00', // End time for the calendar
       columnFormat: 'ddd',
       allDaySlot: false, // Get rid of "all day" slot at the top
