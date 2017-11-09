@@ -29,7 +29,7 @@ const Footer = () => (
   <div style={style.background}>
     <div style={style.panel}>
       <h1 style={{ marginTop: 0 }}>Serif.nu</h1>
-      <p>&copy; 2017 <a style={style.anchorColor} href="http://joonparkmusic.com/">Joon Park</a></p>
+      <p>&copy; 2017 <a style={style.anchorColor} href="http://joonpark.me">Joon Park</a></p>
       <p>Serif.nu is not created by Northwestern University.</p>
       <Link to="/tos"><p style={style.anchorColor}>Terms of Service and Privacy Policy</p></Link>
       <Link to="/acknowledgements"><p style={style.anchorColor}>Acknowledgements</p></Link>
