@@ -25,7 +25,8 @@ const ReportBug = () => (
     <Divider />
     <h3 style={style.note}>
       NOTE: For all questions regarding course data (Ex. "When will
-      winter 2018 courses be updated?"), please <a href="https://www.facebook.com/nuserif/">follow Serif.nu on Facebook for
+      winter 2018 courses be updated?", "SESP courses aren't showing up!"),
+      please <a href="https://www.facebook.com/nuserif/">follow Serif.nu on Facebook for
       updates</a>.
     </h3>
     <h3 style={style.note}>
