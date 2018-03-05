@@ -240,7 +240,7 @@ const About = () => (
           <h2 style={style.centeredPurpleHeader}>
             Like us on Facebook!
           </h2>
-          <a href="https://www.facebook.com/nuserif/">
+          <a href="https://www.facebook.com/serifnorthwestern/">
             <RaisedButton icon={<FontIcon className="fa fa-facebook-official" />} primary />
           </a>
         </div>
