@@ -149,7 +149,7 @@ class Serif extends React.Component {
         {/* Welcome Dialog */}
         <Dialog title="Welcome to Serif.nu!" modal open={firstVisit}>
           <p>
-            Welcome to Serif.nu! Winter 2018 data is now updated. Find out more, or dive right in!
+            Welcome to Serif.nu! Find out more, or dive right in!
           </p>
           <div style={style.buttonBox}>
             <RaisedButton
