@@ -117,6 +117,12 @@ const CalendarWrapper = ({
     <div>
       <Card style={style.card}>
         <CardText>
+          Note: Serif.nu will be updated to a new version in a few weeks. The update will not save
+          your schedules from the current version.
+        </CardText>
+      </Card>
+      <Card style={style.card}>
+        <CardText>
           <CalendarHeader
             currentCalendarName={currentCalendarName}
             setCalendarName={setCalendarName}
